@@ -1,9 +1,8 @@
-# Shastra Result Processing
+# Shastra Result Processing 
 
-This repository contains scripts to process and clean HackerRank leaderboard data for Shastra results.
+This repository contains Jupyter Notebook scripts to process and clean HackerRank leaderboard data for Shastra results.
 
 ## Overview
-
 The workflow involves three main steps:
 
 1. **Scrape HackerRank Leaderboard**: Extracts user IDs and marks from the HackerRank leaderboard.
@@ -13,41 +12,25 @@ The workflow involves three main steps:
 ## Setup Instructions
 
 1. Clone this repository:
-
    ```sh
    git clone <repo-url>
    cd shastra-result-processing
    ```
 
-2. Install dependencies:
+3. Open Jupyter Notebook and run the scripts in order:
 
-   ```sh
-   pip install pandas beautifulsoup4 requests
-   ```
-
-3. Run the scripts in order:
-
-   - **Scrape HackerRank Leaderboard**
-
-     ```sh
-     python scrape_hackerrank.py
-     ```
-
-   - **Clean Uploaded CSV**
-
-     ```sh
-     python clean_csv.py
-     ```
-
-   - **Merge Marks into Cleaned CSV**
-
-     ```sh
-     python merge_results.py
-     ```
+   - **Scrape HackerRank Leaderboard** (`scrape_hackerrank.ipynb`)
+   - **Clean Uploaded CSV** (`clean_csv.ipynb`)
+   - **Merge Marks into Cleaned CSV** (`merge_results.ipynb`)
 
 ## Output Files
+- `shastra_hackerrank_results.csv`: Scraped leaderboard data
+- `cleaned_shastra_results.csv`: Uploaded CSV after removing '@'
+- `final_shastra_results.csv`: Final merged result with marks
 
-- `shastra_hackerrank_results.ipynb`: Scraped leaderboard data
-- `to_get_cleaned_csv.ipynb`: Uploaded CSV after removing '@'
-- `final_shastra_results.ipynb`: Final merged result with marks
+## Notes
+- Ensure that the uploaded CSV file follows the correct format.
+- Modify selectors in `scrape_hackerrank.ipynb` if the HackerRank website structure changes.
+- The final script prints the absolute path of the merged CSV file for easy access.
+- Run the notebooks in order to avoid missing dependencies.
 
