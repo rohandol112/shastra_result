@@ -20,13 +20,13 @@ The workflow involves three main steps:
 3. Open Jupyter Notebook and run the scripts in order:
 
    - **Scrape HackerRank Leaderboard** (`scrape_hackerrank.ipynb`)
-   - **Clean Uploaded CSV** (`clean_csv.ipynb`)
-   - **Merge Marks into Cleaned CSV** (`merge_results.ipynb`)
+   - **Clean Uploaded CSV** (`to_get_cleaned_csv.ipynb`)
+   - **Merge Marks into Cleaned CSV** (`merge_csv.ipynb`)
 
 ## Output Files
 - `shastra_hackerrank_results.csv`: Scraped leaderboard data
-- `cleaned_shastra_results.csv`: Uploaded CSV after removing '@'
-- `final_shastra_results.csv`: Final merged result with marks
+- `to_get_cleaned_csv.csv`: Uploaded CSV after removing '@'
+- `merge_csv.csv`: Final merged result with marks
 
 ## Notes
 - Ensure that the uploaded CSV file follows the correct format.
