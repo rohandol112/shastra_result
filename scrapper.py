@@ -83,8 +83,6 @@ def save_data():
     else:
         print("No data extracted! Check element selectors.")
     
-    # close window
-    driver.quit()
 
 
 page_path = [
@@ -103,22 +101,26 @@ def move_to_next_page(idx):
         print("No more pages or error clicking Next:", e)
         return False  # Stop loop if no more pages
 
+def close_driver():
+    # close window
+    driver.quit()
+
 
 # **Main Execution**
-open_chrome()
-change_view_per_page()
+if __name__ == "__main__":
+    open_chrome()
+    change_view_per_page()
 
-extract_data()      # 1st page
-move_to_next_page(0)     # 2nd page
+    extract_data()      # 1st page
+    move_to_next_page(0)     # 2nd page
 
-extract_data()      # 2nd 
-move_to_next_page(1)
+    extract_data()      # 2nd 
+    move_to_next_page(1)
 
-extract_data()  # 3rd
+    extract_data()  # 3rd
 
-# save data
-save_data()
-driver.quit()
+    # save data
+    save_data()
+    close_driver()
 
-# print("Extracted Data:", leaderboard_data)
-print("Total data:", len(leaderboard_data))
+    print("Total data:", len(leaderboard_data))
