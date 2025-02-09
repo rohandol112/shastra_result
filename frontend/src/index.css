@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .app-container {
+    @apply min-h-screen bg-gray-50;
+  }
+
+  .header {
+    @apply bg-white shadow-sm;
+  }
+
+  .header-container {
+    @apply container mx-auto px-4 py-4;
+  }
+
+  .main-container {
+    @apply container mx-auto px-4 py-8;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-sm p-6;
+  }
+
+  .form-group {
+    @apply mb-4;
+  }
+
+  .form-label {
+    @apply block mb-2 font-medium;
+  }
+
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-500 text-white hover:bg-gray-600;
+  }
+
+  .table-container {
+    @apply overflow-x-auto;
+  }
+
+  .table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .table-header {
+    @apply bg-gray-50;
+  }
+  
+  .table-cell {
+    @apply px-6 py-4 whitespace-nowrap;
+  }
+}
+.shadow-neon {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.text-shadow-neon {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
