@@ -8,8 +8,10 @@ from scrapper import leaderboard_data
 from io import StringIO, BytesIO
 import numpy as np
 from collections import OrderedDict
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/upload', methods=['POST'])
 def upload_csv():

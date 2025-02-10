@@ -8,9 +8,9 @@ const FileUploadPage = () => {
   const [success, setSuccess] = useState(''); 
   const [hackerRankUrl, setHackerRankUrl] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-
+  const [isDownloading, setIsDownloading] = useState(false);
   const [isDownloadable, setDownloadable] = useState(false);
-  const [resData, setData] = useState([]); 
+  const [finalData, setFinalData] = useState([]);
 
   const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
@@ -71,8 +71,7 @@ const FileUploadPage = () => {
 
       const data = await response.json();
       const arrangedData = arrangeData(data);
-      setData(arrangedData);
-      console.log(arrangedData);
+      setFinalData(arrangedData);
         
       if (!response.ok) {
         throw new Error(data.message || 'Processing failed');
@@ -81,10 +80,18 @@ const FileUploadPage = () => {
       setSuccess('Results processed successfully!');
     } catch (err) {
       setError("The error is: "+err.message);
-      console.log(err);
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const handleDownload = () => {
+    setIsDownloading(true);
+    // Trigger the CSVDownload component
+    setTimeout(() => {
+      setIsDownloading(false);
+      // Removed setDownloadable(false) to keep the button available
+    }, 1000);
   };
 
   return (
@@ -177,6 +184,20 @@ const FileUploadPage = () => {
           >
             {isProcessing ? 'Processing...' : 'Process Results'}
           </button>
+
+          {/* Download Button */}
+          {isDownloadable && (
+            <button
+              onClick={handleDownload}
+              disabled={isDownloading}
+              className="mt-4 w-full py-3 px-6 rounded-lg text-white font-medium transition-all bg-gradient-to-r from-purple-500 to-cyan-400 hover:shadow-lg hover:shadow-purple-400/20 hover:scale-105 disabled:bg-gray-700 disabled:cursor-not-allowed"
+            >
+              {isDownloading ? 'Downloading...' : 'Download Results CSV'}
+            </button>
+          )}
+          {isDownloading && (
+            <CSVDownload data={finalData} filename="final_results.csv" target="_blank" />
+          )}
         </div>
 
         {/* Processing Overlay */}
@@ -190,12 +211,9 @@ const FileUploadPage = () => {
             </div>
           </div>
         )}
-        {isDownloadable && <CSVDownload data={resData} />} 
       </div>
     </div>
   );
 };
-
-// {isDownloadable && <CSVDownload data={resData} />} 
 
 export default FileUploadPage;
