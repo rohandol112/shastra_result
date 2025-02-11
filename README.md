@@ -112,4 +112,3 @@ To run tests for the frontend and backend, follow these steps:
 4. Click the "Process Results" button to process the data.
 5. Once processing is complete, click the "Download Results CSV" button to download the final results.
 
-## Project Structure
