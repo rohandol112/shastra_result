@@ -1,48 +1,58 @@
+import os
+import logging
+import pandas as pd
+import numpy as np
 from flask import Flask, jsonify, request
-from scrapper import start_driver,open_chrome, change_view_per_page, extract_data, move_to_next_page, save_data, close_driver
+from flask_cors import CORS
+from collections import OrderedDict
+from io import StringIO, BytesIO
+
+# Import your scraper functions
+from scrapper import (
+    start_driver, open_chrome, change_view_per_page, extract_data,
+    move_to_next_page, close_driver, leaderboard_data
+)
 from cleaner import clean_csv
 from combiner import combine_files
-import os
-import pandas as pd
-from scrapper import leaderboard_data
-from io import StringIO, BytesIO
-import numpy as np
-from collections import OrderedDict
-from flask_cors import CORS
 
+# Initialize Flask app
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+
+# Enable CORS - Allow only specific origins in production
+CORS(app, resources={r"/*": {"origins": os.getenv("FRONTEND_URL", "*")}})
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 @app.route('/upload', methods=['POST'])
 def upload_csv():
     try:
         hacker_rank_url = request.form.get('hackerRankUrl')
-        
         if not hacker_rank_url:
             return jsonify({"error": "HackerRank URL is required"}), 400
 
         if 'file' not in request.files:
-            return jsonify({"error": "No file part in request"}), 400  # Handle missing file
-    
+            return jsonify({"error": "No file part in request"}), 400
+
         file = request.files['file']
-        print(file)
         if file.filename == '':
             return jsonify({"error": "No selected file"}), 400
-        
-        # Convert file data to DataFrame
+
+        # Read uploaded file into a DataFrame
         if file.filename.endswith('.csv'):
             df = pd.read_csv(StringIO(file.read().decode('utf-8')))
         elif file.filename.endswith('.xlsx'):
             df = pd.read_excel(BytesIO(file.read()))
         else:
-            return {'error': 'Unsupported file type'}, 400
+            return jsonify({'error': 'Unsupported file type'}), 400
 
-        print(df.head(5))
+        logger.info("Uploaded file processed successfully.")
 
-        # clean the csv we got
+        # Clean the CSV data
         cleaned_df = clean_csv(df)
 
-        # scraping data of leaderboad
+        # Scrape leaderboard data
         start_driver()
         open_chrome(hacker_rank_url)
         change_view_per_page()
@@ -53,19 +63,24 @@ def upload_csv():
         extract_data()
         close_driver()
 
+        # Convert scraped data into DataFrame
         leaderboard_df = pd.DataFrame(leaderboard_data, columns=["HackerRank ID", "Score"])
+
+        # Merge cleaned and scraped data
         merged_df = combine_files(cleaned_df, leaderboard_df)
         merged_df = merged_df.replace({np.nan: None})
-
         merged_df = merged_df.drop_duplicates(subset=['HackerRank ID'], keep='first')
 
-        ordered_json = [OrderedDict(row) for row in merged_df.to_dict(orient='records')]    # converted dataframe to json
-        # print(ordered_json[0])
-        return jsonify(ordered_json)  # Sending as a list
+        # Convert DataFrame to JSON
+        ordered_json = [OrderedDict(row) for row in merged_df.to_dict(orient='records')]
+
+        return jsonify(ordered_json)
 
     except Exception as e:
-        print("The error is: ",e)
-        return jsonify({"error": str(e)}), 500 
+        logger.error(f"Error processing request: {str(e)}", exc_info=True)
+        return jsonify({"error": "Internal Server Error"}), 500
 
+# Production setup
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
