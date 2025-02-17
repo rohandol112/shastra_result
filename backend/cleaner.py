@@ -3,10 +3,10 @@ import os
 import numpy as np
 
 def clean_csv(df):
-    
     # Remove '@' from the HackerRank ID column
     df["HackerRank ID"] = df["HackerRank ID"].astype(str).str.lstrip("@")
     df = df.replace(np.nan, "") 
+
     return df
 
 

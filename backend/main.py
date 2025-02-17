@@ -1,8 +1,7 @@
 from flask import Flask, jsonify, request
-from scrapper import start_driver,open_chrome, change_view_per_page, extract_data, move_to_next_page, save_data, close_driver
+from scrapper import start_driver,open_chrome, change_view_per_page, extract_data, move_to_next_page, close_driver
 from cleaner import clean_csv
 from combiner import combine_files
-import os
 import pandas as pd
 from scrapper import leaderboard_data
 from io import StringIO, BytesIO
@@ -59,8 +58,10 @@ def upload_csv():
 
         merged_df = merged_df.drop_duplicates(subset=['HackerRank ID'], keep='first')
 
+        # mark students 'AB' who were absent
+        merged_df['Score'][(merged_df['Score'].isna()) & (merged_df['HackerRank ID'] != "NOT REGISTERED")] = "AB"
+
         ordered_json = [OrderedDict(row) for row in merged_df.to_dict(orient='records')]    # converted dataframe to json
-        # print(ordered_json[0])
         return jsonify(ordered_json)  # Sending as a list
 
     except Exception as e:
