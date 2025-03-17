@@ -1,36 +1,114 @@
-# Shastra Result Processing 
-
-This repository contains Jupyter Notebook scripts to process and clean HackerRank leaderboard data for Shastra results.
+# Shastra Result Processing Application
 
 ## Overview
-The workflow involves three main steps:
 
-1. **Scrape HackerRank Leaderboard**: Extracts user IDs and marks from the HackerRank leaderboard.
-2. **Clean Uploaded CSV**: Removes '@' symbols from HackerRank IDs in an uploaded CSV.
-3. **Merge Results**: Combines marks from the scraped data into the cleaned CSV.
+The Shastra Result Processing Application is a web-based tool designed to upload student data in CSV format, process the results, and download the final results as a CSV file. The application integrates a frontend built with React and a backend powered by Flask, allowing users to easily manage and analyze student performance data.
+
+## Features
+
+- Upload student data in CSV format.
+- Enter a HackerRank leaderboard URL for additional data.
+- Process the uploaded data and merge it with leaderboard information.
+- Download the final processed results as a CSV file.
+- User-friendly interface with real-time feedback.
+
+## Technologies Used
+
+### Frontend
+- **React**: JavaScript library for building user interfaces.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Framer Motion**: Library for animations in React.
+- **Lucide React**: Icon library for React.
+- **react-csv**: Library for handling CSV downloads.
+
+### Backend
+- **Flask**: Python web framework for building APIs.
+- **Pandas**: Data manipulation and analysis library.
+- **BeautifulSoup**: Library for web scraping.
+- **Selenium**: Tool for automating web browsers.
+- **NumPy**: Library for numerical operations.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js (v14 or later)
+- npm (Node package manager)
+- Python (v3.6 or later)
+- pip (Python package manager)
+- Chrome WebDriver (for Selenium)
+- Redis (if using Celery for asynchronous tasks)
 
 ## Setup Instructions
 
-1. Clone this repository:
-   ```sh
-   git clone <repo-url>
-   cd shastra-result-processing
+### Frontend Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/shastra-results-app.git
+   cd shastra-results-app/frontend
    ```
 
-3. Open Jupyter Notebook and run the scripts in order:
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-   - **Scrape HackerRank Leaderboard** (`scrape_hackerrank.ipynb`)
-   - **Clean Uploaded CSV** (`to_get_cleaned_csv.ipynb`)
-   - **Merge Marks into Cleaned CSV** (`merge_csv.ipynb`)
+3. **Start the development server**:
+   ```bash
+   npm start
+   ```
 
-## Output Files
-- `shastra_hackerrank_results.csv`: Scraped leaderboard data
-- `to_get_cleaned_csv.csv`: Uploaded CSV after removing '@'
-- `merge_csv.csv`: Final merged result with marks
+   The frontend will be available at `http://localhost:3000`.
 
-## Notes
-- Ensure that the uploaded CSV file follows the correct format.
-- Modify selectors in `scrape_hackerrank.ipynb` if the HackerRank website structure changes.
-- The final script prints the absolute path of the merged CSV file for easy access.
-- Run the notebooks in order to avoid missing dependencies.
+### Backend Setup
+
+1. **Navigate to the backend directory**:
+   ```bash
+   cd shastra-results-app/backend
+   ```
+
+2. **Create a virtual environment (optional but recommended)**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   ```
+
+3. **Install required packages**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the Flask application**:
+   ```bash
+   python main.py
+   ```
+
+   The backend will be available at `http://127.0.0.1:5000`.
+
+### Environment Variables
+
+If your application requires any environment variables (e.g., API keys, database URLs), create a `.env` file in the backend directory and add the necessary variables.
+
+### Running Tests
+
+To run tests for the frontend and backend, follow these steps:
+
+- **Frontend Tests**:
+  ```bash
+  npm test
+  ```
+
+- **Backend Tests**:
+  ```bash
+  python -m unittest discover
+  ```
+
+## Usage
+
+1. Open your web browser and navigate to `http://localhost:3000`.
+2. Upload a CSV file containing student data.
+3. Enter the HackerRank leaderboard URL if applicable.
+4. Click the "Process Results" button to process the data.
+5. Once processing is complete, click the "Download Results CSV" button to download the final results.
 
