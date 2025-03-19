@@ -1,0 +1,706 @@
+submission_id,username,problem_name,language,code,page,url
+1390053351,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(arr, k):
+4
+    result = []
+5
+    dq = deque()
+6
+    7
+    # Process the first window of size k
+8
+    for i in range(k):
+9
+        if arr[i] < 0:
+10
+            dq.append(i)
+11
+    12
+    # Store the first result
+13
+    result.append(arr[dq[0]] if dq else 0)
+14
+    15
+    # Process the remaining windows
+16
+    for i in range(k, len(arr)):
+17
+        # Remove elements that are out of the current window
+18
+        if dq and dq[0] < i - k + 1:
+19
+            dq.popleft()
+20
+        21
+        # Add the new element if it is negative
+22
+        if arr[i] < 0:
+23
+            dq.append(i)
+24
+        25
+        # Store the result for the current window
+26
+        result.append(arr[dq[0]] if dq else 0)
+27
+    28
+    return result
+29
+30
+def main():
+31
+    t = int(input().strip())  # Number of test cases
+32
+    for _ in range(t):
+33
+        n, k = map(int, input().split())  # Read n and k
+34
+        arr = list(map(int, input().split()))  # Read array elements
+35
+        36
+        # Get the earliest faulty readings
+37
+        output = earliest_faulty_readings(arr, k)
+38
+        39
+        # Print result as space-separated values
+40
+        print("" "".join(map(str, output)))
+41
+42
+if __name__ == ""__main__"":
+43
+    main()
+44",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390053351
+1390053353,unknown,unknown,unknown,"1
+def min_effort(test_cases):
+2
+    results = []
+3
+    for n, k, arr in test_cases:
+4
+        total_effort = sum(arr)
+5
+        6
+        if k == n:
+7
+            results.append(""0"")  
+8
+            continue
+9
+10
+        min_effort = total_effort 
+11
+        12
+        13
+        for i in range(n):
+14
+            effort_with_skip = (total_effort - arr[i]) + k
+15
+            min_effort = min(min_effort, effort_with_skip)
+16
+        17
+        results.append(str(min_effort))
+18
+    19
+    return ""\n"".join(results)
+20
+21
+22
+t = int(input())  
+23
+test_cases = []
+24
+for _ in range(t):
+25
+    n, k = map(int, input().split())  
+26
+    arr = list(map(int, input().split()))  
+27
+    test_cases.append((n, k, arr))
+28
+29
+30
+print(min_effort(test_cases))
+31",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053353
+1390053354,unknown,unknown,unknown,"1
+def min_effort(n, k, arr):
+2
+    total_effort = sum(arr)  # Compute the total effort without skipping any firewall
+3
+    min_effort = total_effort  # Initialize minimum effort
+4
+5
+    if len(arr)==k:
+6
+        return 0
+7
+    # Try skipping each firewall
+8
+    for i in range(n):
+9
+        effort = total_effort - arr[i] + k  # Skip the i-th firewall and add k penalty
+10
+        min_effort = min(min_effort, effort)  # Keep track of the minimum
+11
+12
+    return min_effort
+13
+14
+# Read input
+15
+t = int(input())
+16
+for _ in range(t):
+17
+    n, k = map(int, input().split())
+18
+    arr = list(map(int, input().split()))
+19
+    print(min_effort(n, k, arr))
+20",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053354
+1390053339,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class Main {
+4
+5
+    public static void main(String[] args) {
+6
+7
+        Scanner sc = new Scanner(System.in);
+8
+9
+        int T = sc.nextInt();
+10
+11
+        while (T-- > 0) {
+12
+13
+            int n = sc.nextInt();
+14
+15
+            int k = sc.nextInt();
+16
+17
+            int[] a = new int[n];
+18
+19
+            long sum_a = 0;
+20
+21
+            for (int i = 0; i < n; i++) {
+22
+23
+                a[i] = sc.nextInt();
+24
+25
+                sum_a += a[i];
+26
+27
+            }
+28
+29
+            List<Long> values = new ArrayList<>();
+30
+31
+            for (int i = 0; i < n; i++) {
+32
+33
+                long val = a[i] - (n - i - 1L);
+34
+35
+                values.add(val);
+36
+37
+            }
+38
+39
+            values.sort((x, y) -> Long.compare(y, x));
+40
+41
+            long[] prefixSum = new long[n + 1];
+42
+43
+            prefixSum[0] = 0;
+44
+45
+            for (int i = 1; i <= n; i++) {
+46
+47
+                prefixSum[i] = prefixSum[i - 1] + values.get(i - 1);
+48
+49
+            }
+50
+51
+            int max_m = Math.min(k, n);
+52
+53
+            long maxTotal = Long.MIN_VALUE;
+54
+55
+            for (int m = 0; m <= max_m; m++) {
+56
+57
+                long current = prefixSum[m] + ((long) m * (m - 1)) / 2;
+58
+59
+                if (current > maxTotal) {
+60
+61
+                    maxTotal = current;
+62
+63
+                }
+64
+65
+            }
+66
+67
+            long minEffort = sum_a - maxTotal;
+68
+69
+            System.out.println(minEffort);
+70
+71
+        }
+72
+73
+        sc.close();
+74
+75
+    }
+76
+77
+}",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053339
+1390053344,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <algorithm>
+4
+5
+using namespace std;
+6
+7
+long long minEffort(vector<int>& firewalls, int n, int k) {
+8
+    // If we can skip all firewalls, return 0
+9
+    if (k >= n) return 0;
+10
+    11
+    // Create a vector of pairs (index, strength)
+12
+    vector<pair<int, int>> indexedFirewalls(n);
+13
+    for (int i = 0; i < n; i++) {
+14
+        indexedFirewalls[i] = {i, firewalls[i]};
+15
+    }
+16
+    17
+    // Sort by strength to find the k strongest firewalls to skip
+18
+    sort(indexedFirewalls.begin(), indexedFirewalls.end(), [](const pair<int, int>& a, const pair<int, int>& b) {
+19
+        return a.second > b.second;
+20
+    });
+21
+    22
+    // Mark which firewalls to skip
+23
+    vector<bool> skip(n, false);
+24
+    for (int i = 0; i < k; i++) {
+25
+        skip[indexedFirewalls[i].first] = true;
+26
+    }
+27
+    28
+    // Calculate the total effort
+29
+    long long totalEffort = 0;
+30
+    int skippedCount = 0;
+31
+    32
+    for (int i = 0; i < n; i++) {
+33
+        if (skip[i]) {
+34
+            skippedCount++;
+35
+        } else {
+36
+            totalEffort += firewalls[i] + skippedCount;
+37
+        }
+38
+    }
+39
+    40
+    return totalEffort;
+41
+}
+42
+43
+int main() {
+44
+    ios_base::sync_with_stdio(false);
+45
+    cin.tie(NULL);
+46
+    47
+    int t;
+48
+    cin >> t;
+49
+    50
+    while (t--) {
+51
+        int n, k;
+52
+        cin >> n >> k;
+53
+        54
+        vector<int> firewalls(n);
+55
+        for (int i = 0; i < n; i++) {
+56
+            cin >> firewalls[i];
+57
+        }
+58
+        59
+        cout << minEffort(firewalls, n, k) << endl;
+60
+    }
+61
+    62
+    return 0;
+63
+}
+64",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053344
+1390053349,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+vector<int> earliest_faulty_readings(vector<int>& arr, int k) {
+5
+    int n = arr.size();
+6
+    vector<int> result;
+7
+    deque<int> dq;  // Stores indices of negative numbers
+8
+9
+    // Process first window
+10
+    for (int i = 0; i < k; i++) {
+11
+        if (arr[i] < 0) dq.push_back(i);
+12
+    }
+13
+14
+    // Process the sliding window
+15
+    for (int i = k; i <= n; i++) {
+16
+        // Append first negative number in the window
+17
+        if (!dq.empty()) 
+18
+            result.push_back(arr[dq.front()]);  // First negative in the deque
+19
+        else 
+20
+            result.push_back(0);  // No negative number
+21
+22
+        // Remove elements that are out of the current window
+23
+        while (!dq.empty() && dq.front() < i - k + 1) {
+24
+            dq.pop_front();
+25
+        }
+26
+27
+        // Add the next element if negative
+28
+        if (i < n && arr[i] < 0) {
+29
+            dq.push_back(i);
+30
+        }
+31
+    }
+32
+33
+    return result;
+34
+}
+35
+36
+int main() {
+37
+    int t;
+38
+    cin >> t;  // Number of test cases
+39
+    while (t--) {
+40
+        int n, k;
+41
+        cin >> n >> k;  // Size of array and batch size
+42
+        vector<int> arr(n);
+43
+        for (int i = 0; i < n; i++) {
+44
+            cin >> arr[i];
+45
+        }
+46
+        47
+        vector<int> result = earliest_faulty_readings(arr, k);
+48
+        for (int num : result) {
+49
+            cout << num << "" "";
+50
+        }
+51
+        cout << endl;
+52
+    }
+53
+    return 0;
+54
+}",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390053349
+1390053333,unknown,unknown,unknown,"1
+t = int(input())
+2
+for _ in range(t):
+3
+    4
+    5
+    n, k = map(int, input().split())
+6
+    a = list(map(int, input().split()))
+7
+    8
+    9
+    dp = [float('inf')] * (k + 1)
+10
+    dp[0] = 0
+11
+    12
+    13
+    for i in range(n):
+14
+        new_dp = [float('inf')]*(k+1)
+15
+        16
+        17
+        for s in range(k+1):
+18
+            19
+            if s>0:
+20
+                new_dp[s] = min(new_dp[s],dp[s - 1])
+21
+                22
+                23
+            new_dp[s] = min(new_dp[s], dp[s] + a[i] + s)
+24
+        dp = new_dp
+25
+    print(min(dp))",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053333
+1390053334,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+8
+        Scanner sc = new Scanner(System.in);
+9
+        int T = sc.nextInt();
+10
+        while (T-- > 0) {
+11
+            String rack = sc.next();
+12
+            int n = rack.length();
+13
+            int[] prefixZero = new int[n + 1];
+14
+            int[] prefixOne = new int[n + 1];
+15
+            16
+            // Build prefix sums
+17
+            for (int i = 0; i < n; i++) {
+18
+                prefixZero[i + 1] = prefixZero[i] + (rack.charAt(i) == '0' ? 1 : 0);
+19
+                prefixOne[i + 1] = prefixOne[i] + (rack.charAt(i) == '1' ? 1 : 0);
+20
+            }
+21
+22
+            int totalOnes = prefixOne[n];
+23
+            int totalZeros = prefixZero[n];
+24
+            int minCost = totalOnes; // If we remove nothing, A = 0, I = totalZeros
+25
+            26
+            // If all are zeros, we can remove everything from the beginning
+27
+            if (totalOnes == 0) {
+28
+                System.out.println(0);
+29
+                continue;
+30
+            }
+31
+            32
+            // Try all possible left starting points
+33
+            for (int i = 1; i <= n; i++) {
+34
+                int onesInPrefix = prefixOne[i];
+35
+                int zerosBefore = prefixZero[i];
+36
+                // Try all possible right ending points
+37
+                for (int j = 0; j <= n - i; j++) {
+38
+                    int onesInSuffix = prefixOne[n] - prefixOne[n - j];
+39
+                    int zerosInSuffix = prefixZero[n] - prefixZero[n - j];
+40
+                    int idleRemaining = totalZeros - zerosBefore - zerosInSuffix;
+41
+                    int activeDecommissioned = onesInPrefix + onesInSuffix;
+42
+                    int cost = Math.max(idleRemaining, activeDecommissioned);
+43
+                    minCost = Math.min(minCost, cost);
+44
+                    // Early termination: if activeDecommissioned >= minCost, no need to check larger suffixes
+45
+                    if (activeDecommissioned >= minCost) break;
+46
+                }
+47
+            }
+48
+            System.out.println(minCost);
+49
+        }
+50
+        sc.close();
+51
+    }
+52
+}",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053334
+1390053337,unknown,unknown,unknown,"1
+     2
+        3
+for _ in range(int(input())):
+4
+    x,y = map(int,input().split())
+5
+    arr = list(map(int,input().split()))
+6
+    res = []
+7
+    for i in range(x-y+1):
+8
+        batch = arr[i:i+y]
+9
+        for a in batch:
+10
+            if a<=0:
+11
+                res.append(a)
+12
+                break
+13
+            elif a>0 and a == batch[-1]: 
+14
+                res.append(0)
+15
+                16
+    for i in res:
+17
+        print(i, end = ' ')
+18
+    print()
+19
+20
+21
+    22
+ 23
+            24
+            ",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390053337
+1390053332,unknown,unknown,unknown,"1
+def solve():
+2
+    s = input()
+3
+    n = len(s)
+4
+    5
+    min_cost = float('inf')
+6
+    7
+    for i in range(n + 1):
+8
+        for j in range(n - i + 1):
+9
+            remaining = s[i:n-j]
+10
+            11
+            idle_remaining = remaining.count('0')
+12
+            active_removed = s[:i].count('1') + s[n-j:].count('1')
+13
+            14
+            cost = max(idle_remaining, active_removed)
+15
+            min_cost = min(min_cost, cost)
+16
+            17
+    print(min_cost)
+18
+19
+t = int(input())
+20
+for _ in range(t):
+21
+    solve()",141,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053332

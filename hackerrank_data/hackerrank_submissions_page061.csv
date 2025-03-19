@@ -1,0 +1,1213 @@
+submission_id,username,problem_name,language,code,page,url
+1390054890,unknown,unknown,unknown,"1
+import sys, bisect
+2
+data = sys.stdin.read().split()
+3
+if not data:
+4
+    exit()
+5
+t = int(data[0])
+6
+ptr = 1
+7
+out = []
+8
+for _ in range(t):
+9
+    s = data[ptr]
+10
+    ptr += 1
+11
+    n = len(s)
+12
+    pos = []
+13
+    for i,ch in enumerate(s):
+14
+        if ch=='1':
+15
+            pos.append(i)
+16
+    tot = len(pos)
+17
+    if tot==0:
+18
+        out.append(""1"")
+19
+        continue
+20
+    A = [pos[i]-i for i in range(tot)]
+21
+    lo, hi = 0, tot
+22
+    def feas(C):
+23
+        req = tot - C
+24
+        for i in range(tot):
+25
+            lim = C + (pos[i]-i)
+26
+            j = bisect.bisect_right(A, lim) - 1
+27
+            if j < i: continue
+28
+            if j - i + 1 >= req:
+29
+                return True
+30
+        return False
+31
+    while lo < hi:
+32
+        mid = (lo+hi)//2
+33
+        if feas(mid):
+34
+            hi = mid
+35
+        else:
+36
+            lo = mid+1
+37
+    out.append(str(lo))
+38
+sys.stdout.write(""\n"".join(out))
+39",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054890
+1390054891,unknown,unknown,unknown,"1
+def min_effort(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, k, a = case
+5
+        # Calculate the potential reduction for each firewall if skipped
+6
+        # Reduction for a[i] is a[i] - (number of firewalls after it) * 1
+7
+        # Because skipping it increases the strength of all subsequent firewalls by 1
+8
+        # So, the net reduction is a[i] - (n - i - 1)
+9
+        reductions = []
+10
+        for i in range(n):
+11
+            reductions.append(a[i] - (n - i - 1))
+12
+        13
+        # Select the top k reductions (most positive)
+14
+        # If a reduction is negative, it's better not to skip that firewall
+15
+        # So, we only consider positive reductions
+16
+        positive_reductions = [r for r in reductions if r > 0]
+17
+        positive_reductions.sort(reverse=True)
+18
+        19
+        # Take the top min(k, len(positive_reductions)) reductions
+20
+        skip_count = min(k, len(positive_reductions))
+21
+        total_reduction = sum(positive_reductions[:skip_count])
+22
+        23
+        # Calculate the total effort
+24
+        # Initial total effort is sum(a)
+25
+        # After skipping, the total effort is sum(a) - total_reduction
+26
+        # Because the skipped firewalls are reduced by their a[i], but the subsequent firewalls are increased by skip_count
+27
+        # Wait, no. The total effort is sum(a) - sum of a[i] for skipped firewalls + skip_count * (number of firewalls after the last skipped firewall)
+28
+        # This is getting complicated. Let's think differently.
+29
+        30
+        # Alternative approach:
+31
+        # Sort the firewalls in descending order of a[i] - (n - i - 1)
+32
+        # Skip the top k firewalls in this order
+33
+        # Calculate the total effort accordingly
+34
+        35
+        # Let's implement this alternative approach
+36
+        # Create a list of tuples (a[i], i)
+37
+        firewall_indices = [(a[i], i) for i in range(n)]
+38
+        # Sort by a[i] - (n - i - 1) in descending order
+39
+        firewall_indices.sort(key=lambda x: x[0] - (n - x[1] - 1), reverse=True)
+40
+        41
+        # Select the top k firewalls to skip
+42
+        skip_indices = set()
+43
+        for i in range(min(k, n)):
+44
+            skip_indices.add(firewall_indices[i][1])
+45
+        46
+        # Calculate the total effort
+47
+        total_effort = 0
+48
+        increase = 0
+49
+        for i in range(n):
+50
+            if i in skip_indices:
+51
+                increase += 1
+52
+            else:
+53
+                total_effort += a[i] + increase
+54
+        55
+        results.append(total_effort)
+56
+    return results
+57
+58
+# Read input
+59
+T = int(input())
+60
+test_cases = []
+61
+for _ in range(T):
+62
+    n, k = map(int, input().split())
+63
+    a = list(map(int, input().split()))
+64
+    test_cases.append((n, k, a))
+65
+66
+# Compute results
+67
+results = min_effort(test_cases)
+68
+69
+# Output results
+70
+for res in results:
+71
+    print(res)",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054891
+1390054892,unknown,unknown,unknown,"1
+import java.util.Scanner;
+2
+3
+public class Main {
+4
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int T = sc.nextInt();
+8
+        sc.nextLine(); // Consume the newline after T
+9
+        while (T-- > 0) {
+10
+            String s = sc.nextLine().trim();
+11
+            int n = s.length();
+12
+            int totalOnes = 0;
+13
+            int maxConsecutiveOnes = 0;
+14
+            int currentConsecutiveOnes = 0;
+15
+            16
+            // Calculate totalOnes and maxConsecutiveOnes
+17
+            for (char c : s.toCharArray()) {
+18
+                if (c == '1') {
+19
+                    currentConsecutiveOnes++;
+20
+                    maxConsecutiveOnes = Math.max(maxConsecutiveOnes, currentConsecutiveOnes);
+21
+                    totalOnes++;
+22
+                } else {
+23
+                    currentConsecutiveOnes = 0;
+24
+                }
+25
+            }
+26
+            27
+            // Handle cases where the cost is trivially 0
+28
+            if (totalOnes == 0) {
+29
+                System.out.println(0);
+30
+                continue;
+31
+            }
+32
+            if (maxConsecutiveOnes == totalOnes) {
+33
+                System.out.println(0);
+34
+                continue;
+35
+            }
+36
+            37
+            int totalZeros = n - totalOnes;
+38
+            int low = 0;
+39
+            int high = Math.max(totalOnes, totalZeros);
+40
+            int answer = high;
+41
+            42
+            // Binary search for the minimal possible cost
+43
+            while (low <= high) {
+44
+                int mid = (low + high) / 2;
+45
+                int requiredOnes = Math.max(0, totalOnes - mid);
+46
+                47
+                if (requiredOnes == 0) {
+48
+                    answer = mid;
+49
+                    high = mid - 1;
+50
+                    continue;
+51
+                }
+52
+                53
+                int maxOnes = maxOnesWithAtMostKZeros(s, mid);
+54
+                if (maxOnes >= requiredOnes) {
+55
+                    answer = mid;
+56
+                    high = mid - 1;
+57
+                } else {
+58
+                    low = mid + 1;
+59
+                }
+60
+            }
+61
+            62
+            System.out.println(answer);
+63
+        }
+64
+        sc.close();
+65
+    }
+66
+    67
+    // Helper function to calculate maximum ones in any window with at most k zeros
+68
+    private static int maxOnesWithAtMostKZeros(String s, int k) {
+69
+        int left = 0;
+70
+        int zeros = 0;
+71
+        int maxOnes = 0;
+72
+        int n = s.length();
+73
+        74
+        for (int right = 0; right < n; right++) {
+75
+            if (s.charAt(right) == '0') {
+76
+                zeros++;
+77
+            }
+78
+            // Shrink the window if zeros exceed k
+79
+            while (zeros > k) {
+80
+                if (s.charAt(left) == '0') {
+81
+                    zeros--;
+82
+                }
+83
+                left++;
+84
+            }
+85
+            // Calculate current number of ones in the window
+86
+            int currentOnes = (right - left + 1) - zeros;
+87
+            maxOnes = Math.max(maxOnes, currentOnes);
+88
+        }
+89
+        90
+        return maxOnes;
+91
+    }
+92
+}",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054892
+1390054886,unknown,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+int maxOnesWithAtMostKZeros(const string &s, int k) {
+9
+    int left = 0, zeros = 0, maxOnes = 0, n = s.length();
+10
+11
+    for (int right = 0; right < n; right++) {
+12
+        if (s[right] == '0') zeros++;
+13
+        while (zeros > k) {
+14
+            if (s[left] == '0') zeros--;
+15
+            left++;
+16
+        }
+17
+        maxOnes = max(maxOnes, (right - left + 1) - zeros);
+18
+    }
+19
+20
+    return maxOnes;
+21
+}
+22
+23
+void solve() {
+24
+    string s;
+25
+    cin >> s;
+26
+    int n = s.length(), totalOnes = 0, maxConsecutiveOnes = 0, currentConsecutiveOnes = 0;
+27
+28
+    for (char c : s) {
+29
+        if (c == '1') {
+30
+            currentConsecutiveOnes++;
+31
+            maxConsecutiveOnes = max(maxConsecutiveOnes, currentConsecutiveOnes);
+32
+            totalOnes++;
+33
+        } else {
+34
+            currentConsecutiveOnes = 0;
+35
+        }
+36
+    }
+37
+38
+    if (totalOnes == 0 || maxConsecutiveOnes == totalOnes) {
+39
+        cout << 0 << endl;
+40
+        return;
+41
+    }
+42
+43
+    int totalZeros = n - totalOnes, low = 0, high = max(totalOnes, totalZeros), answer = high;
+44
+45
+    while (low <= high) {
+46
+        int mid = (low + high) / 2, requiredOnes = max(0, totalOnes - mid);
+47
+48
+        if (requiredOnes == 0) {
+49
+            answer = mid;
+50
+            high = mid - 1;
+51
+            continue;
+52
+        }
+53
+54
+        if (maxOnesWithAtMostKZeros(s, mid) >= requiredOnes) {
+55
+            answer = mid;
+56
+            high = mid - 1;
+57
+        } else {
+58
+            low = mid + 1;
+59
+        }
+60
+    }
+61
+62
+    cout << answer << endl;
+63
+}
+64
+65
+int main() {
+66
+    int t;
+67
+    cin >> t;
+68
+    while (t--) solve();
+69
+    return 0;
+70
+}
+71",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054886
+1390054887,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class Main {
+4
+    public static void main(String[] args) {
+5
+        Scanner sc = new Scanner(System.in);
+6
+        int T = sc.nextInt();
+7
+        while (T-- > 0) {
+8
+            int n = sc.nextInt();
+9
+            int k = sc.nextInt();
+10
+            int[] a = new int[n];
+11
+            long sum_a = 0;
+12
+            for (int i = 0; i < n; i++) {
+13
+                a[i] = sc.nextInt();
+14
+                sum_a += a[i];
+15
+            }
+16
+            List<Long> values = new ArrayList<>();
+17
+            for (int i = 0; i < n; i++) {
+18
+                long val = a[i] - (n - i - 1L);
+19
+                values.add(val);
+20
+            }
+21
+            values.sort((x, y) -> Long.compare(y, x));
+22
+            long[] prefixSum = new long[n + 1];
+23
+            prefixSum[0] = 0;
+24
+            for (int i = 1; i <= n; i++) {
+25
+                prefixSum[i] = prefixSum[i - 1] + values.get(i - 1);
+26
+            }
+27
+            int max_m = Math.min(k, n);
+28
+            long maxTotal = Long.MIN_VALUE;
+29
+            for (int m = 0; m <= max_m; m++) {
+30
+                long current = prefixSum[m] + ((long) m * (m - 1)) / 2;
+31
+                if (current > maxTotal) {
+32
+                    maxTotal = current;
+33
+                }
+34
+            }
+35
+            long minEffort = sum_a - maxTotal;
+36
+            System.out.println(minEffort);
+37
+        }
+38
+        sc.close();
+39
+    }
+40
+}",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054887
+1390054888,unknown,unknown,unknown,"1
+def calculate_min_effort(num_firewalls, max_skips, firewall_strengths):
+2
+    if max_skips >= num_firewalls:
+3
+        return 0
+4
+5
+    skip_impacts = []
+6
+    for i in range(num_firewalls):
+7
+        skip_impact = firewall_strengths[i] - (num_firewalls - i - 1)
+8
+        skip_impacts.append((skip_impact, i))
+9
+10
+    skip_impacts.sort(reverse=True)
+11
+    firewalls_to_skip = set(skip_impacts[i][1] for i in range(max_skips))
+12
+13
+    total_effort = 0
+14
+    penalty = 0
+15
+16
+    for i in range(num_firewalls):
+17
+        if i in firewalls_to_skip:
+18
+            penalty += 1
+19
+        else:
+20
+            total_effort += firewall_strengths[i] + penalty
+21
+22
+    return total_effort
+23
+24
+def process_test_cases():
+25
+    num_test_cases = int(input())
+26
+    results = []
+27
+28
+    for _ in range(num_test_cases):
+29
+        num_firewalls, max_skips = map(int, input().split())
+30
+        firewall_strengths = list(map(int, input().split()))
+31
+        results.append(calculate_min_effort(num_firewalls, max_skips, firewall_strengths))
+32
+33
+    return results
+34
+35
+def main():
+36
+    results = process_test_cases()
+37
+    for result in results:
+38
+        print(result)
+39
+40
+if __name__ == ""__main__"":
+41
+    main()",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054888
+1390054878,unknown,unknown,unknown,"1
+def min_decommissioning_cost(servers):
+2
+3
+    n = len(servers)
+4
+5
+    6
+7
+    # Create prefix sums for 1's to optimize counting
+8
+9
+    prefix_ones = [0] * (n + 1)
+10
+11
+    for i in range(n):
+12
+13
+        prefix_ones[i + 1] = prefix_ones[i] + (1 if servers[i] == '1' else 0)
+14
+15
+    16
+17
+    # Create prefix sums for 0's
+18
+19
+    prefix_zeros = [0] * (n + 1)
+20
+21
+    for i in range(n):
+22
+23
+        prefix_zeros[i + 1] = prefix_zeros[i] + (1 if servers[i] == '0' else 0)
+24
+25
+    26
+27
+    min_cost = float('inf')
+28
+29
+    30
+31
+    # Try all possible substrings (start, end)
+32
+33
+    for start in range(n + 1):
+34
+35
+        for end in range(start, n + 1):
+36
+37
+            # Active servers removed = ones before start + ones after end
+38
+39
+            active_removed = prefix_ones[start] + (prefix_ones[n] - prefix_ones[end])
+40
+41
+            # Idle servers remaining = zeros between start and end
+42
+43
+            idle_remaining = prefix_zeros[end] - prefix_zeros[start]
+44
+45
+            46
+47
+            cost = max(idle_remaining, active_removed)
+48
+49
+            min_cost = min(min_cost, cost)
+50
+51
+    52
+53
+    return min_cost
+54
+55
+# Process test cases
+56
+57
+t = int(input())
+58
+59
+for _ in range(t):
+60
+61
+    servers = input().strip()
+62
+63
+    print(min_decommissioning_cost(servers))",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054878
+1390054883,unknown,unknown,unknown,"1
+def min_effort_to_breach(arr, k):
+2
+    n = len(arr)
+3
+    4
+    5
+    if k >= n:
+6
+        return 0
+7
+    8
+    9
+    min_effort = float('inf')
+10
+    11
+12
+    13
+    14
+    effective_costs = []
+15
+    for i in range(n):
+16
+       17
+        skip_penalty = n - i - 1
+18
+        19
+       20
+        effective_cost = arr[i] - skip_penalty
+21
+        22
+        effective_costs.append((effective_cost, i))
+23
+    24
+25
+    effective_costs.sort(reverse=True)
+26
+    27
+   28
+    skipped = [False] * n
+29
+    skips_used = 0
+30
+    31
+    for cost, idx in effective_costs:
+32
+        if skips_used < k and cost > 0:
+33
+            skipped[idx] = True
+34
+            skips_used += 1
+35
+    36
+    37
+    total_effort = 0
+38
+    penalty = 0
+39
+    40
+    for i in range(n):
+41
+        if skipped[i]:
+42
+            penalty += 1
+43
+        else:
+44
+            total_effort += arr[i] + penalty
+45
+    46
+    return total_effort
+47
+48
+def solve_test_cases():
+49
+    t = int(input())  
+50
+    results = []
+51
+    52
+    for _ in range(t):
+53
+        n, k = map(int, input().split())
+54
+        arr = list(map(int, input().split()))
+55
+        56
+        result = min_effort_to_breach(arr, k)
+57
+        results.append(result)
+58
+    59
+   60
+    for result in results:
+61
+        print(result)
+62
+63
+64
+if __name__ == ""__main__"":
+65
+    solve_test_cases()",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054883
+1390054881,unknown,unknown,unknown,"1
+import java.util.Scanner;
+2
+3
+public class Main {
+4
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int T = sc.nextInt();
+8
+        sc.nextLine(); 
+9
+        while (T-- > 0) {
+10
+            String s = sc.nextLine().trim();
+11
+            int n = s.length();
+12
+            int totalOnes = 0;
+13
+            int maxConsecutiveOnes = 0;
+14
+            int currentConsecutiveOnes = 0;
+15
+            16
+           17
+            for (char c : s.toCharArray()) {
+18
+                if (c == '1') {
+19
+                    currentConsecutiveOnes++;
+20
+                    maxConsecutiveOnes = Math.max(maxConsecutiveOnes, currentConsecutiveOnes);
+21
+                    totalOnes++;
+22
+                } else {
+23
+                    currentConsecutiveOnes = 0;
+24
+                }
+25
+            }
+26
+            27
+            28
+            if (totalOnes == 0) {
+29
+                System.out.println(0);
+30
+                continue;
+31
+            }
+32
+            if (maxConsecutiveOnes == totalOnes) {
+33
+                System.out.println(0);
+34
+                continue;
+35
+            }
+36
+            37
+            int totalZeros = n - totalOnes;
+38
+            int low = 0;
+39
+            int high = Math.max(totalOnes, totalZeros);
+40
+            int answer = high;
+41
+         42
+            while (low <= high) {
+43
+                int mid = (low + high) / 2;
+44
+                int requiredOnes = Math.max(0, totalOnes - mid);
+45
+                46
+                if (requiredOnes == 0) {
+47
+                    answer = mid;
+48
+                    high = mid - 1;
+49
+                    continue;
+50
+                }
+51
+                52
+                int maxOnes = maxOnesWithAtMostKZeros(s, mid);
+53
+                if (maxOnes >= requiredOnes) {
+54
+                    answer = mid;
+55
+                    high = mid - 1;
+56
+                } else {
+57
+                    low = mid + 1;
+58
+                }
+59
+            }
+60
+            61
+            System.out.println(answer);
+62
+        }
+63
+        sc.close();
+64
+    }
+65
+    66
+    67
+    private static int maxOnesWithAtMostKZeros(String s, int k) {
+68
+        int left = 0;
+69
+        int zeros = 0;
+70
+        int maxOnes = 0;
+71
+        int n = s.length();
+72
+        73
+        for (int right = 0; right < n; right++) {
+74
+            if (s.charAt(right) == '0') {
+75
+                zeros++;
+76
+            }
+77
+            78
+            while (zeros > k) {
+79
+                if (s.charAt(left) == '0') {
+80
+                    zeros--;
+81
+                }
+82
+                left++;
+83
+            }
+84
+            85
+            int currentOnes = (right - left + 1) - zeros;
+86
+            maxOnes = Math.max(maxOnes, currentOnes);
+87
+        }
+88
+        89
+        return maxOnes;
+90
+    }
+91
+}",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054881
+1390054874,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+3
+    """"""
+4
+5
+    Calculate the minimum effort needed to breach the network.
+6
+7
+    8
+9
+    Args:
+10
+11
+        n (int): Number of firewalls
+12
+13
+        k (int): Maximum number of firewalls that can be skipped
+14
+15
+        strengths (list): List of firewall strengths
+16
+17
+    18
+19
+    Returns:
+20
+21
+        int: Minimum effort required
+22
+23
+    """"""
+24
+25
+    # Edge case: if we can skip all firewalls
+26
+27
+    if k >= n:
+28
+29
+        return 0
+30
+31
+        32
+33
+    # We need to find the optimal firewalls to skip
+34
+35
+    # This is a combinatorial problem
+36
+37
+    38
+39
+    # First, let's calculate the impact of skipping each firewall
+40
+41
+    # Impact = firewall's strength - penalty to subsequent firewalls
+42
+43
+    impacts = []
+44
+45
+    46
+47
+    for i in range(n):
+48
+49
+        # If we skip this firewall, we save its strength
+50
+51
+        # But we impose a penalty of +1 on (n-i-1) remaining firewalls
+52
+53
+        impact = strengths[i] - (n - i - 1)
+54
+55
+        impacts.append((impact, i))
+56
+57
+    58
+59
+    # Sort by impact in descending order
+60
+61
+    impacts.sort(reverse=True)
+62
+63
+    64
+65
+    # Select the k firewalls with the highest impact to skip
+66
+67
+    to_skip = set(impacts[i][1] for i in range(k))
+68
+69
+    70
+71
+    # Calculate the total effort
+72
+73
+    total_effort = 0
+74
+75
+    penalty = 0
+76
+77
+    78
+79
+    for i in range(n):
+80
+81
+        if i in to_skip:
+82
+83
+            # Skip this firewall
+84
+85
+            penalty += 1
+86
+87
+        else:
+88
+89
+            # Breach this firewall (with penalty applied)
+90
+91
+            total_effort += strengths[i] + penalty
+92
+93
+    94
+95
+    return total_effort
+96
+97
+def solve_test_cases():
+98
+99
+    """"""
+100
+101
+    Process all test cases and return the minimum effort for each.
+102
+103
+    """"""
+104
+105
+    t = int(input())  # Number of test cases
+106
+107
+    results = []
+108
+109
+    110
+111
+    for _ in range(t):
+112
+113
+        n, k = map(int, input().split())
+114
+115
+        strengths = list(map(int, input().split()))
+116
+117
+        results.append(min_effort_to_breach(n, k, strengths))
+118
+119
+    120
+121
+    return results
+122
+123
+# Main function to run the solution
+124
+125
+def main():
+126
+127
+    results = solve_test_cases()
+128
+129
+    130
+131
+    # Print the results
+132
+133
+    for result in results:
+134
+135
+        print(result)
+136
+137
+if __name__ == ""__main__"":
+138
+139
+    main()",61,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054874

@@ -1,0 +1,674 @@
+submission_id,username,problem_name,language,code,page,url
+1390054502,unknown,unknown,unknown,"1
+def min_cost(s):
+2
+    n = len(s)
+3
+    zeros = s.count('0')
+4
+    ones = n - zeros
+5
+6
+    min_cost = float('inf')
+7
+    for i in range(n + 1):
+8
+        for j in range(n + 1):
+9
+            if i + j > n:
+10
+                break
+11
+            remaining_zeros = zeros - (s[:i].count('0') + s[n - j:].count('0'))
+12
+            decommissioned_ones = ones - s[i:n - j].count('1')
+13
+            cost = max(remaining_zeros, decommissioned_ones)
+14
+            min_cost = min(min_cost, cost)
+15
+16
+    return min_cost
+17
+18
+T = int(input())
+19
+for _ in range(T):
+20
+    s = input()
+21
+    print(min_cost(s))
+22",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054502
+1390054503,unknown,unknown,unknown,"1
+def solve():
+2
+    n, k = map(int, input().split())
+3
+    a = list(map(int, input().split()))
+4
+5
+    INF = float('inf')
+6
+7
+    prev = [INF] * (k + 1)
+8
+    prev[0] = 0
+9
+10
+    for i in range(n):
+11
+        curr = [INF] * (k + 1)
+12
+        for s in range(k + 1):
+13
+            # Don't skip i
+14
+            curr[s] = prev[s] + a[i] + s
+15
+            # Skip i (if possible)
+16
+            if s > 0:
+17
+                curr[s] = min(curr[s], prev[s - 1])
+18
+        prev = curr
+19
+20
+    ans = min(prev)
+21
+    print(ans)
+22
+23
+if __name__ == ""__main__"":
+24
+    T = int(input())
+25
+    for _ in range(T):
+26
+        solve()",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054503
+1390054505,unknown,unknown,unknown,"1
+import sys
+2
+3
+def min_decommission_cost(server_string):
+4
+    n = len(server_string)
+5
+    total_ones = server_string.count('1')
+6
+7
+    # Edge cases: If all are '0's or all are '1's
+8
+    if total_ones == 0 or total_ones == n:
+9
+        return 0
+10
+11
+    min_cost = float('inf')
+12
+    ones_in_window = 0
+13
+14
+    # Sliding window approach
+15
+    left = 0
+16
+    for right in range(n):
+17
+        if server_string[right] == '1':
+18
+            ones_in_window += 1
+19
+20
+        # Maintain window size <= n-1
+21
+        if right - left + 1 > n - 1:
+22
+            if server_string[left] == '1':
+23
+                ones_in_window -= 1
+24
+            left += 1
+25
+26
+        if right - left + 1 == n - 1:
+27
+            zeros_in_window = (right - left + 1) - ones_in_window
+28
+            ones_removed = total_ones - ones_in_window
+29
+            cost = max(zeros_in_window, ones_removed)
+30
+            min_cost = min(min_cost, cost)
+31
+32
+    return min_cost
+33
+34
+def solve():
+35
+    t = int(sys.stdin.readline().strip())  # Fast input reading
+36
+    results = []
+37
+    38
+    for _ in range(t):
+39
+        server_string = sys.stdin.readline().strip()
+40
+        results.append(str(min_decommission_cost(server_string)))
+41
+42
+    sys.stdout.write(""\n"".join(results) + ""\n"")  # Fast output
+43
+44
+# Run the function
+45
+solve()
+46",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054505
+1390054493,unknown,unknown,unknown,"1
+import sys
+2
+3
+def main():
+4
+    T = int(sys.stdin.readline().strip())
+5
+    for _ in range(T):
+6
+        n, k = map(int, sys.stdin.readline().split())
+7
+        a = list(map(int, sys.stdin.readline().split()))
+8
+        9
+        sum_a = sum(a)
+10
+        values = [a[i] - (n - i - 1) for i in range(n)]
+11
+        values.sort(reverse=True)
+12
+        prefix_sum = [0] * (n + 1)
+13
+        for i in range(1, n + 1):
+14
+            prefix_sum[i] = prefix_sum[i - 1] + values[i - 1]
+15
+        max_m = min(k, n)
+16
+        max_total = float('-inf')
+17
+        for m in range(max_m + 1):
+18
+            current = prefix_sum[m] + (m * (m - 1)) // 2
+19
+            max_total = max(max_total, current)
+20
+        min_effort = sum_a - max_total
+21
+        print(min_effort)
+22
+23
+if __name__ == ""__main__"":
+24
+    main()",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054493
+1390054496,unknown,unknown,unknown,"1
+def earliest_fault(arr, k):
+2
+    results = []
+3
+    4
+    # Loop through each possible batch
+5
+    for i in range(len(arr) - k + 1):
+6
+        fault_found = False
+7
+        8
+        # Find earliest fault in current batch
+9
+        for j in range(i, i + k):
+10
+            if arr[j] < 0:
+11
+                results.append(arr[j])
+12
+                fault_found = True
+13
+                break
+14
+                15
+        # If no fault found in batch, append 0
+16
+        if not fault_found:
+17
+            results.append(0)
+18
+    19
+    return results
+20
+21
+# Process test cases
+22
+t = int(input())
+23
+for _ in range(t):
+24
+    n, k = map(int, input().split())
+25
+    arr = list(map(int, input().split()))
+26
+    27
+    result = earliest_fault(arr, k)
+28
+    print(*result)",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390054496
+1390054499,unknown,unknown,unknown,"1
+def min_effort_to_breach(firewalls, k):
+2
+    n = len(firewalls)
+3
+    4
+    if k >= n:
+5
+        return 0
+6
+    7
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+8
+    dp[0][0] = 0
+9
+    10
+    for i in range(1, n + 1):
+11
+        fw = firewalls[i - 1]
+12
+        13
+        for j in range(k + 1):
+14
+            if j <= i - 1:
+15
+                dp[i][j] = min(dp[i][j], dp[i-1][j] + fw + j)
+16
+            17
+            if j > 0:
+18
+                dp[i][j] = min(dp[i][j], dp[i-1][j-1])
+19
+    20
+    return min(dp[n])
+21
+22
+import sys
+23
+input = sys.stdin.readline
+24
+25
+t = int(input())
+26
+for _ in range(t):
+27
+    n, k = map(int, input().split())
+28
+    firewalls = list(map(int, input().split()))
+29
+    print(min_effort_to_breach(firewalls, k))",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054499
+1390054489,unknown,unknown,unknown,"1
+def minimize_effort(T, test_cases):
+2
+    results = []
+3
+    for t in range(T):
+4
+        n, k = test_cases[t][0]
+5
+        firewalls = test_cases[t][1]
+6
+        7
+        # Sort firewalls in increasing order
+8
+        firewalls.sort()
+9
+        10
+        # Skip up to k weakest firewalls
+11
+        skipped_strength = sum(firewalls[:k]) if k > 0 else 0
+12
+        13
+        # Total effort is sum of all strengths minus skipped strengths
+14
+        total_effort = sum(firewalls) - skipped_strength
+15
+        results.append(total_effort)
+16
+    17
+    return results
+18
+19
+# Sample Input
+20
+T = 2
+21
+test_cases = [
+22
+    ((4, 1), [5, 10, 11, 5]),  # Test case 1
+23
+    ((4, 4), [8, 7, 1, 4])     # Test case 2
+24
+]
+25
+26
+# Running the Code
+27
+results = minimize_effort(T, test_cases)
+28
+29
+# Output the results
+30
+for res in results:
+31
+    print(res)
+32",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054489
+1390054491,unknown,unknown,unknown,"1
+def min_decommission_cost(server_rack):
+2
+    total_active = server_rack.count('1')
+3
+    total_idle = server_rack.count('0')
+4
+5
+    min_cost = min(total_active, total_idle)  # Worst case: remove all active or all idle
+6
+7
+    left, right = 0, len(server_rack) - 1
+8
+    removed_active = 0
+9
+    removed_idle = 0
+10
+11
+    # Try decommissioning from both ends
+12
+    while left <= right:
+13
+        if server_rack[left] == '0':
+14
+            removed_idle += 1
+15
+            left += 1
+16
+        elif server_rack[right] == '0':
+17
+            removed_idle += 1
+18
+            right -= 1
+19
+        elif server_rack[left] == '1':
+20
+            removed_active += 1
+21
+            left += 1
+22
+        elif server_rack[right] == '1':
+23
+            removed_active += 1
+24
+            right -= 1
+25
+        26
+        remaining_idle = total_idle - removed_idle
+27
+        min_cost = min(min_cost, max(remaining_idle, removed_active))
+28
+29
+    return min_cost
+30
+31
+32
+# Read input
+33
+T = int(input())  # Number of test cases
+34
+results = []
+35
+36
+for _ in range(T):
+37
+    server_rack = input().strip()
+38
+    results.append(min_decommission_cost(server_rack))
+39
+40
+# Print results
+41
+for res in results:
+42
+    print(res)",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054491
+1390054492,unknown,unknown,unknown,"1
+def max_ones_with_at_most_k_zeros(s, k):
+2
+3
+    left = 0
+4
+5
+    zeros = 0
+6
+7
+    max_ones = 0
+8
+9
+    n = len(s)
+10
+11
+    for right in range(n):
+12
+13
+        if s[right] == '0':
+14
+15
+            zeros += 1
+16
+17
+        while zeros > k:
+18
+19
+            if s[left] == '0':
+20
+21
+                zeros -= 1
+22
+23
+            left += 1
+24
+25
+        current_ones = (right - left + 1) - zeros
+26
+27
+        max_ones = max(max_ones, current_ones)
+28
+29
+    30
+31
+    return max_ones
+32
+33
+def main():
+34
+35
+    T = int(input())
+36
+37
+    for _ in range(T):
+38
+39
+        s = input().strip()
+40
+41
+        n = len(s)
+42
+43
+        total_ones = s.count('1')
+44
+45
+        # Calculate max consecutive ones
+46
+47
+        max_consecutive_ones = 0
+48
+49
+        current = 0
+50
+51
+        for c in s:
+52
+53
+            if c == '1':
+54
+55
+                current += 1
+56
+57
+                max_consecutive_ones = max(max_consecutive_ones, current)
+58
+59
+            else:
+60
+61
+                current = 0
+62
+63
+        if total_ones == 0 or total_ones == max_consecutive_ones:
+64
+65
+            print(0)
+66
+67
+            continue
+68
+69
+        total_zeros = n - total_ones
+70
+71
+        low, high = 0, max(total_ones, total_zeros)
+72
+73
+        answer = high
+74
+75
+        while low <= high:
+76
+77
+            mid = (low + high) // 2
+78
+79
+            required_ones = max(0, total_ones - mid)
+80
+81
+            if required_ones == 0:
+82
+83
+                answer = mid
+84
+85
+                high = mid - 1
+86
+87
+                continue
+88
+89
+            max_ones = max_ones_with_at_most_k_zeros(s, mid)
+90
+91
+            if max_ones >= required_ones:
+92
+93
+                answer = mid
+94
+95
+                high = mid - 1
+96
+97
+            else:
+98
+99
+                low = mid + 1
+100
+101
+        print(answer)
+102
+103
+if __name__ == ""__main__"":
+104
+105
+    main()",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054492
+1390054488,unknown,unknown,unknown,"1
+import sys  
+2
+from itertools import accumulate  
+3
+4
+def min_effort(arr, k):  
+5
+    n = len(arr)  
+6
+    T = sum(arr)  
+7
+    A = [arr[i] + (i + 1) for i in range(n)]  
+8
+    A.sort(reverse=True)  
+9
+    P = [0] + list(accumulate(A))  
+10
+    m_max = min(k, n)  
+11
+    best = float('inf')  
+12
+    13
+    for m in range(m_max + 1):  
+14
+        cost = T + m * n - (m * m - m) // 2 - P[m]  
+15
+        if cost < best:  
+16
+            best = cost  
+17
+            18
+    return best  
+19
+20
+def solve():  
+21
+    data = sys.stdin.read().strip().split()  
+22
+    if not data:  
+23
+        return  
+24
+    t = int(data[0])  
+25
+    index = 1  
+26
+    res = []  
+27
+    28
+    for _ in range(t):  
+29
+        n = int(data[index])  
+30
+        index += 1  
+31
+        k = int(data[index])  
+32
+        index += 1  
+33
+        arr = list(map(int, data[index:index + n]))  
+34
+        index += n  
+35
+        res.append(str(min_effort(arr, k)))  
+36
+        37
+    sys.stdout.write(""\n"".join(res) +  
+38
+39
+if __name__ == 
+40
+    solve()  ",79,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054488

@@ -1,0 +1,718 @@
+submission_id,username,problem_name,language,code,page,url
+1390054575,unknown,unknown,unknown,"1
+2
+import math
+3
+4
+def min_cost(s):
+5
+    n = len(s)
+6
+    zeros = s.count('0')
+7
+    ones = n - zeros
+8
+9
+    min_cost = math.inf
+10
+    for i in range(n + 1):
+11
+        for j in range(n + 1):
+12
+            if i + j > n:
+13
+                break
+14
+            remaining_zeros = zeros - (s[:i].count('0') + s[n - j:].count('0'))
+15
+            decommissioned_ones = ones - s[i:n - j].count('1')
+16
+            cost = max(remaining_zeros, decommissioned_ones)
+17
+            min_cost = min(min_cost, cost)
+18
+19
+    return min_cost
+20
+21
+T = int(input())
+22
+for _ in range(T):
+23
+    s = input()
+24
+    print(min_cost(s))
+25",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054575
+1390054577,unknown,unknown,unknown,"1
+def solve():
+2
+    n, k = map(int, input().split())
+3
+    a = list(map(int, input().split()))
+4
+5
+    INF = float('inf')
+6
+    dp = [INF] * (k + 1)
+7
+    dp[0] = 0
+8
+9
+    for i in range(n):
+10
+        new_dp = list(dp) # create a copy to avoid overwriting before needed.
+11
+        for s in range(k + 1):
+12
+            new_dp[s] = dp[s] + a[i] + s
+13
+            if s > 0:
+14
+                new_dp[s] = min(new_dp[s], dp[s - 1])
+15
+        dp = new_dp
+16
+17
+    ans = min(dp)
+18
+    print(ans)
+19
+20
+if __name__ == ""__main__"":
+21
+    T = int(input())
+22
+    for _ in range(T):
+23
+        solve()",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054577
+1390054579,unknown,unknown,unknown,"1
+def min_cost_server_pruning(server_rack):
+2
+    n = len(server_rack)
+3
+    min_cost = float('inf')
+4
+    5
+    for i in range(n + 1):
+6
+        for j in range(n + 1 - i):
+7
+            remaining = server_rack[i:n-j]
+8
+            idle_remaining = remaining.count('0')
+9
+            10
+            removed_start = server_rack[:i].count('1')
+11
+            removed_end = server_rack[n-j:].count('1')
+12
+            active_decommissioned = removed_start + removed_end
+13
+            14
+            cost = max(idle_remaining, active_decommissioned)
+15
+            min_cost = min(min_cost, cost)
+16
+    17
+    return min_cost
+18
+19
+t = int(input())
+20
+for _ in range(t):
+21
+    server_rack = input().strip()
+22
+    print(min_cost_server_pruning(server_rack))",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054579
+1390054570,unknown,unknown,unknown,"1
+def min_effort(n, k, firewalls):
+2
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+3
+    dp[0][0] = 0  
+4
+5
+    for i in range(1, n + 1):
+6
+        for j in range(k + 1):
+7
+            dp[i][j] = dp[i - 1][j] + firewalls[i - 1] + j
+8
+            if j > 0:
+9
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1])
+10
+11
+    return min(dp[n])
+12
+13
+T = int(input())  
+14
+for _ in range(T):
+15
+    n, k = map(int, input().split())  
+16
+    firewalls = list(map(int, input().split()))  
+17
+    print(min_effort(n, k, firewalls))
+18",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054570
+1390054571,unknown,unknown,unknown,"1
+def solve():
+2
+    s = input()
+3
+    n = len(s)
+4
+    min_cost = float('inf')
+5
+6
+    for i in range(n + 1):
+7
+        for j in range(n - i + 1):
+8
+            rem = s[i:n - j]
+9
+            idle = rem.count('0')
+10
+            active_rem = s[:i].count('1') + s[n - j:].count('1')
+11
+            min_cost = min(min_cost, max(idle, active_rem))
+12
+13
+    print(min_cost)
+14
+15
+t = int(input())
+16
+for _ in range(t):
+17
+    solve()",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054571
+1390054572,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int T = sc.nextInt(); 
+8
+        9
+        while(T-- > 0) {
+10
+            int n = sc.nextInt();
+11
+            int k = sc.nextInt();
+12
+            int[] a = new int[n];
+13
+            for (int i = 0; i < n; i++){
+14
+                a[i] = sc.nextInt();
+15
+            }
+16
+            17
+           18
+            if(k >= n) {
+19
+                System.out.println(0);
+20
+                continue;
+21
+            }
+22
+            23
+         24
+            long INF = Long.MAX_VALUE / 2;
+25
+            long[] dp = new long[k+1];
+26
+            Arrays.fill(dp, INF);
+27
+            dp[0] = 0;
+28
+            29
+            30
+            for (int i = 0; i < n; i++) {
+31
+                int lim = Math.min(i+1, k);
+32
+                long[] newdp = new long[k+1];
+33
+                Arrays.fill(newdp, INF);
+34
+                35
+               36
+                for (int j = lim; j >= 0; j--) {
+37
+                   38
+                    newdp[j] = Math.min(newdp[j], dp[j] + a[i] + j);
+39
+                    40
+                   41
+                    if(j < k) {
+42
+                        newdp[j+1] = Math.min(newdp[j+1], dp[j]);
+43
+                    }
+44
+                }
+45
+                dp = newdp;
+46
+            }
+47
+            48
+           49
+            long ans = INF;
+50
+            for (int j = 0; j <= k; j++) {
+51
+                ans = Math.min(ans, dp[j]);
+52
+            }
+53
+            System.out.println(ans);
+54
+        }
+55
+        sc.close();
+56
+    }
+57
+}
+58",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054572
+1390054557,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(test_cases):
+4
+    results = []
+5
+    6
+    for case in test_cases:
+7
+        n, k, arr = case
+8
+        output = []
+9
+        dq = deque()
+10
+        11
+        for i in range(n):
+12
+            if arr[i] < 0:
+13
+                dq.append(i)
+14
+            15
+            if i >= k - 1:
+16
+                while dq and dq[0] < i - k + 1:
+17
+                    dq.popleft()
+18
+                19
+                output.append(arr[dq[0]] if dq else 0)
+20
+        21
+        results.append("" "".join(map(str, output)))
+22
+    23
+    return results
+24
+25
+# Reading input
+26
+t = int(input().strip())
+27
+test_cases = []
+28
+29
+for _ in range(t):
+30
+    n, k = map(int, input().split())
+31
+    arr = list(map(int, input().split()))
+32
+    test_cases.append((n, k, arr))
+33
+34
+# Processing and printing output
+35
+for res in earliest_faulty_readings(test_cases):
+36
+    print(res)
+37",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390054557
+1390054563,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <string>
+4
+#include <climits>
+5
+6
+using namespace std;
+7
+8
+vector<int> min_decommissioning_cost(const vector<string>& test_cases) {
+9
+    vector<int> results;
+10
+    11
+    for (const string& servers : test_cases) {
+12
+        int n = servers.size();
+13
+        int total_0 = 0;
+14
+        for (char c : servers) {
+15
+            if (c == '0') total_0++;
+16
+        }
+17
+        int total_1 = n - total_0;
+18
+        19
+        // Precompute prefix counts for 0s and 1s
+20
+        vector<int> prefix_0(n + 1, 0), prefix_1(n + 1, 0);
+21
+        for (int i = 1; i <= n; ++i) {
+22
+            prefix_0[i] = prefix_0[i-1] + (servers[i-1] == '0');
+23
+            prefix_1[i] = prefix_1[i-1] + (servers[i-1] == '1');
+24
+        }
+25
+        26
+        // Precompute suffix counts for 0s and 1s
+27
+        vector<int> suffix_0(n + 1, 0), suffix_1(n + 1, 0);
+28
+        for (int j = 1; j <= n; ++j) {
+29
+            suffix_0[j] = suffix_0[j-1] + (servers[n - j] == '0');
+30
+            suffix_1[j] = suffix_1[j-1] + (servers[n - j] == '1');
+31
+        }
+32
+        33
+        int min_cost = INT_MAX;
+34
+        35
+        // Iterate over all possible prefixes (i)
+36
+        for (int i = 0; i <= n; ++i) {
+37
+            int j_max = n - i;
+38
+            int left = 0, right = j_max;
+39
+            int best_j = 0;
+40
+            int best_cost = INT_MAX;
+41
+            42
+            // Binary search for the best j
+43
+            while (left <= right) {
+44
+                int mid = (left + right) / 2;
+45
+                int remaining_0 = total_0 - (prefix_0[i] + suffix_0[mid]);
+46
+                int decommissioned_1 = prefix_1[i] + suffix_1[mid];
+47
+                int current_cost = max(remaining_0, decommissioned_1);
+48
+                49
+                if (current_cost < best_cost) {
+50
+                    best_cost = current_cost;
+51
+                    best_j = mid;
+52
+                } else if (current_cost == best_cost && mid < best_j) {
+53
+                    best_j = mid;
+54
+                }
+55
+                56
+                if (decommissioned_1 < remaining_0) {
+57
+                    left = mid + 1;
+58
+                } else {
+59
+                    right = mid - 1;
+60
+                }
+61
+            }
+62
+            63
+            // Check neighboring j values
+64
+            for (int dj : {-1, 0, 1}) {
+65
+                int j = best_j + dj;
+66
+                if (j >= 0 && j <= j_max) {
+67
+                    int remaining_0 = total_0 - (prefix_0[i] + suffix_0[j]);
+68
+                    int decommissioned_1 = prefix_1[i] + suffix_1[j];
+69
+                    int current_cost = max(remaining_0, decommissioned_1);
+70
+                    if (current_cost < best_cost) {
+71
+                        best_cost = current_cost;
+72
+                    }
+73
+                }
+74
+            }
+75
+            76
+            if (best_cost < min_cost) {
+77
+                min_cost = best_cost;
+78
+            }
+79
+        }
+80
+        81
+        results.push_back(min_cost);
+82
+    }
+83
+    84
+    return results;
+85
+}
+86
+87
+int main() {
+88
+    int T;
+89
+    cin >> T;
+90
+    vector<string> test_cases(T);
+91
+    for (int i = 0; i < T; ++i) {
+92
+        cin >> test_cases[i];
+93
+    }
+94
+    95
+    vector<int> results = min_decommissioning_cost(test_cases);
+96
+    97
+    for (int result : results) {
+98
+        cout << result << endl;
+99
+    }
+100
+    101
+    return 0;
+102
+}
+103",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054563
+1390054569,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class FirewallBreach {
+4
+    public static void main(String[] args) {
+5
+        Scanner scanner = new Scanner(System.in);
+6
+        int T = scanner.nextInt(); 
+7
+8
+        while (T-- > 0) {
+9
+            int n = scanner.nextInt(); 
+10
+            int k = scanner.nextInt(); 
+11
+12
+            long[] strengths = new long[n];
+13
+            for (int i = 0; i < n; i++) {
+14
+                strengths[i] = scanner.nextLong(); 
+15
+            }
+16
+17
+            System.out.println(minimumEffort(n, k, strengths));
+18
+        }
+19
+        scanner.close();
+20
+    }
+21
+22
+    private static long minimumEffort(int n, int k, long[] strengths) {
+23
+        long minEffort = Long.MAX_VALUE;
+24
+        long[] cumulative = new long[n + 1]; 
+25
+        for (int i = 0; i < n; i++) {
+26
+            cumulative[i + 1] = cumulative[i] + strengths[i];
+27
+        }
+28
+29
+        minEffort = cumulative[n];
+30
+31
+        for (int skip = 0; skip <= k; skip++) {
+32
+            for (int start = 0; start + skip <= n; start++) {
+33
+                long effort = 0;
+34
+                if (start > 0) {
+35
+                    effort += cumulative[start];
+36
+                }
+37
+                if (start + skip < n) {
+38
+39
+                    for (int j = start + skip; j < n; j++) {
+40
+                        effort += strengths[j] + (j - (start + skip));
+41
+                    }
+42
+                }
+43
+                minEffort = Math.min(minEffort, effort);
+44
+            }
+45
+        }
+46
+47
+        return minEffort;
+48
+    }
+49
+}",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054569
+1390054556,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class FaultyComponentDetector {
+4
+    public static void main(String[] args) {
+5
+        Scanner sc = new Scanner(System.in);
+6
+        int t = sc.nextInt(); // Number of test cases
+7
+8
+        while (t-- > 0) {
+9
+            int n = sc.nextInt(); // Size of the array
+10
+            int k = sc.nextInt(); // Batch size
+11
+            int[] arr = new int[n];
+12
+13
+            for (int i = 0; i < n; i++) {
+14
+                arr[i] = sc.nextInt();
+15
+            }
+16
+17
+            List<Integer> result = findEarliestFaults(arr, k);
+18
+            for (int num : result) {
+19
+                System.out.print(num + "" "");
+20
+            }
+21
+            System.out.println();
+22
+        }
+23
+24
+        sc.close();
+25
+    }
+26
+27
+    private static List<Integer> findEarliestFaults(int[] arr, int k) {
+28
+        List<Integer> result = new ArrayList<>();
+29
+        Deque<Integer> deque = new LinkedList<>();
+30
+31
+        for (int i = 0; i < arr.length; i++) {
+32
+            // Remove elements that are out of the current window
+33
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+34
+                deque.poll();
+35
+            }
+36
+37
+            // Add new negative number index to the deque
+38
+            if (arr[i] < 0) {
+39
+                deque.offer(i);
+40
+            }
+41
+42
+            // Start collecting results when we have a complete window
+43
+            if (i >= k - 1) {
+44
+                result.add(deque.isEmpty() ? 0 : arr[deque.peek()]);
+45
+            }
+46
+        }
+47
+48
+        return result;
+49
+    }
+50
+}",76,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390054556

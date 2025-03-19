@@ -1,0 +1,29 @@
+[2025-03-17 03:25:48] 
+==== Processing Page 1/190 ====
+[2025-03-17 03:25:59] Error processing page 1: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=134.0.6998.89)
+Stacktrace:
+	GetHandleVerifier [0x00007FF6E39DFE45+26629]
+	(No symbol) [0x00007FF6E3946010]
+	(No symbol) [0x00007FF6E37D931A]
+	(No symbol) [0x00007FF6E37C4F65]
+	(No symbol) [0x00007FF6E37E9E04]
+	(No symbol) [0x00007FF6E385F85F]
+	(No symbol) [0x00007FF6E387FA55]
+	(No symbol) [0x00007FF6E3857883]
+	(No symbol) [0x00007FF6E3820550]
+	(No symbol) [0x00007FF6E3821803]
+	GetHandleVerifier [0x00007FF6E3D372BD+3529853]
+	GetHandleVerifier [0x00007FF6E3D4DA22+3621858]
+	GetHandleVerifier [0x00007FF6E3D424D3+3575443]
+	GetHandleVerifier [0x00007FF6E3AAB77A+860474]
+	(No symbol) [0x00007FF6E395088F]
+	(No symbol) [0x00007FF6E394CBC4]
+	(No symbol) [0x00007FF6E394CD66]
+	(No symbol) [0x00007FF6E393C2C9]
+	BaseThreadInitThunk [0x00007FF8C19EE8D7+23]
+	RtlUserThreadStart [0x00007FF8C2B1BF6C+44]
+
+[2025-03-17 03:25:59] Could not recover. Stopping scraper.
+[2025-03-17 03:25:59] Scraping complete! Total submissions scraped: 0

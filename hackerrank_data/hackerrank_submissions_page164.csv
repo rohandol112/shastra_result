@@ -1,0 +1,677 @@
+submission_id,username,problem_name,language,code,page,url
+1390052852,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_reading(arr, k):
+4
+    n = len(arr)
+5
+    result = []
+6
+    dq = deque()  
+7
+8
+    for i in range(n):
+9
+        10
+        if dq and dq[0] < i - k + 1:
+11
+            dq.popleft()
+12
+13
+        if arr[i] < 0:
+14
+            dq.append(i)
+15
+16
+        if i >= k - 1:
+17
+            if dq:
+18
+                result.append(arr[dq[0]])  
+19
+            else:
+20
+                result.append(0)  
+21
+22
+    return result
+23
+24
+def process_test_cases():
+25
+    t = int(input())  # number of test cases
+26
+    for _ in range(t):
+27
+        n, k = map(int, input().split())  
+28
+        arr = list(map(int, input().split()))  
+29
+        result = earliest_faulty_reading(arr, k)
+30
+        print(' '.join(map(str, result)))
+31
+32
+process_test_cases()",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052852
+1390052854,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc=new Scanner(System.in);
+7
+        int T=sc.nextInt();
+8
+        while(T-- > 0) {
+9
+            int n=sc.nextInt(),k=sc.nextInt();
+10
+            int[] a=new int[n];
+11
+            for(int i=0;i<n;i++) a[i]=sc.nextInt();
+12
+13
+            List<Integer> idx=new ArrayList<>();
+14
+            for(int i=0;i<n;i++) idx.add(i);
+15
+            idx.sort((x,y)->Integer.compare(a[y],a[x]));
+16
+17
+            Set<Integer> skip=new HashSet<>();
+18
+            for(int i=0;i<k;i++) skip.add(idx.get(i));
+19
+20
+            long effort=0;
+21
+            int skips=0;
+22
+            for(int i=0;i<n;i++) {
+23
+                if(skip.contains(i)) skips++;
+24
+                else effort+=a[i]+skips;
+25
+            }
+26
+            System.out.println(effort);
+27
+        }
+28
+        sc.close();
+29
+    }
+30
+}
+31",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390052854
+1390052856,unknown,unknown,unknown,"1
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+2
+from collections import deque
+3
+4
+def earliest_faulty_readings(arr, k):
+5
+    result = []
+6
+    dq = deque()
+7
+    8
+    # Process the first window of size k
+9
+    for i in range(k):
+10
+        if arr[i] < 0:
+11
+            dq.append(i)
+12
+    13
+    # Store the first result
+14
+    result.append(arr[dq[0]] if dq else 0)
+15
+    16
+    # Process the remaining windows
+17
+    for i in range(k, len(arr)):
+18
+        # Remove elements that are out of the current window
+19
+        if dq and dq[0] < i - k + 1:
+20
+            dq.popleft()
+21
+        22
+        # Add the new element if it is negative
+23
+        if arr[i] < 0:
+24
+            dq.append(i)
+25
+        26
+        # Store the result for the current window
+27
+        result.append(arr[dq[0]] if dq else 0)
+28
+    29
+    return result
+30
+31
+def main():
+32
+    t = int(input().strip())  # Number of test cases
+33
+    for _ in range(t):
+34
+        n, k = map(int, input().split())  # Read n and k
+35
+        arr = list(map(int, input().split()))  # Read array elements
+36
+        37
+        # Get the earliest faulty readings
+38
+        output = earliest_faulty_readings(arr, k)
+39
+        40
+        # Print result as space-separated values
+41
+        print("" "".join(map(str, output)))
+42
+43
+if __name__ == ""__main__"":
+44
+    main()
+45",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052856
+1390052842,unknown,unknown,unknown,"1
+from collections import deque
+2
+import sys
+3
+4
+def find_earliest_faults(n, k, arr):
+5
+    result = []
+6
+    dq = deque()
+7
+8
+    # Process the first window
+9
+    for i in range(k):
+10
+        if arr[i] < 0:
+11
+            dq.append(i)
+12
+13
+    # Iterate through all possible windows
+14
+    for i in range(n - k + 1):
+15
+        # Get the earliest faulty reading in the window
+16
+        result.append(arr[dq[0]] if dq else 0)
+17
+18
+        # Remove elements that are out of the current window
+19
+        if dq and dq[0] == i:
+20
+            dq.popleft()
+21
+22
+        # Add the next element from the upcoming window
+23
+        if i + k < n and arr[i + k] < 0:
+24
+            dq.append(i + k)
+25
+26
+    return result
+27
+28
+# Read input
+29
+t = int(sys.stdin.readline())  # Number of test cases
+30
+output = []
+31
+32
+for _ in range(t):
+33
+    n, k = map(int, sys.stdin.readline().split())
+34
+    arr = map(int, sys.stdin.readline().split())
+35
+    output.append("" "".join(map(str, find_earliest_faults(n, k, arr))))
+36
+37
+# Print the final output
+38
+sys.stdout.write(""\n"".join(output) + ""\n"")
+39",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052842
+1390052845,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+using namespace std;
+4
+5
+int main() {
+6
+    int t; 
+7
+    cin >> t;
+8
+    while(t--){
+9
+        int n, k;
+10
+        cin >> n >> k;
+11
+        vector<int> arr(n);
+12
+        for (int i = 0; i < n; i++){
+13
+            cin >> arr[i];
+14
+        }
+15
+        16
+        if(n < k) {
+17
+            cout << -1 << endl;
+18
+            continue;
+19
+        }
+20
+        21
+        vector<int> ans;
+22
+        int negIndex = 0;
+23
+        for (int i = 0; i <= n - k; i++){
+24
+            if(negIndex < i) 
+25
+                negIndex = i;
+26
+            27
+            while(negIndex < i + k && arr[negIndex] >= 0)
+28
+                negIndex++;
+29
+            30
+            if(negIndex < i + k) 
+31
+                ans.push_back(arr[negIndex]);
+32
+            else 
+33
+                ans.push_back(0);
+34
+        }
+35
+        36
+        for (int num : ans)
+37
+            cout << num << "" "";
+38
+        cout << endl;
+39
+    }
+40
+    return 0;
+41
+}
+42",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052845
+1390052850,unknown,unknown,unknown,"1
+def min_decommission_cost(server_string):
+2
+    n = len(server_string)
+3
+    4
+    # Try all possible combinations of removing servers from beginning and end
+5
+    min_cost = float('inf')
+6
+    7
+    # Convert to list of integers for easier processing
+8
+    servers = [int(c) for c in server_string]
+9
+    10
+    # Precompute prefix and suffix sums for ones
+11
+    prefix_ones = [0] * (n + 1)
+12
+    for i in range(n):
+13
+        prefix_ones[i+1] = prefix_ones[i] + servers[i]
+14
+    15
+    # Total ones in the string
+16
+    total_ones = prefix_ones[n]
+17
+    18
+    for i in range(n + 1):  # i servers removed from beginning
+19
+        for j in range(n + 1 - i):  # j servers removed from end
+20
+            if i + j == n:  # Skip if removing all servers
+21
+                continue
+22
+                23
+            # Calculate ones removed from beginning and end
+24
+            ones_removed_left = prefix_ones[i]
+25
+            ones_removed_right = total_ones - prefix_ones[n-j]
+26
+            total_ones_removed = ones_removed_left + ones_removed_right
+27
+            28
+            # Calculate zeros remaining in the middle portion
+29
+            middle_length = n - i - j
+30
+            middle_ones = prefix_ones[n-j] - prefix_ones[i]
+31
+            middle_zeros = middle_length - middle_ones
+32
+            33
+            # Calculate cost
+34
+            cost = max(middle_zeros, total_ones_removed)
+35
+            min_cost = min(min_cost, cost)
+36
+    37
+    return min_cost
+38
+39
+def solve():
+40
+    t = int(input())
+41
+    42
+    for _ in range(t):
+43
+        server_string = input().strip()
+44
+        result = min_decommission_cost(server_string)
+45
+        print(result)
+46
+47
+# Execute the solution
+48
+solve()",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390052850
+1390052838,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(arr, k):
+4
+    n = len(arr)
+5
+    result = []
+6
+    dq = deque()  # To store indices of negative numbers
+7
+    8
+    # Process the first window
+9
+    for i in range(k):
+10
+        if arr[i] < 0:
+11
+            dq.append(i)
+12
+    13
+    # Store the result for the first window
+14
+    result.append(arr[dq[0]] if dq else 0)
+15
+    16
+    # Process the remaining windows
+17
+    for i in range(k, n):
+18
+        # Remove elements that are out of the current window
+19
+        if dq and dq[0] < i - k + 1:
+20
+            dq.popleft()
+21
+        22
+        # Add the current element if it is negative
+23
+        if arr[i] < 0:
+24
+            dq.append(i)
+25
+        26
+        # Store the result for the current window
+27
+        result.append(arr[dq[0]] if dq else 0)
+28
+    29
+    return result
+30
+31
+# Reading input
+32
+t = int(input())  # Number of test cases
+33
+for _ in range(t):
+34
+    n, k = map(int, input().split())  # Size of array and batch size
+35
+    arr = list(map(int, input().split()))  # Array elements
+36
+    37
+    # Get the results and print as space-separated values
+38
+    print(*earliest_faulty_readings(arr, k))",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052838
+1390052839,unknown,unknown,unknown,"1
+def min_decommission_cost(servers):
+2
+    n = len(servers)
+3
+    min_cost = float('inf')
+4
+    5
+    for i in range(n):
+6
+        for j in range(i, n):
+7
+            kept_substr = servers[i:j+1]
+8
+            idle_remaining = kept_substr.count('0')
+9
+            active_removed = servers[:i].count('1') + servers[j+1:].count('1')
+10
+            cost = max(idle_remaining, active_removed)
+11
+            min_cost = min(min_cost, cost)
+12
+    13
+    return min_cost
+14
+15
+def solve():
+16
+    t = int(input())
+17
+    18
+    for _ in range(t):
+19
+        servers = input().strip()
+20
+        result = min_decommission_cost(servers)
+21
+        print(result)
+22
+23
+if __name__ == ""__main__"":
+24
+    solve()",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390052839
+1390052840,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+    if k >= n:
+3
+        return 0
+4
+    5
+    prefix_sum = [0] * (n + 1)
+6
+    for i in range(n):
+7
+        prefix_sum[i + 1] = prefix_sum[i] + strengths[i]
+8
+    9
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+10
+    dp[0][0] = 0
+11
+    12
+    for i in range(1, n + 1):
+13
+        for j in range(k + 1):
+14
+            if dp[i-1][j] != float('inf'):
+15
+                dp[i][j] = min(dp[i][j], dp[i-1][j] + strengths[i-1] + j)
+16
+        17
+        for j in range(k):
+18
+            if dp[i-1][j] != float('inf'):
+19
+                dp[i][j+1] = min(dp[i][j+1], dp[i-1][j])
+20
+    21
+    return min(dp[n])
+22
+23
+def main():
+24
+    t = int(input())
+25
+    26
+    for _ in range(t):
+27
+        n, k = map(int, input().split())
+28
+        strengths = list(map(int, input().split()))
+29
+        print(min_effort_to_breach(n, k, strengths))
+30
+31
+if __name__ == ""__main__"":
+32
+    main()",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390052840
+1390052832,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void findEarliestFaults(int[] arr, int k) {
+7
+        List<Integer> result = new ArrayList<>();
+8
+        Deque<Integer> deque = new LinkedList<>(); 
+9
+10
+        for (int i = 0; i < arr.length; i++) {
+11
+            12
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+13
+                deque.poll();
+14
+            }
+15
+16
+           17
+            if (arr[i] < 0) {
+18
+                deque.offer(i);
+19
+            }
+20
+21
+           22
+            if (i >= k - 1) {
+23
+                result.add(deque.isEmpty() ? 0 : arr[deque.peek()]);
+24
+            }
+25
+        }
+26
+27
+       28
+        for (int num : result) {
+29
+            System.out.print(num + "" "");
+30
+        }
+31
+        System.out.println();
+32
+    }
+33
+34
+    public static void main(String[] args) {
+35
+        Scanner scanner = new Scanner(System.in);
+36
+        int t = scanner.nextInt(); 
+37
+38
+        while (t-- > 0) {
+39
+            int n = scanner.nextInt();
+40
+            int k = scanner.nextInt(); 
+41
+            int[] arr = new int[n];
+42
+43
+            for (int i = 0; i < n; i++) {
+44
+                arr[i] = scanner.nextInt();
+45
+            }
+46
+47
+            findEarliestFaults(arr, k);
+48
+        }
+49
+50
+        scanner.close();
+51
+    }
+52
+}
+53",164,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052832

@@ -1,0 +1,788 @@
+submission_id,username,problem_name,language,code,page,url
+1390053619,unknown,unknown,unknown,"1
+def min_decommission_cost(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n = len(case)
+5
+        min_cost = float('inf')
+6
+        7
+        # Precompute prefix sums for 0's and 1's
+8
+        prefix_0 = [0] * (n + 1)
+9
+        prefix_1 = [0] * (n + 1)
+10
+        for i in range(n):
+11
+            prefix_0[i + 1] = prefix_0[i] + (1 if case[i] == '0' else 0)
+12
+            prefix_1[i + 1] = prefix_1[i] + (1 if case[i] == '1' else 0)
+13
+        14
+        # Iterate through all possible splits
+15
+        for i in range(n + 1):
+16
+            for j in range(i, n + 1):
+17
+                # Remaining segment is from i to j-1
+18
+                remaining_0s = prefix_0[j] - prefix_0[i]
+19
+                removed_1s = prefix_1[i] + (prefix_1[n] - prefix_1[j])
+20
+                cost = max(remaining_0s, removed_1s)
+21
+                if cost < min_cost:
+22
+                    min_cost = cost
+23
+        results.append(min_cost)
+24
+    return results
+25
+26
+# Read input
+27
+T = int(input())
+28
+test_cases = [input().strip() for _ in range(T)]
+29
+30
+# Compute results
+31
+results = min_decommission_cost(test_cases)
+32
+33
+# Print output
+34
+for result in results:
+35
+    print(result)",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053619
+1390053620,unknown,unknown,unknown,"1
+def min_decommission_cost(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n = len(case)
+5
+        min_cost = float('inf')
+6
+        7
+        # Precompute prefix sums for 0's and 1's
+8
+        prefix_0 = [0] * (n + 1)
+9
+        prefix_1 = [0] * (n + 1)
+10
+        for i in range(n):
+11
+            prefix_0[i + 1] = prefix_0[i] + (1 if case[i] == '0' else 0)
+12
+            prefix_1[i + 1] = prefix_1[i] + (1 if case[i] == '1' else 0)
+13
+        14
+        # Iterate through all possible splits
+15
+        for i in range(n + 1):
+16
+            for j in range(i, n + 1):
+17
+                # Remaining segment is from i to j-1
+18
+                remaining_0s = prefix_0[j] - prefix_0[i]
+19
+                removed_1s = prefix_1[i] + (prefix_1[n] - prefix_1[j])
+20
+                cost = max(remaining_0s, removed_1s)
+21
+                if cost < min_cost:
+22
+                    min_cost = cost
+23
+        results.append(min_cost)
+24
+    return results
+25
+26
+# Read input
+27
+T = int(input())
+28
+test_cases = [input().strip() for _ in range(T)]
+29
+30
+# Compute results
+31
+results = min_decommission_cost(test_cases)
+32
+33
+# Print output
+34
+for result in results:
+35
+    print(result)",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053620
+1390053621,unknown,unknown,unknown,"1
+def minimum_effort(T, test_cases):
+2
+    results = []
+3
+    4
+    for t in range(T):
+5
+        n, k = test_cases[t][0]
+6
+        arr = test_cases[t][1][:]
+7
+        8
+        if k >= n:
+9
+            results.append(0)
+10
+            continue
+11
+        12
+        min_effort = float('inf')
+13
+        14
+        for i in range(1 << n):
+15
+            skipped_indices = []
+16
+            17
+            for j in range(n):
+18
+                if (i >> j) & 1:
+19
+                    skipped_indices.append(j)
+20
+                    21
+            if len(skipped_indices) <= k:
+22
+                effort = 0
+23
+                temp_arr = arr[:]
+24
+                25
+                for j in range(n):
+26
+                    if not (i >> j) & 1:
+27
+                        effort += temp_arr[j]
+28
+                        for l in range(j + 1, n):
+29
+                            if (i >> l) & 1:
+30
+                                continue
+31
+                            temp_arr[l] += 1
+32
+                33
+                min_effort = min(min_effort, effort)
+34
+        35
+        results.append(min_effort)
+36
+        37
+    return results
+38
+39
+# Input reading
+40
+T = int(input())
+41
+test_cases = []
+42
+43
+# Read all test cases
+44
+for _ in range(T):
+45
+    n, k = map(int, input().split())
+46
+    arr = list(map(int, input().split()))
+47
+    test_cases.append([(n, k), arr])
+48
+49
+# Get the results and print them
+50
+results = minimum_effort(T, test_cases)
+51
+52
+for result in results:
+53
+    print(result)",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053621
+1390053615,unknown,unknown,unknown,"1
+def solve():
+2
+    s = input()
+3
+    n = len(s)
+4
+    5
+    ans = float('inf')
+6
+    7
+    for i in range(n + 1):
+8
+        for j in range(n - i + 1):
+9
+            10
+            decommissioned_ones = 0
+11
+            remaining_zeros = 0
+12
+            13
+            # Decommission from the beginning
+14
+            decommissioned_ones += s[:i].count('1')
+15
+            16
+            # Decommission from the end
+17
+            decommissioned_ones += s[n - j:].count('1')
+18
+            19
+            # Remaining string after decommissioning
+20
+            remaining_string = s[i:n - j]
+21
+            remaining_zeros = remaining_string.count('0')
+22
+            23
+            ans = min(ans, max(decommissioned_ones, remaining_zeros))
+24
+            25
+    print(ans)
+26
+27
+t = int(input())
+28
+for _ in range(t):
+29
+    solve()",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053615
+1390053618,unknown,unknown,unknown,"1
+def min_decommission_cost(server_string):
+2
+    n = len(server_string)
+3
+    4
+    # Count total active servers and total idle servers
+5
+    total_active = server_string.count('1')
+6
+    total_idle = n - total_active
+7
+    8
+    # Precompute cumulative counts of active servers from left
+9
+    active_prefix_sum = [0] * (n + 1)
+10
+    for i in range(n):
+11
+        active_prefix_sum[i + 1] = active_prefix_sum[i] + (1 if server_string[i] == '1' else 0)
+12
+    13
+    min_cost = float('inf')
+14
+    15
+    # Try all possible starting positions for the remaining servers
+16
+    for left in range(n + 1):
+17
+        # For each possible ending position
+18
+        for right in range(left, n + 1):
+19
+            # Active servers in the remaining segment
+20
+            active_remaining = active_prefix_sum[right] - active_prefix_sum[left]
+21
+            idle_remaining = (right - left) - active_remaining
+22
+            23
+            # Active servers removed
+24
+            active_removed = total_active - active_remaining
+25
+            26
+            cost = max(idle_remaining, active_removed)
+27
+            min_cost = min(min_cost, cost)
+28
+    29
+    return min_cost
+30
+31
+def faster_min_decommission_cost(server_string):
+32
+    n = len(server_string)
+33
+    34
+    # Precompute prefix sums for active and idle servers
+35
+    active_prefix = [0] * (n + 1)
+36
+    idle_prefix = [0] * (n + 1)
+37
+    38
+    for i in range(n):
+39
+        active_prefix[i + 1] = active_prefix[i] + (server_string[i] == '1')
+40
+        idle_prefix[i + 1] = idle_prefix[i] + (server_string[i] == '0')
+41
+    42
+    min_cost = n  # Worst case cost
+43
+    44
+    # For each possible remaining substring (from i to j-1)
+45
+    for i in range(n + 1):
+46
+        for j in range(i, n + 1):
+47
+            # Idle servers in remaining substring
+48
+            idle_remaining = idle_prefix[j] - idle_prefix[i]
+49
+            50
+            # Active servers removed (from left and right)
+51
+            active_removed = active_prefix[n] - (active_prefix[j] - active_prefix[i])
+52
+            53
+            cost = max(idle_remaining, active_removed)
+54
+            min_cost = min(min_cost, cost)
+55
+    56
+    return min_cost
+57
+58
+def main():
+59
+    t = int(input().strip())
+60
+    61
+    for _ in range(t):
+62
+        server_string = input().strip()
+63
+        result = faster_min_decommission_cost(server_string)
+64
+        print(result)
+65
+66
+if __name__ == ""__main__"":
+67
+    main()",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053618
+1390053614,unknown,unknown,unknown,"1
+def min_decommission_cost(server_rack):
+2
+    total_active = server_rack.count('1')
+3
+    total_idle = server_rack.count('0')
+4
+5
+    min_cost = min(total_active, total_idle)  # Worst case: remove all active or all idle
+6
+7
+    left, right = 0, len(server_rack) - 1
+8
+    removed_active = 0
+9
+    removed_idle = 0
+10
+11
+    # Try decommissioning from both ends
+12
+    while left <= right:
+13
+        if server_rack[left] == '0':
+14
+            removed_idle += 1
+15
+            left += 1
+16
+        elif server_rack[right] == '0':
+17
+            removed_idle += 1
+18
+            right -= 1
+19
+        elif server_rack[left] == '1':
+20
+            removed_active += 1
+21
+            left += 1
+22
+        elif server_rack[right] == '1':
+23
+            removed_active += 1
+24
+            right -= 1
+25
+        26
+        remaining_idle = total_idle - removed_idle
+27
+        min_cost = min(min_cost, max(remaining_idle, removed_active))
+28
+29
+    return min_cost
+30
+31
+32
+# Read input
+33
+T = int(input())  # Number of test cases
+34
+results = []
+35
+36
+for _ in range(T):
+37
+    server_rack = input().strip()
+38
+    results.append(min_decommission_cost(server_rack))
+39
+40
+# Print results
+41
+for res in results:
+42
+    print(res)",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053614
+1390053607,unknown,unknown,unknown,"1
+import java.util.*;
+2
+import java.io.*;
+3
+4
+public class FaultyComponents {
+5
+6
+    public static void main(String[] args) throws IOException {
+7
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+8
+        9
+        // Read number of test cases
+10
+        int t = Integer.parseInt(reader.readLine().trim());
+11
+        12
+        StringBuilder output = new StringBuilder();
+13
+        14
+        for (int testCase = 0; testCase < t; testCase++) {
+15
+            // Read n and k
+16
+            String[] nk = reader.readLine().trim().split("" "");
+17
+            int n = Integer.parseInt(nk[0]);
+18
+            int k = Integer.parseInt(nk[1]);
+19
+            20
+            // Read the array of sensor readings
+21
+            String[] arrStr = reader.readLine().trim().split("" "");
+22
+            int[] arr = new int[n];
+23
+            for (int i = 0; i < n; i++) {
+24
+                arr[i] = Integer.parseInt(arrStr[i]);
+25
+            }
+26
+            27
+            ArrayList<Integer> results = findEarliestFaults(n, k, arr);
+28
+            29
+            // Convert results to a single string line
+30
+            for (int i = 0; i < results.size(); i++) {
+31
+                if (i > 0) output.append("" "");
+32
+                output.append(results.get(i));
+33
+            }
+34
+            output.append(""\n"");
+35
+        }
+36
+        37
+        System.out.println(output.toString());
+38
+    }
+39
+40
+    public static ArrayList<Integer> findEarliestFaults(int n, int k, int[] arr) {
+41
+        ArrayList<Integer> result = new ArrayList<>();
+42
+        Deque<Integer> dq = new ArrayDeque<>();
+43
+        44
+        // Process the first window
+45
+        for (int i = 0; i < k; i++) {
+46
+            if (arr[i] < 0) {
+47
+                dq.addLast(i);
+48
+            }
+49
+        }
+50
+        51
+        // Store result for the first window
+52
+        if (!dq.isEmpty()) {
+53
+            result.add(arr[dq.peek()]);
+54
+        } else {
+55
+            result.add(0);
+56
+        }
+57
+        58
+        // Process the rest of the array
+59
+        for (int i = k; i < n; i++) {
+60
+            // Remove elements not within the sliding window
+61
+            while (!dq.isEmpty() && dq.peek() <= i - k) {
+62
+                dq.poll();
+63
+            }
+64
+            65
+            // Add the current element if it's negative
+66
+            if (arr[i] < 0) {
+67
+                dq.addLast(i);
+68
+            }
+69
+            70
+            // Append result for the current window
+71
+            if (!dq.isEmpty()) {
+72
+                result.add(arr[dq.peek()]);
+73
+            } else {
+74
+                result.add(0);
+75
+            }
+76
+        }
+77
+        78
+        return result;
+79
+    }
+80
+}",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390053607
+1390053605,unknown,unknown,unknown,"1
+def generate_skip_options(n, k, start=0, current_skips=[], all_skips=[]):
+2
+    if len(current_skips) == k:
+3
+        all_skips.append(current_skips[:]) 
+4
+        return
+5
+    6
+    for i in range(start, n):
+7
+        current_skips.append(i)
+8
+        generate_skip_options(n, k, i + 1, current_skips, all_skips)
+9
+        current_skips.pop() 
+10
+11
+def min_effort_to_breach(n, k, firewalls):
+12
+    min_effort = float('inf')
+13
+    all_skip_options = []
+14
+    15
+    generate_skip_options(n, k, 0, [], all_skip_options)
+16
+    17
+    for skip_indices in all_skip_options:
+18
+        effort = 0
+19
+        skipped = set(skip_indices)
+20
+        21
+        security_increase = 0 
+22
+        for i in range(n):
+23
+            if i in skipped:
+24
+                security_increase += 1  
+25
+            else:
+26
+                effort += firewalls[i] + security_increase  
+27
+28
+        min_effort = min(min_effort, effort)
+29
+30
+    return min_effort
+31
+32
+T = int(input()) 
+33
+34
+for _ in range(T):
+35
+    n, k = map(int, input().split())
+36
+    firewalls = list(map(int, input().split()))
+37
+    print(min_effort_to_breach(n, k, firewalls))
+38",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390053605
+1390053613,unknown,unknown,unknown,"1
+def earliest_faulty_readings(arr, k):
+2
+    n = len(arr)
+3
+    result = []
+4
+    5
+    for i in range(n - k + 1):
+6
+        batch = arr[i:i + k]  # Extract batch of size k
+7
+        found = 0
+8
+        for num in batch:
+9
+            if num < 0:
+10
+                found = num  # First faulty component
+11
+                break
+12
+        result.append(found)
+13
+    14
+    return result
+15
+16
+# Input handling
+17
+t = int(input())  # Number of test cases
+18
+for _ in range(t):
+19
+    n, k = map(int, input().split())  # Array size and batch size
+20
+    arr = list(map(int, input().split()))  # Sensor readings
+21
+    print(*earliest_faulty_readings(arr, k))  # Print results space-separated
+22",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390053613
+1390053604,unknown,unknown,unknown,"1
+import bisect
+2
+3
+4
+T = int(input())
+5
+6
+for _ in range(T):
+7
+    8
+    s = input().strip()
+9
+    n = len(s)
+10
+    11
+    12
+    prefix_0= [0]* (n+1)
+13
+    prefix_1 = [0] *(n+1)
+14
+    15
+    #assign
+16
+    17
+    18
+    for i in range(n):
+19
+        prefix_0[i+ 1] =prefix_0[i] +(1 if s[i]== '0' else 0)
+20
+        prefix_1[i+ 1] = prefix_1[i]+ (1 if s[i] == '1' else 0)
+21
+    total_1 = prefix_1[n]
+22
+    23
+   24
+    def check(m):
+25
+        26
+        #check
+27
+        28
+        29
+        for j in range(n + 1):
+30
+            target = prefix_0[j] - m
+31
+            l_j = bisect.bisect_left(prefix_0, target)
+32
+            if l_j<=j and prefix_1[l_j]<=m -(total_1-prefix_1[j]):
+33
+                return True
+34
+        return False
+35
+    36
+    37
+    low,high =0, n
+38
+    39
+    while low<high:
+40
+        mid=(low+high)//2
+41
+        if check(mid):
+42
+            high=mid
+43
+        else:
+44
+            low=mid + 1
+45
+            46
+            47
+    print(low)",127,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390053604

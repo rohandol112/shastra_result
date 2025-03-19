@@ -1,0 +1,666 @@
+submission_id,username,problem_name,language,code,page,url
+1390054207,unknown,unknown,unknown,"1
+def min_decommission_cost(s):
+2
+    n = len(s)
+3
+    4
+    first_one = s.find('1')
+5
+    last_one = s.rfind('1')
+6
+7
+    if first_one == -1:
+8
+        return 0  
+9
+10
+    trimmed = s[first_one:last_one+1]
+11
+    remaining_zeros = trimmed.count('0')
+12
+13
+    min_cost = remaining_zeros
+14
+    ones_removed = 0
+15
+16
+    for i in range(first_one, last_one + 1):
+17
+        if s[i] == '1':
+18
+            ones_removed += 1
+19
+        else:
+20
+            remaining_zeros -= 1
+21
+    22
+        min_cost = min(min_cost, max(remaining_zeros, ones_removed))
+23
+24
+    return min_cost
+25
+26
+T = int(input())
+27
+for _ in range(T):
+28
+    s = input().strip()
+29
+    print(min_decommission_cost(s))
+30",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054207
+1390054209,unknown,unknown,unknown,"1
+def min_effort_to_breach(t, test_cases):
+2
+    results = []
+3
+    4
+    for n, k, firewalls in test_cases:
+5
+        firewalls.sort()
+6
+        7
+        # Skip the k weakest firewalls (if possible)
+8
+        remaining_effort = sum(firewalls[:max(0, n - k)])
+9
+        results.append(str(remaining_effort))
+10
+    11
+    return ""\n"".join(results)
+12
+13
+# Read input
+14
+t = int(input().strip())
+15
+test_cases = []
+16
+17
+for _ in range(t):
+18
+    n, k = map(int, input().split())
+19
+    firewalls = list(map(int, input().split()))
+20
+    test_cases.append((n, k, firewalls))
+21
+22
+# Compute and print results
+23
+print(min_effort_to_breach(t, test_cases))
+24",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054209
+1390054210,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+3
+    4
+    for j in range(k + 1):
+5
+        dp[0][j] = 0
+6
+    7
+    for i in range(1, n + 1):
+8
+        for j in range(k + 1):
+9
+            if j > 0:
+10
+                dp[i][j] = dp[i-1][j-1]
+11
+            12
+            current_strength = strengths[i-1] + j
+13
+            dp[i][j] = min(dp[i][j], dp[i-1][j] + current_strength)
+14
+    15
+    return min(dp[n])
+16
+17
+def solve():
+18
+    t = int(input())
+19
+    results = []
+20
+    21
+    for _ in range(t):
+22
+        n, k = map(int, input().split())
+23
+        strengths = list(map(int, input().split()))
+24
+        results.append(min_effort_to_breach(n, k, strengths))
+25
+    26
+    for result in results:
+27
+        print(result)
+28
+29
+solve()
+30",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054210
+1390054202,unknown,unknown,unknown,"1
+import java.util.*;
+2
+public class Main {
+3
+    public static void main(String[] args) {
+4
+        Scanner sc = new Scanner(System.in);
+5
+        int t = sc.nextInt();
+6
+        7
+        while (t-- > 0) {
+8
+            int n = sc.nextInt(), k = sc.nextInt();
+9
+            int[] arr = new int[n];
+10
+            11
+            for (int i = 0; i < n; i++) {
+12
+                arr[i] = sc.nextInt();
+13
+            }
+14
+            15
+            System.out.println(minEffort(n, k, arr));
+16
+        }
+17
+        sc.close();
+18
+    }
+19
+    20
+    static int minEffort(int n, int k, int[] arr) {
+21
+        int[] curr = new int[k + 1];
+22
+        int[] next = new int[k + 1];
+23
+        24
+        Arrays.fill(curr, Integer.MAX_VALUE);
+25
+        Arrays.fill(next, Integer.MAX_VALUE);
+26
+        27
+        Arrays.fill(next, 0);
+28
+        29
+        for (int i = n - 1; i >= 0; i--) {
+30
+            for (int skip = 0; skip <= k; skip++) {
+31
+                int take = arr[i] + skip;
+32
+                if (i + 1 < n) {
+33
+                    if (next[skip] != Integer.MAX_VALUE) {
+34
+                        take += next[skip];
+35
+                    }
+36
+                }
+37
+                38
+                int leave = Integer.MAX_VALUE;
+39
+                if (skip < k && i + 1 <= n) {
+40
+                    leave = next[skip + 1];
+41
+                }
+42
+                43
+                curr[skip] = Math.min(take, leave);
+44
+            }
+45
+            46
+            int[] temp = next;
+47
+            next = curr;
+48
+            curr = temp;
+49
+            50
+            Arrays.fill(curr, Integer.MAX_VALUE);
+51
+        }
+52
+        53
+        return next[0];
+54
+    }
+55
+}",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054202
+1390054203,unknown,unknown,unknown,"1
+import sys
+2
+import threading
+3
+4
+def main():
+5
+    T = int(sys.stdin.readline())
+6
+    7
+    for _ in range(T):
+8
+        n, k = map(int, sys.stdin.readline().split())
+9
+        a = list(map(int, sys.stdin.readline().split()))
+10
+11
+        benefits = []
+12
+        for i in range(n):
+13
+            benefit = a[i] - (n - i - 1)
+14
+            benefits.append((benefit, i))
+15
+        16
+        # Sort by benefit descending
+17
+        benefits.sort(reverse=True)
+18
+19
+        skipped = [False] * n
+20
+21
+        # Mark the top k firewalls to skip
+22
+        for i in range(k):
+23
+            _, idx = benefits[i]
+24
+            skipped[idx] = True
+25
+26
+        # Calculate total effort
+27
+        total_effort = 0
+28
+        penalty = 0  # number of skipped firewalls so far
+29
+        for i in range(n):
+30
+            if skipped[i]:
+31
+                penalty += 1
+32
+            else:
+33
+                total_effort += a[i] + penalty
+34
+35
+        print(total_effort)
+36
+37
+# Run main() inside a separate thread to avoid recursion limit issues in large input
+38
+threading.Thread(target=main).start()
+39",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054203
+1390054204,unknown,unknown,unknown,"1
+def min_cost(server_str):
+2
+    n = len(server_str)
+3
+    prefix_1 = [0] * (n + 1)  # prefix count of 1s
+4
+    prefix_0 = [0] * (n + 1)  # prefix count of 0s
+5
+6
+    for i in range(n):
+7
+        prefix_1[i + 1] = prefix_1[i] + (1 if server_str[i] == '1' else 0)
+8
+        prefix_0[i + 1] = prefix_0[i] + (1 if server_str[i] == '0' else 0)
+9
+10
+    total_1 = prefix_1[n]
+11
+    total_0 = prefix_0[n]
+12
+13
+    min_cost = float('inf')
+14
+15
+    # Try removing l elements from the front
+16
+    for l in range(n + 1):
+17
+        # Try removing r elements from the back
+18
+        for r in range(n - l + 1):
+19
+            left = l
+20
+            right = n - r
+21
+            remaining_0 = prefix_0[right] - prefix_0[left]
+22
+            removed_1 = prefix_1[left] + (total_1 - prefix_1[right])
+23
+            cost = max(remaining_0, removed_1)
+24
+            min_cost = min(min_cost, cost)
+25
+26
+    return min_cost
+27
+28
+# Main driver
+29
+T = int(input())
+30
+for _ in range(T):
+31
+    server_str = input().strip()
+32
+    print(min_cost(server_str))",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054204
+1390054194,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <string>
+3
+#include <climits>
+4
+#include <algorithm>
+5
+6
+using namespace std;
+7
+8
+int minDecommissioningCost(const string& serverRack) {
+9
+    int n = serverRack.size();
+10
+    int minCost = INT_MAX;
+11
+    12
+    // Try all possible prefix and suffix removals
+13
+    for (int i = 0; i <= n; ++i) {  // i = prefix length to remove
+14
+        for (int j = 0; j <= n - i; ++j) {  // j = suffix length to remove
+15
+            if (i + j > n) continue;
+16
+            17
+            string remaining = serverRack.substr(i, n - i - j);
+18
+            if (remaining.empty()) continue;
+19
+            20
+            int idleRemaining = count(remaining.begin(), remaining.end(), '0');
+21
+            int activeRemoved = count(serverRack.begin(), serverRack.begin() + i, '1') +
+22
+                                count(serverRack.end() - j, serverRack.end(), '1');
+23
+            24
+            int cost = max(idleRemaining, activeRemoved);
+25
+            minCost = min(minCost, cost);
+26
+        }
+27
+    }
+28
+    29
+    return minCost;
+30
+}
+31
+32
+void solve() {
+33
+    int t;
+34
+    cin >> t;
+35
+    while (t--) {
+36
+        string serverRack;
+37
+        cin >> serverRack;
+38
+        cout << minDecommissioningCost(serverRack) << endl;
+39
+    }
+40
+}
+41
+42
+int main() {
+43
+    ios::sync_with_stdio(false);
+44
+    cin.tie(nullptr);
+45
+    solve();
+46
+    return 0;
+47
+}",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054194
+1390054196,unknown,unknown,unknown,"1
+def minimize_breach_effort(num_firewalls, max_skips, security_strengths):
+2
+    effort_table = [[float('inf')] * (max_skips + 1) for _ in range(num_firewalls + 1)]
+3
+    effort_table[0][0] = 0  
+4
+5
+    for firewall in range(1, num_firewalls + 1):
+6
+        for skips_used in range(max_skips + 1):
+7
+            effort_table[firewall][skips_used] = (
+8
+                effort_table[firewall - 1][skips_used] + security_strengths[firewall - 1] + skips_used
+9
+            )
+10
+            if skips_used > 0:
+11
+                effort_table[firewall][skips_used] = min(
+12
+                    effort_table[firewall][skips_used], effort_table[firewall - 1][skips_used - 1]
+13
+                )
+14
+15
+    return min(effort_table[num_firewalls])
+16
+17
+test_cases = int(input())
+18
+19
+for _ in range(test_cases):
+20
+    num_firewalls, max_skips = map(int, input().split())
+21
+    security_strengths = list(map(int, input().split()))
+22
+    print(minimize_breach_effort(num_firewalls, max_skips, security_strengths))
+23",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054196
+1390054200,unknown,unknown,unknown,"1
+import sys
+2
+3
+def minimum_effort(test_cases):
+4
+    results = []
+5
+    6
+    for n, k, a in test_cases:
+7
+        if k >= n:
+8
+            results.append(0)
+9
+            continue
+10
+11
+        # Sorting indices of firewalls based on strength in descending order
+12
+        sorted_indices = sorted(range(n), key=lambda i: a[i], reverse=True)
+13
+        14
+        # Try skipping different firewalls and calculate minimum effort
+15
+        min_effort = float('inf')
+16
+17
+        for skip_index in sorted_indices[:k]:  # Only consider skipping the top 'k' strongest firewalls
+18
+            effort = 0
+19
+            security_cost = 0
+20
+21
+            for i in range(n):
+22
+                if i == skip_index:
+23
+                    security_cost += 1  # Every skipped firewall increases security cost
+24
+                else:
+25
+                    effort += a[i] + security_cost  # Firewall strength + accumulated security cost
+26
+            27
+            min_effort = min(min_effort, effort)
+28
+29
+        results.append(min_effort)
+30
+    31
+    return results
+32
+33
+def main():
+34
+    input_data = sys.stdin.read().split()
+35
+    it = iter(input_data)
+36
+    T = int(next(it))
+37
+    test_cases = []
+38
+39
+    for _ in range(T):
+40
+        n = int(next(it))
+41
+        k = int(next(it))
+42
+        a = [int(next(it)) for _ in range(n)]
+43
+        test_cases.append((n, k, a))
+44
+    45
+    results = minimum_effort(test_cases)
+46
+    print(""\n"".join(map(str, results)))
+47
+48
+if __name__ == ""__main__"":
+49
+    main()
+50",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054200
+1390054192,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, firewalls):
+2
+    # Special case: If we can skip all firewalls, the effort is 0
+3
+    if k >= n:
+4
+        return 0
+5
+    6
+    # Try all possible subsets of firewalls to skip
+7
+    min_effort = float('inf')
+8
+    9
+    # Generate all possible subsets of k or fewer indices to skip
+10
+    # Instead of trying all combinations, we can use a greedy approach
+11
+    # We'll calculate the impact of skipping each firewall and choose the best ones
+12
+    13
+    # Calculate the impact of skipping each firewall
+14
+    impact = []
+15
+    for i, val in enumerate(firewalls):
+16
+        # Impact = (value of firewall) - (penalty to remaining firewalls)
+17
+        # Penalty to remaining firewalls = (n - i - 1)
+18
+        impact_val = val - (n - i - 1)
+19
+        impact.append((impact_val, i))
+20
+    21
+    # Sort by impact (descending)
+22
+    impact.sort(reverse=True)
+23
+    24
+    # Try skipping 0 to k firewalls
+25
+    for skip_count in range(k + 1):
+26
+        # Get the indices of firewalls to skip
+27
+        skip_indices = set(impact[j][1] for j in range(skip_count))
+28
+        29
+        # Calculate the effort for this configuration
+30
+        effort = 0
+31
+        penalty = 0
+32
+        33
+        for i in range(n):
+34
+            if i in skip_indices:
+35
+                penalty += 1  # Increase penalty for subsequent firewalls
+36
+            else:
+37
+                effort += firewalls[i] + penalty  # Add effort with penalty
+38
+        39
+        min_effort = min(min_effort, effort)
+40
+    41
+    return min_effort
+42
+43
+# Read input
+44
+t = int(input().strip())  # Number of test cases
+45
+for _ in range(t):
+46
+    n, k = map(int, input().split())
+47
+    firewalls = list(map(int, input().split()))
+48
+    print(min_effort_to_breach(n, k, firewalls))",94,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054192

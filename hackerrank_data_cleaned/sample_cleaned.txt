@@ -1,0 +1,42 @@
+import java.util.Scanner;
+public class ServerDecommissioning {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int t = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+        for (int i = 0; i < t; i++) {
+            String serverRack = scanner.nextLine();
+            int minCost = findMinimumCost(serverRack);
+            System.out.println(minCost);
+        }
+        scanner.close();
+    }
+    public static int findMinimumCost(String serverRack) {
+        int n = serverRack.length();
+        int minCost = Integer.MAX_VALUE;
+        // Try all possible combinations of removing servers from the beginning and end
+        for (int front = 0; front <= n; front++) {
+            for (int back = 0; back <= n - front; back++) {
+                // Calculate the servers that will remain after decommissioning
+                String remainingServers = serverRack.substring(front, n - back);
+                // Calculate the cost factors
+                int remainingIdleServers = countChar(remainingServers, '0');
+                int decommissionedActiveServers = countChar(serverRack.substring(0, front), '1') + 
+                                                countChar(serverRack.substring(n - back, n), '1');
+                // The cost is the maximum of the two factors
+                int cost = Math.max(remainingIdleServers, decommissionedActiveServers);
+                minCost = Math.min(minCost, cost);
+            }
+        }
+        return minCost;
+    }
+    private static int countChar(String str, char target) {
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == target) {
+                count++;
+            }
+        }
+        return count;
+    }
+}

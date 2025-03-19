@@ -1,0 +1,740 @@
+submission_id,username,problem_name,language,code,page,url
+1390052231,unknown,unknown,unknown,"1
+def min_effort(firewalls, k):
+2
+    n = len(firewalls)
+3
+    4
+    # Base case: if we can skip all firewalls, effort is 0
+5
+    if k >= n:
+6
+        return 0
+7
+    8
+    # Initialize memoization dictionary
+9
+    memo = {}
+10
+    11
+    def dp(index, skips_used):
+12
+        # Base case: processed all firewalls
+13
+        if index == n:
+14
+            return 0
+15
+        16
+        # Check if already computed
+17
+        if (index, skips_used) in memo:
+18
+            return memo[(index, skips_used)]
+19
+        20
+        # Option 1: Skip this firewall if we have skips left
+21
+        if skips_used < k:
+22
+            option1 = dp(index + 1, skips_used + 1)
+23
+        else:
+24
+            option1 = float('inf')
+25
+        26
+        # Option 2: Don't skip this firewall
+27
+        # Its strength increases by skips_used
+28
+        option2 = (firewalls[index] + skips_used) + dp(index + 1, skips_used)
+29
+        30
+        # Store and return the minimum effort
+31
+        memo[(index, skips_used)] = min(option1, option2)
+32
+        return memo[(index, skips_used)]
+33
+    34
+    return dp(0, 0)
+35
+36
+# Process test cases
+37
+t = int(input(""Enter number of test cases: ""))
+38
+for _ in range(t):
+39
+    # Get n (number of firewalls) and k (number of skips allowed)
+40
+    n, k = map(int, input(""Enter n and k (space-separated): "").split())
+41
+    # Get firewall strengths
+42
+    firewalls = list(map(int, input(""Enter firewall strengths (space-separated): "").split()))
+43
+    result = min_effort(firewalls, k)
+44
+    print(f""Minimum effort required: {result}"")",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390052231
+1390052243,unknown,unknown,unknown,"1
+t=int(input())
+2
+for _ in range(t):
+3
+    n,k=list(map(int,input().split()))
+4
+    arr=list(map(int,input().split()))
+5
+    ans=[]
+6
+    for i in range(n-k+1):
+7
+        for j in range(i,i+k):
+8
+            if arr[j]<0:
+9
+                ans.append(arr[j])
+10
+                break
+11
+        else:ans.append(0)
+12
+    for i in ans:print(i,end=' ')
+13
+    print()",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052243
+1390052233,unknown,unknown,unknown,"1
+def earliest_faulty_in_batches(arr, n, k):
+2
+    result = []
+3
+    4
+    # Traverse the array in batches of size k
+5
+    for i in range(n - k + 1):
+6
+        batch = arr[i:i + k]
+7
+        found_fault = False
+8
+        9
+        # Find the first negative number in the batch
+10
+        for num in batch:
+11
+            if num < 0:
+12
+                result.append(num)
+13
+                found_fault = True
+14
+                break
+15
+        16
+        # If no negative number is found, append 0
+17
+        if not found_fault:
+18
+            result.append(0)
+19
+    20
+    return result
+21
+22
+# Reading input
+23
+t = int(input().strip())
+24
+outputs = []
+25
+26
+for _ in range(t):
+27
+    n, k = map(int, input().strip().split())
+28
+    arr = list(map(int, input().strip().split()))
+29
+    outputs.append(earliest_faulty_in_batches(arr, n, k))
+30
+31
+# Print results
+32
+for output in outputs:
+33
+    print("" "".join(map(str, output)))
+34",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052233
+1390052226,unknown,unknown,unknown,"1
+def earliest_faulty_readings(t, test_cases):
+2
+    results = []
+3
+    for n, k, arr in test_cases:
+4
+        output = []
+5
+        for i in range(n - k + 1):
+6
+            found = 0
+7
+            for j in range(i, i + k):
+8
+                if arr[j] < 0:
+9
+                    found = arr[j]
+10
+                    break
+11
+            output.append(found)
+12
+        13
+        results.append(output)
+14
+    15
+    return results
+16
+17
+t = int(input())
+18
+test_cases = []
+19
+20
+for _ in range(t):
+21
+    n, k = map(int, input().split())
+22
+    arr = list(map(int, input().split()))
+23
+    test_cases.append((n, k, arr))
+24
+25
+for res in earliest_faulty_readings(t, test_cases):
+26
+    print(*res)
+27",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052226
+1390052225,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(test_cases):
+4
+5
+    results = []
+6
+7
+    for n, k, arr in test_cases:
+8
+9
+        result = []
+10
+11
+        dq = deque()
+12
+13
+        14
+15
+        # Process first k elements
+16
+17
+        for i in range(k):
+18
+19
+            if arr[i] < 0:
+20
+21
+                dq.append(i)
+22
+23
+        24
+25
+        # Check first window
+26
+27
+        result.append(arr[dq[0]] if dq else 0)
+28
+29
+        30
+31
+        # Process remaining windows
+32
+33
+        for i in range(k, n):
+34
+35
+            # Remove elements that are out of the window
+36
+37
+            if dq and dq[0] <= i - k:
+38
+39
+                dq.popleft()
+40
+41
+            42
+43
+            # Add new element if it is negative
+44
+45
+            if arr[i] < 0:
+46
+47
+                dq.append(i)
+48
+49
+            50
+51
+            # Get earliest faulty reading
+52
+53
+            result.append(arr[dq[0]] if dq else 0)
+54
+55
+        56
+57
+        results.append("" "".join(map(str, result)))
+58
+59
+    60
+61
+    return ""\n"".join(results)
+62
+63
+# Read input
+64
+65
+t = int(input())
+66
+67
+test_cases = []
+68
+69
+for _ in range(t):
+70
+71
+    n, k = map(int, input().split())
+72
+73
+    arr = list(map(int, input().split()))
+74
+75
+    test_cases.append((n, k, arr))
+76
+77
+# Get results and print
+78
+79
+print(earliest_faulty_readings(test_cases))
+80
+81",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052225
+1390052228,unknown,unknown,unknown,"1
+def solve():
+2
+    t = int(input())
+3
+    for _ in range(t):
+4
+        s = input()
+5
+        n = len(s)
+6
+        7
+        min_cost = float('inf')
+8
+        9
+        for i in range(n + 1):
+10
+            for j in range(n - i + 1):
+11
+                removed_start = s[:i]
+12
+                remaining = s[i:n-j]
+13
+                removed_end = s[n-j:]
+14
+                15
+                idle_remaining = remaining.count('0')
+16
+                active_removed = removed_start.count('1') + removed_end.count('1')
+17
+                18
+                cost = max(idle_remaining, active_removed)
+19
+                min_cost = min(min_cost, cost)
+20
+        21
+        print(min_cost)
+22
+23
+solve()",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390052228
+1390052216,unknown,unknown,unknown,"1
+#include <stdio.h>
+2
+#include <stdlib.h>
+3
+4
+void findEarliestFaultyReadings(int *arr, int n, int k) {
+5
+    int *result = (int *)malloc((n - k + 1) * sizeof(int));
+6
+    int front = 0, rear = 0;
+7
+    int queue[n];
+8
+    9
+    // Process the first window
+10
+    for (int i = 0; i < k; i++) {
+11
+        if (arr[i] < 0) {
+12
+            queue[rear++] = i;
+13
+        }
+14
+    }
+15
+    16
+    // Store result for the first batch
+17
+    result[0] = (front < rear) ? arr[queue[front]] : 0;
+18
+    19
+    // Process the remaining windows
+20
+    for (int i = k; i < n; i++) {
+21
+        // Remove elements not within the window
+22
+        while (front < rear && queue[front] <= i - k) {
+23
+            front++;
+24
+        }
+25
+        26
+        // Add new element if it's faulty
+27
+        if (arr[i] < 0) {
+28
+            queue[rear++] = i;
+29
+        }
+30
+        31
+        // Store result for current batch
+32
+        result[i - k + 1] = (front < rear) ? arr[queue[front]] : 0;
+33
+    }
+34
+    35
+    // Print the result
+36
+    for (int i = 0; i < n - k + 1; i++) {
+37
+        printf(""%d "", result[i]);
+38
+    }
+39
+    printf(""\n"");
+40
+    41
+    free(result);
+42
+}
+43
+44
+int main() {
+45
+    int t;
+46
+    scanf(""%d"", &t);
+47
+    48
+    while (t--) {
+49
+        int n, k;
+50
+        scanf(""%d %d"", &n, &k);
+51
+        int arr[n];
+52
+        53
+        for (int i = 0; i < n; i++) {
+54
+            scanf(""%d"", &arr[i]);
+55
+        }
+56
+        57
+        findEarliestFaultyReadings(arr, n, k);
+58
+    }
+59
+    60
+    return 0;
+61
+}
+62",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052216
+1390052217,unknown,unknown,unknown,"1
+def min_effort(arr, k):
+2
+    n = len(arr)
+3
+    4
+    # If we can skip all firewalls, minimum effort is 0
+5
+    if k >= n:
+6
+        return 0
+7
+    8
+    # Try all configurations of which firewalls to skip
+9
+    min_effort_value = float('inf')
+10
+    11
+    # Generate all possible configurations of k skips from n firewalls
+12
+    # This would be combinatorial explosion for large n and k
+13
+    # We need a more efficient approach
+14
+15
+    # Dynamic programming approach
+16
+    # dp[i][j] = minimum effort to handle first i firewalls with j skips
+17
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]
+18
+    19
+    # Base case: 0 effort for 0 firewalls
+20
+    dp[0][0] = 0
+21
+    22
+    for i in range(1, n + 1):
+23
+        curr_firewall = arr[i - 1]
+24
+        25
+        for j in range(k + 1):
+26
+            # Option 1: Don't skip the current firewall
+27
+            if j <= i - 1:
+28
+                dp[i][j] = dp[i - 1][j] + curr_firewall + j
+29
+            30
+            # Option 2: Skip the current firewall (if we have skips left)
+31
+            if j > 0:
+32
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1])
+33
+    34
+    # Find minimum across all possible numbers of skips
+35
+    return min(dp[n])
+36
+37
+def solve():
+38
+    t = int(input())
+39
+    results = []
+40
+    41
+    for _ in range(t):
+42
+        n, k = map(int, input().split())
+43
+        arr = list(map(int, input().split()))
+44
+        results.append(min_effort(arr, k))
+45
+    46
+    for result in results:
+47
+        print(result)
+48
+49
+if __name__ == ""__main__"":
+50
+    solve()",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390052217
+1390052224,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(test_cases):
+4
+    results = []
+5
+    for n, k, arr in test_cases:
+6
+        res = []
+7
+        dq = deque()
+8
+        9
+        # Process the first k elements
+10
+        for i in range(k):
+11
+            if arr[i] < 0:
+12
+                dq.append(i)
+13
+        14
+        # Store the first result
+15
+        res.append(arr[dq[0]] if dq else 0)
+16
+        17
+        # Process the remaining elements
+18
+        for i in range(k, n):
+19
+            # Remove elements that are out of the current window
+20
+            while dq and dq[0] < i - k + 1:
+21
+                dq.popleft()
+22
+            23
+            # Add new element if it is faulty
+24
+            if arr[i] < 0:
+25
+                dq.append(i)
+26
+            27
+            # Store result for current window
+28
+            res.append(arr[dq[0]] if dq else 0)
+29
+        30
+        results.append(res)
+31
+    32
+    return results
+33
+34
+# Read input
+35
+def main():
+36
+    t = int(input().strip())
+37
+    test_cases = []
+38
+    for _ in range(t):
+39
+        n, k = map(int, input().split())
+40
+        arr = list(map(int, input().split()))
+41
+        test_cases.append((n, k, arr))
+42
+    43
+    # Get results
+44
+    output = earliest_faulty_readings(test_cases)
+45
+    46
+    # Print results
+47
+    for res in output:
+48
+        print("" "".join(map(str, res)))
+49
+50
+if __name__ == ""__main__"":
+51
+    main()",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052224
+1390052209,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class FaultySensor {
+4
+    public static List<Integer> earliestFaults(int[] arr, int k) {
+5
+        List<Integer> result = new ArrayList<>();
+6
+        Deque<Integer> deque = new LinkedList<>();
+7
+8
+        for (int i = 0; i < arr.length; i++) {
+9
+   10
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+11
+                deque.poll();
+12
+            }
+13
+14
+            if (arr[i] < 0) {
+15
+                deque.offer(i);
+16
+            }
+17
+18
+            if (i >= k - 1) {
+19
+                result.add(deque.isEmpty() ? 0 : arr[deque.peek()]);
+20
+            }
+21
+        }
+22
+        return result;
+23
+    }
+24
+25
+    public static void main(String[] args) {
+26
+        Scanner scanner = new Scanner(System.in);
+27
+        int t = scanner.nextInt(); 
+28
+29
+        while (t-- > 0) {
+30
+            int n = scanner.nextInt(); 
+31
+            int k = scanner.nextInt(); 
+32
+            int[] arr = new int[n];
+33
+34
+            for (int i = 0; i < n; i++) {
+35
+                arr[i] = scanner.nextInt();
+36
+            }
+37
+38
+           39
+            List<Integer> faults = earliestFaults(arr, k);
+40
+            for (int val : faults) {
+41
+                System.out.print(val + "" "");
+42
+            }
+43
+            System.out.println();
+44
+        }
+45
+        scanner.close();
+46
+    }
+47
+}
+48",185,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052209

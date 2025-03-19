@@ -1,0 +1,786 @@
+submission_id,username,problem_name,language,code,page,url
+1390055706,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+using ll = long long;
+5
+6
+int main() {
+7
+    ios::sync_with_stdio(false);
+8
+    cin.tie(0);
+9
+10
+    int T;
+11
+    cin >> T;
+12
+    for (int t = 0; t < T; t++) {
+13
+        int n, k;
+14
+        cin >> n >> k;
+15
+        vector<ll> a(n);
+16
+        for (int i = 0; i < n; i++) {
+17
+            cin >> a[i];
+18
+        }
+19
+20
+        const ll INF = 1e18;
+21
+22
+        vector<ll> prev(k + 1, INF);
+23
+        prev[0] = 0; 
+24
+25
+        for (int i = 0; i < n; i++) {
+26
+            vector<ll> curr(k + 1, INF);
+27
+            for (int s = 0; s <= k; s++) {
+28
+                // Don't skip i
+29
+                curr[s] = prev[s] + a[i] + s;
+30
+                if (s > 0) {
+31
+                    curr[s] = min(curr[s], prev[s - 1]);
+32
+                }
+33
+            }
+34
+            prev = curr; 
+35
+        }
+36
+37
+        ll ans = *min_element(prev.begin(), prev.end());
+38
+        cout << ans << '\n';
+39
+    }
+40
+    return 0;
+41
+}",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055706
+1390055710,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+    min_total_effort = float('inf')
+3
+    4
+    dp = [[float('inf') for _ in range(k+1)] for _ in range(n+1)]
+5
+    dp[0][0] = 0  
+6
+    7
+    for i in range(1, n+1):
+8
+        current_strength = strengths[i-1]
+9
+        10
+        for j in range(k+1):
+11
+            if dp[i-1][j] != float('inf'):
+12
+                dp[i][j] = min(dp[i][j], dp[i-1][j] + current_strength + j)
+13
+        14
+        for j in range(1, k+1):
+15
+            if dp[i-1][j-1] != float('inf'):
+16
+                dp[i][j] = min(dp[i][j], dp[i-1][j-1])
+17
+    18
+    return min(dp[n])
+19
+20
+def solve_test_cases():
+21
+    t = int(input())  
+22
+    23
+    results = []
+24
+    for _ in range(t):
+25
+        n, k = map(int, input().split())
+26
+        strengths = list(map(int, input().split()))
+27
+        28
+        min_effort = min_effort_to_breach(n, k, strengths)
+29
+        results.append(min_effort)
+30
+    31
+    return results
+32
+33
+if __name__ == ""__main__"":
+34
+    results = solve_test_cases()
+35
+    for result in results:
+36
+        print(result)",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055710
+1390055709,unknown,unknown,unknown,"1
+import sys
+2
+3
+def min_pruning_cost(T, test_cases):
+4
+    results = []
+5
+    6
+    for servers in test_cases:
+7
+        first_one = servers.find('1')  # First occurrence of '1'
+8
+        last_one = servers.rfind('1')  # Last occurrence of '1'
+9
+10
+        if first_one == -1:  # No '1' present in the string
+11
+            results.append(""0"")
+12
+            continue
+13
+14
+        # Core section between first and last '1'
+15
+        core_section = servers[first_one:last_one + 1]
+16
+        idle_remaining = core_section.count('0')  # Count '0's in core section
+17
+        18
+        # Active servers removed from edges
+19
+        active_removed = servers[:first_one].count('1') + servers[last_one + 1:].count('1')
+20
+        21
+        # Minimum cost
+22
+        results.append(str(max(idle_remaining, active_removed)))
+23
+24
+    # Print all results efficiently
+25
+    sys.stdout.write(""\n"".join(results) + ""\n"")
+26
+27
+# **Input Handling**
+28
+T = int(sys.stdin.readline().strip())  # Number of test cases
+29
+test_cases = [sys.stdin.readline().strip() for _ in range(T)]
+30
+31
+# **Function Call**
+32
+min_pruning_cost(T, test_cases)
+33",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055709
+1390055697,unknown,unknown,unknown,"1
+def minimize_decommission_cost(test_cases):
+2
+    results = []
+3
+4
+    for binary_string in test_cases:
+5
+        n = len(binary_string)
+6
+        total_idle = binary_string.count('0') 
+7
+        total_active = binary_string.count('1')  
+8
+9
+        min_cost = float('inf')  
+10
+11
+        12
+        for start in range(n + 1):  
+13
+            for end in range(n - start + 1):  
+14
+                15
+                remaining = binary_string[start:n - end]
+16
+17
+                18
+                remaining_idle = remaining.count('0')
+19
+                decommissioned_active = total_active - remaining.count('1')
+20
+21
+                22
+                cost = max(remaining_idle, decommissioned_active)
+23
+                min_cost = min(min_cost, cost)
+24
+25
+        results.append(min_cost)
+26
+27
+    return results
+28
+29
+30
+31
+T = int(input().strip())
+32
+test_cases = [input().strip() for _ in range(T)]
+33
+34
+35
+results = minimize_decommission_cost(test_cases)
+36
+for result in results:
+37
+    print(result)
+38",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055697
+1390055699,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    6
+    static boolean isFeasible(int maxShifts, int[] onePositions, int totalOnes) {
+7
+        if (maxShifts >= totalOnes) return true;
+8
+        9
+        int right = 0;
+10
+        for (int left = 0; left < totalOnes; left++) {
+11
+            if (right < left) right = left;
+12
+            13
+            while (right < totalOnes && (onePositions[right] - onePositions[left] - (right - left)) <= maxShifts) {
+14
+                right++;
+15
+            }
+16
+            17
+            int consecutive = right - left;
+18
+            if (consecutive >= totalOnes - maxShifts) return true;
+19
+        }
+20
+        return false;
+21
+    }
+22
+    23
+    public static void main(String[] args) {
+24
+        Scanner scanner = new Scanner(System.in);
+25
+        int testCases = scanner.nextInt();
+26
+        27
+        while (testCases-- > 0) {
+28
+            String input = scanner.next();
+29
+            int length = input.length();
+30
+            31
+            List<Integer> oneIndicesList = new ArrayList<>();
+32
+            for (int i = 0; i < length; i++) {
+33
+                if (input.charAt(i) == '1') {
+34
+                    oneIndicesList.add(i);
+35
+                }
+36
+            }
+37
+            38
+            int totalOnes = oneIndicesList.size();
+39
+            40
+            if (totalOnes == 0) {
+41
+                System.out.println(0);
+42
+                continue;
+43
+            }
+44
+            45
+            int[] onePositions = new int[totalOnes];
+46
+            for (int i = 0; i < totalOnes; i++) {
+47
+                onePositions[i] = oneIndicesList.get(i);
+48
+            }
+49
+            50
+            int low = 0, high = totalOnes, result = high;
+51
+            while (low <= high) {
+52
+                int mid = low + (high - low) / 2;
+53
+                if (isFeasible(mid, onePositions, totalOnes)) {
+54
+                    result = mid;
+55
+                    high = mid - 1;
+56
+                } else {
+57
+                    low = mid + 1;
+58
+                }
+59
+            }
+60
+            System.out.println(result);
+61
+        }
+62
+        scanner.close();
+63
+    }
+64
+}
+65",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055699
+1390055701,unknown,unknown,unknown,"1
+import sys
+2
+3
+def main():
+4
+    input = sys.stdin.read
+5
+    data = input().split(""\n"")
+6
+    7
+    t = int(data[0])
+8
+    index = 1
+9
+10
+    results = []
+11
+    for _ in range(t):
+12
+        n, k = map(int, data[index].split())
+13
+        strengths = list(map(int, data[index + 1].split()))
+14
+        index += 2
+15
+        16
+        if k >= n:
+17
+            results.append(""0"")
+18
+            continue
+19
+        20
+        # Calculate the impact of each firewall: strength + index
+21
+        impact = [(strengths[i] + i, i) for i in range(n)]
+22
+        23
+        # Sort firewalls by impact (higher impact should be skipped first)
+24
+        impact.sort(reverse=True)
+25
+        26
+        # Select the top k firewalls to skip
+27
+        to_skip = set(idx for _, idx in impact[:k])
+28
+        29
+        # Compute the minimal effort
+30
+        effort = 0
+31
+        skipped = 0
+32
+        33
+        for i in range(n):
+34
+            if i in to_skip:
+35
+                skipped += 1
+36
+            else:
+37
+                effort += strengths[i] + skipped
+38
+        39
+        results.append(str(effort))
+40
+    41
+    # Print all results at once (faster output handling)
+42
+    sys.stdout.write(""\n"".join(results) + ""\n"")
+43
+44
+if __name__ == ""__main__"":
+45
+    main()",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055701
+1390055693,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+using ll = long long;
+5
+6
+int main() {
+7
+    // Optimize input/output
+8
+    ios::sync_with_stdio(false);
+9
+    cin.tie(0);
+10
+11
+    int T;
+12
+    cin >> T;
+13
+    for (int t = 0; t < T; t++) {
+14
+        int n, k;
+15
+        cin >> n >> k;
+16
+        vector<ll> a(n);
+17
+        for (int i = 0; i < n; i++) {
+18
+            cin >> a[i];
+19
+        }
+20
+21
+        // INF for impossible states , really tough one to solved actually 
+22
+        const ll INF = 1e18;
+23
+24
+        vector<ll> prev(k + 1, INF);
+25
+        prev[0] = 0; 
+26
+27
+    28
+        for (int i = 0; i < n; i++) {
+29
+            vector<ll> curr(k + 1, INF);
+30
+            for (int s = 0; s <= k; s++) {
+31
+                // Don't skip i
+32
+                curr[s] = prev[s] + a[i] + s;
+33
+                // Skip i (if possible)
+34
+                if (s > 0) {
+35
+                    curr[s] = min(curr[s], prev[s - 1]);
+36
+                }
+37
+            }
+38
+            prev = curr; 
+39
+        }
+40
+41
+42
+        ll ans = *min_element(prev.begin(), prev.end());
+43
+        cout << ans << '\n';
+44
+    }
+45
+    return 0;
+46
+}",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055693
+1390055694,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class FaultySensor {
+4
+    public static List<Integer> earliestFaults(int[] arr, int k) {
+5
+        List<Integer> result = new ArrayList<>();
+6
+        Deque<Integer> deque = new LinkedList<>();
+7
+8
+        for (int i = 0; i < arr.length; i++) {
+9
+            // Remove out-of-window elements
+10
+            if (!deque.isEmpty() && deque.peek() < i - k + 1) {
+11
+                deque.poll();
+12
+            }
+13
+14
+            // Add new faulty readings
+15
+            if (arr[i] < 0) {
+16
+                deque.offer(i);
+17
+            }
+18
+19
+            // Collect results for valid windows
+20
+            if (i >= k - 1) {
+21
+                result.add(deque.isEmpty() ? 0 : arr[deque.peek()]);
+22
+            }
+23
+        }
+24
+        return result;
+25
+    }
+26
+27
+    public static void main(String[] args) {
+28
+        Scanner scanner = new Scanner(System.in);
+29
+        int t = scanner.nextInt(); // Number of test cases
+30
+31
+        while (t-- > 0) {
+32
+            int n = scanner.nextInt(); // Array size
+33
+            int k = scanner.nextInt(); // Batch size
+34
+            int[] arr = new int[n];
+35
+36
+            for (int i = 0; i < n; i++) {
+37
+                arr[i] = scanner.nextInt();
+38
+            }
+39
+40
+            // Compute and print results
+41
+            List<Integer> faults = earliestFaults(arr, k);
+42
+            for (int val : faults) {
+43
+                System.out.print(val + "" "");
+44
+            }
+45
+            System.out.println();
+46
+        }
+47
+        scanner.close();
+48
+    }
+49
+}",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390055694
+1390055695,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int t = sc.nextInt();
+8
+9
+        while (t-- > 0) {
+10
+            int n = sc.nextInt();
+11
+            int k = sc.nextInt();
+12
+            int[] a = new int[n];
+13
+14
+            for (int i = 0; i < n; i++) {
+15
+                a[i] = sc.nextInt();
+16
+            }
+17
+18
+            int[][] dp = new int[n + 1][k + 1];
+19
+            for (int[] row : dp) Arrays.fill(row, -1);
+20
+21
+            int result = solveDP(0, k, 0, a, dp);
+22
+            System.out.println(result);
+23
+        }
+24
+        sc.close();
+25
+    }
+26
+27
+    static int solveDP(int index, int remainingSkips, int skippedCount, int[] a, int[][] dp) {
+28
+        if (index == a.length) return 0;
+29
+        if (dp[index][remainingSkips] != -1) return dp[index][remainingSkips];
+30
+31
+        int skipEffort = Integer.MAX_VALUE;
+32
+        if (remainingSkips > 0) {
+33
+            skipEffort = solveDP(index + 1, remainingSkips - 1, skippedCount + 1, a, dp);
+34
+        }
+35
+36
+        int takeEffort = a[index] + skippedCount + solveDP(index + 1, remainingSkips, skippedCount, a, dp);
+37
+38
+        dp[index][remainingSkips] = Math.min(skipEffort, takeEffort);
+39
+        return dp[index][remainingSkips];
+40
+    }
+41
+}
+42
+43",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055695
+1390055684,unknown,unknown,unknown,"1
+import sys
+2
+3
+def min_pruning_cost():
+4
+    input_data = sys.stdin.read().splitlines()
+5
+    t = int(input_data[0].strip())
+6
+    line = 1
+7
+    results = []
+8
+    9
+    for _ in range(t):
+10
+        servers = input_data[line].strip()
+11
+        line += 1
+12
+        n = len(servers)
+13
+        14
+        active_positions = [i for i, ch in enumerate(servers) if ch == '1']
+15
+        active_count = len(active_positions)
+16
+        17
+        if active_count == 0:
+18
+            results.append(""0"")
+19
+            continue
+20
+        21
+        offset_positions = [active_positions[i] - i for i in range(active_count)]
+22
+        23
+        def is_valid_pruning(limit):
+24
+            if active_count - limit <= 0:
+25
+                return True
+26
+            j = 0
+27
+            for i in range(active_count):
+28
+                if j < i:
+29
+                    j = i
+30
+                while j < active_count and offset_positions[j] - offset_positions[i] <= limit:
+31
+                    j += 1
+32
+                if j - i >= active_count - limit:
+33
+                    return True
+34
+            return False
+35
+        36
+        lo, hi, min_cost = 0, n, n
+37
+        while lo <= hi:
+38
+            mid = (lo + hi) // 2
+39
+            if is_valid_pruning(mid):
+40
+                min_cost = mid
+41
+                hi = mid - 1
+42
+            else:
+43
+                lo = mid + 1
+44
+        45
+        results.append(str(min_cost))
+46
+    47
+    sys.stdout.write(""\n"".join(results))
+48
+    49
+if __name__ == ""__main__"":
+50
+    min_pruning_cost()",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055684

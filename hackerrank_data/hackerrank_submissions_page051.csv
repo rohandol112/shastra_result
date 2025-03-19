@@ -1,0 +1,847 @@
+submission_id,username,problem_name,language,code,page,url
+1390055075,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+3
+    impacts = []
+4
+    5
+    for i in range(n):
+6
+7
+        impact = strengths[i] - (n - i - 1)
+8
+        impacts.append((impact, i))
+9
+    10
+    impacts.sort(reverse=True)
+11
+    12
+    to_skip = set(impacts[i][1] for i in range(k))
+13
+14
+    total_effort = 0
+15
+    penalty = 0
+16
+    17
+    for i in range(n):
+18
+        if i in to_skip:
+19
+            penalty += 1
+20
+        else:
+21
+            total_effort += strengths[i] + penalty
+22
+    23
+    return total_effort
+24
+25
+def solve_test_cases():
+26
+27
+    t = int(input())  
+28
+    results = []
+29
+    30
+    for _ in range(t):
+31
+        n, k = map(int, input().split())
+32
+        strengths = list(map(int, input().split()))
+33
+        results.append(min_effort_to_breach(n, k, strengths))
+34
+    35
+    return results
+36
+37
+def main():
+38
+    results = solve_test_cases()
+39
+    40
+    for result in results:
+41
+        print(result)
+42
+43
+if name == ""main"":
+44
+    main()",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055075
+1390055079,unknown,unknown,unknown,1,51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055079
+1390055078,unknown,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+int main() {
+9
+    int T;
+10
+    cin >> T;
+11
+    while (T--) {
+12
+        string s;
+13
+        cin >> s;
+14
+        int n = s.size();
+15
+16
+        // Prefix sums
+17
+        vector<int> prefix_1(n + 1, 0);
+18
+        vector<int> prefix_0(n + 1, 0);
+19
+        for (int i = 0; i < n; i++) {
+20
+            prefix_1[i + 1] = prefix_1[i] + (s[i] == '1' ? 1 : 0);
+21
+            prefix_0[i + 1] = prefix_0[i] + (s[i] == '0' ? 1 : 0);
+22
+        }
+23
+24
+        int total_1 = prefix_1[n];
+25
+        int min_cost = n;
+26
+27
+        // Try all possible kept substrings [l, r)
+28
+        for (int l = 0; l <= n; l++) {
+29
+            // Instead of full nested loop, calculate cost directly
+30
+            // for r = n (maximum right end possible for fixed l)
+31
+            for (int r = l; r <= n; r++) {
+32
+                int kept_1 = prefix_1[r] - prefix_1[l];
+33
+                int kept_0 = prefix_0[r] - prefix_0[l];
+34
+                int removed_1 = total_1 - kept_1;
+35
+                int cost = max(removed_1, kept_0);
+36
+                if (cost < min_cost) min_cost = cost;
+37
+            }
+38
+        }
+39
+40
+        cout << min_cost << endl;
+41
+    }
+42
+    return 0;
+43
+}",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055078
+1390055068,unknown,unknown,unknown,"1
+2
+def min_cost_server_pruning(server_rack):
+3
+    n = len(server_rack)
+4
+5
+    active_prefix_sum = [0] * (n + 1)
+6
+7
+    idle_suffix_sum = [0] * (n + 1)
+8
+    for i in range(n):
+9
+10
+        active_prefix_sum[i+1] = active_prefix_sum[i] + (1 if server_rack[i] == '1' else 0)
+11
+    for i in range(n-1, -1, -1):
+12
+13
+        idle_suffix_sum[i] = idle_suffix_sum[i+1] + (1 if server_rack[i] == '0' else 0)
+14
+15
+    min_cost = float('inf')
+16
+    for left in range(n + 1):
+17
+18
+        for right in range(left, n + 1):
+19
+20
+            # Active servers decommissioned (from start and end)
+21
+22
+            active_removed = active_prefix_sum[left] + (active_prefix_sum[n] - active_prefix_sum[right])
+23
+24
+            25
+26
+            # Idle servers remaining in the middle
+27
+28
+            idle_remaining = idle_suffix_sum[left] - idle_suffix_sum[right]
+29
+            cost = max(idle_remaining, active_removed)
+30
+            min_cost = min(min_cost, cost)
+31
+    return min_cost
+32
+33
+t = int(input())
+34
+35
+for _ in range(t):
+36
+37
+    server_rack = input().strip()
+38
+39
+    print(min_cost_server_pruning(server_rack))",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055068
+1390055069,unknown,unknown,unknown,"1
+def solve():
+2
+    n, k = map(int, input().split())
+3
+    a = list(map(int, input().split()))
+4
+    5
+    min_effort = float('inf')
+6
+    7
+    for i in range(1 << n):
+8
+        skipped = []
+9
+        efforts = []
+10
+        11
+        for j in range(n):
+12
+            if (i >> j) & 1:
+13
+                skipped.append(j)
+14
+            else:
+15
+                efforts.append(j)
+16
+        17
+        if len(skipped) <= k:
+18
+            effort = 0
+19
+            skipped_count = 0
+20
+            for j in range(n):
+21
+                if j in skipped:
+22
+                    skipped_count += 1
+23
+                else:
+24
+                    effort += a[j] + skipped_count
+25
+            min_effort = min(min_effort, effort)
+26
+    27
+    print(min_effort)
+28
+    29
+t = int(input())
+30
+for _ in range(t):
+31
+    solve()",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055069
+1390055074,unknown,unknown,unknown,"1
+def solve(n, k, a):
+2
+    if k >= n:
+3
+        return 0
+4
+5
+    mem = {}
+6
+7
+    def dfs(i, kl, p):
+8
+        if i == n:
+9
+            return 0
+10
+11
+        st = (i, kl, p)
+12
+        if st in mem:
+13
+14
+            return mem[st]
+15
+16
+        ans = a[i] + p + dfs(i + 1, kl, p)
+17
+18
+        if kl > 0:
+19
+            ans = min(ans, dfs(i + 1, kl - 1, p + 1))
+20
+21
+        mem[st] = ans
+22
+        return ans
+23
+24
+25
+    return dfs(0, k, 0)
+26
+27
+def main():
+28
+    t = int(input())
+29
+    res = []
+30
+31
+    for _ in range(t):
+32
+        n, k = map(int, input().split())
+33
+        a = list(map(int, input().split()))
+34
+        res.append(solve(n, k, a))
+35
+36
+37
+    for x in res:
+38
+        print(x)
+39
+40
+if __name__ == ""__main__"":
+41
+42
+    main()",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055074
+1390055061,unknown,unknown,unknown,"1
+import sys
+2
+data = sys.stdin.read().split()
+3
+if not data:
+4
+    exit()
+5
+t = int(data[0])
+6
+ptr = 1
+7
+res = []
+8
+for _ in range(t):
+9
+    s = data[ptr]
+10
+    ptr += 1
+11
+    n = len(s)
+12
+    pre = [0]*(n+1)
+13
+    for i in range(n):
+14
+        pre[i+1] = pre[i] + (1 if s[i]=='1' else 0)
+15
+    O = pre[n]
+16
+    best = 10**9
+17
+    for L in range(n+1):
+18
+        if L <= n - O:
+19
+            cost = O - (pre[L+O] - pre[L])
+20
+        else:
+21
+            cost = pre[L] + ((n - L - O) if n - L - O > 0 else 0)
+22
+        if cost < best:
+23
+            best = cost
+24
+    res.append(str(best))
+25
+sys.stdout.write(""\n"".join(res))
+26",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055061
+1390055063,unknown,unknown,unknown,"1
+2
+#include <bits/stdc++.h>
+3
+using namespace std;
+4
+5
+typedef long long ll;
+6
+7
+void solve() {
+8
+    int n, k;
+9
+    cin >> n >> k;
+10
+    vector<ll> arr(n);
+11
+    ll total = 0;
+12
+    13
+    14
+    for (int i = 0; i < n; i++) {
+15
+        cin >> arr[i];
+16
+        total += arr[i];
+17
+    }
+18
+    19
+    vector<ll> benefits(n);
+20
+    for (int j = 0; j < n; j++){
+21
+        benefits[j] = arr[j] - (n - 1 - j);
+22
+    }
+23
+    24
+    sort(benefits.begin(), benefits.end(), greater<ll>());
+25
+26
+    ll best = total;
+27
+    ll sumb = 0;
+28
+    int m = min(k, n);
+29
+    for (int i = 0; i < m; i++){
+30
+        if (benefits[i] < 0) {
+31
+        }
+32
+        sumb += benefits[i];
+33
+        int skips = i + 1;
+34
+        ll candidate = total - sumb - (skips * (skips - 1LL)) / 2LL;
+35
+        best = min(best, candidate);
+36
+    }
+37
+    cout << best << ""\n"";
+38
+}
+39
+40
+int main() {
+41
+    int t; cin >> t;
+42
+    while (t--) {
+43
+        solve();
+44
+    }
+45
+    return 0;
+46
+}",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390055063
+1390055064,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <string>
+4
+#include <climits>
+5
+6
+using namespace std;
+7
+8
+vector<int> min_decommissioning_cost(const vector<string>& test_cases) {
+9
+    vector<int> results;
+10
+    11
+    for (const string& servers : test_cases) {
+12
+        int n = servers.size();
+13
+        int total_0 = 0;
+14
+        for (char c : servers) {
+15
+            if (c == '0') total_0++;
+16
+        }
+17
+        18
+        // Precompute prefix counts for 0s and 1s
+19
+        vector<int> prefix_0(n + 1, 0), prefix_1(n + 1, 0);
+20
+        for (int i = 1; i <= n; ++i) {
+21
+            prefix_0[i] = prefix_0[i-1] + (servers[i-1] == '0');
+22
+            prefix_1[i] = prefix_1[i-1] + (servers[i-1] == '1');
+23
+        }
+24
+        25
+        // Precompute suffix counts for 0s and 1s
+26
+        vector<int> suffix_0(n + 1, 0), suffix_1(n + 1, 0);
+27
+        for (int j = 1; j <= n; ++j) {
+28
+            suffix_0[j] = suffix_0[j-1] + (servers[n - j] == '0');
+29
+            suffix_1[j] = suffix_1[j-1] + (servers[n - j] == '1');
+30
+        }
+31
+        32
+        int min_cost = INT_MAX;
+33
+        34
+        // Iterate over all possible prefixes (i)
+35
+        for (int i = 0; i <= n; ++i) {
+36
+            int j_max = n - i;
+37
+            int left = 0, right = j_max;
+38
+            int best_j = 0;
+39
+            int best_cost = INT_MAX;
+40
+            41
+            // Binary search for the best j
+42
+            while (left <= right) {
+43
+                int mid = (left + right) / 2;
+44
+                int remaining_0 = total_0 - (prefix_0[i] + suffix_0[mid]);
+45
+                int decommissioned_1 = prefix_1[i] + suffix_1[mid];
+46
+                int current_cost = max(remaining_0, decommissioned_1);
+47
+                48
+                if (current_cost < best_cost) {
+49
+                    best_cost = current_cost;
+50
+                    best_j = mid;
+51
+                } else if (current_cost == best_cost && mid < best_j) {
+52
+                    best_j = mid;
+53
+                }
+54
+                55
+                if (decommissioned_1 < remaining_0) {
+56
+                    left = mid + 1;
+57
+                } else {
+58
+                    right = mid - 1;
+59
+                }
+60
+            }
+61
+            62
+            // Check neighboring j values
+63
+            for (int dj : {-1, 0, 1}) {
+64
+                int j = best_j + dj;
+65
+                if (j >= 0 && j <= j_max) {
+66
+                    int remaining_0 = total_0 - (prefix_0[i] + suffix_0[j]);
+67
+                    int decommissioned_1 = prefix_1[i] + suffix_1[j];
+68
+                    int current_cost = max(remaining_0, decommissioned_1);
+69
+                    if (current_cost < best_cost) {
+70
+                        best_cost = current_cost;
+71
+                    }
+72
+                }
+73
+            }
+74
+            75
+            if (best_cost < min_cost) {
+76
+                min_cost = best_cost;
+77
+            }
+78
+        }
+79
+        80
+        results.push_back(min_cost);
+81
+    }
+82
+    83
+    return results;
+84
+}
+85
+86
+int main() {
+87
+    int T;
+88
+    cin >> T;
+89
+    vector<string> test_cases(T);
+90
+    for (int i = 0; i < T; ++i) {
+91
+        cin >> test_cases[i];
+92
+    }
+93
+    94
+    vector<int> results = min_decommissioning_cost(test_cases);
+95
+    96
+    for (int result : results) {
+97
+        cout << result << endl;
+98
+    }
+99
+    100
+    return 0;
+101
+}
+102",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055064
+1390055060,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <string>
+4
+#include <climits>
+5
+6
+using namespace std;
+7
+8
+vector<int> min_decommissioning_cost(const vector<string>& test_cases) {
+9
+    vector<int> results;
+10
+    11
+    for (const string& servers : test_cases) {
+12
+        int n = servers.size();
+13
+        int total_0 = 0;
+14
+        for (char c : servers) {
+15
+            if (c == '0') total_0++;
+16
+        }
+17
+        int total_1 = n - total_0;
+18
+        19
+        // Precompute prefix counts for 0s and 1s
+20
+        vector<int> prefix_0(n + 1, 0), prefix_1(n + 1, 0);
+21
+        for (int i = 1; i <= n; ++i) {
+22
+            prefix_0[i] = prefix_0[i-1] + (servers[i-1] == '0');
+23
+            prefix_1[i] = prefix_1[i-1] + (servers[i-1] == '1');
+24
+        }
+25
+        26
+        // Precompute suffix counts for 0s and 1s
+27
+        vector<int> suffix_0(n + 1, 0), suffix_1(n + 1, 0);
+28
+        for (int j = 1; j <= n; ++j) {
+29
+            suffix_0[j] = suffix_0[j-1] + (servers[n - j] == '0');
+30
+            suffix_1[j] = suffix_1[j-1] + (servers[n - j] == '1');
+31
+        }
+32
+        33
+        int min_cost = INT_MAX;
+34
+        35
+        // Iterate over all possible prefixes (i)
+36
+        for (int i = 0; i <= n; ++i) {
+37
+            int j_max = n - i;
+38
+            int left = 0, right = j_max;
+39
+            int best_j = 0;
+40
+            int best_cost = INT_MAX;
+41
+            42
+            // Binary search for the best j
+43
+            while (left <= right) {
+44
+                int mid = (left + right) / 2;
+45
+                int remaining_0 = total_0 - (prefix_0[i] + suffix_0[mid]);
+46
+                int decommissioned_1 = prefix_1[i] + suffix_1[mid];
+47
+                int current_cost = max(remaining_0, decommissioned_1);
+48
+                49
+                if (current_cost < best_cost) {
+50
+                    best_cost = current_cost;
+51
+                    best_j = mid;
+52
+                } else if (current_cost == best_cost && mid < best_j) {
+53
+                    best_j = mid;
+54
+                }
+55
+                56
+                if (decommissioned_1 < remaining_0) {
+57
+                    left = mid + 1;
+58
+                } else {
+59
+                    right = mid - 1;
+60
+                }
+61
+            }
+62
+            63
+            // Check neighboring j values
+64
+            for (int dj : {-1, 0, 1}) {
+65
+                int j = best_j + dj;
+66
+                if (j >= 0 && j <= j_max) {
+67
+                    int remaining_0 = total_0 - (prefix_0[i] + suffix_0[j]);
+68
+                    int decommissioned_1 = prefix_1[i] + suffix_1[j];
+69
+                    int current_cost = max(remaining_0, decommissioned_1);
+70
+                    if (current_cost < best_cost) {
+71
+                        best_cost = current_cost;
+72
+                    }
+73
+                }
+74
+            }
+75
+            76
+            if (best_cost < min_cost) {
+77
+                min_cost = best_cost;
+78
+            }
+79
+        }
+80
+        81
+        results.push_back(min_cost);
+82
+    }
+83
+    84
+    return results;
+85
+}
+86
+87
+int main() {
+88
+    int T;
+89
+    cin >> T;
+90
+    vector<string> test_cases(T);
+91
+    for (int i = 0; i < T; ++i) {
+92
+        cin >> test_cases[i];
+93
+    }
+94
+    95
+    vector<int> results = min_decommissioning_cost(test_cases);
+96
+    97
+    for (int result : results) {
+98
+        cout << result << endl;
+99
+    }
+100
+    101
+    return 0;
+102
+}",51,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390055060

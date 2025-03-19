@@ -1,0 +1,1451 @@
+submission_id,username,problem_name,language,code,page,url
+1390054224,unknown,unknown,unknown,"1
+def earliest_fault(arr, k):
+2
+    results = []
+3
+    4
+    # Loop through each possible batch
+5
+    for i in range(len(arr) - k + 1):
+6
+        fault_found = False
+7
+        8
+        # Find earliest fault in current batch
+9
+        for j in range(i, i + k):
+10
+            if arr[j] < 0:
+11
+                results.append(arr[j])
+12
+                fault_found = True
+13
+                break
+14
+                15
+        # If no fault found in batch, append 0
+16
+        if not fault_found:
+17
+            results.append(0)
+18
+    19
+    return results
+20
+21
+# Process test cases
+22
+t = int(input())
+23
+for _ in range(t):
+24
+    n, k = map(int, input().split())
+25
+    arr = list(map(int, input().split()))
+26
+    27
+    result = earliest_fault(arr, k)
+28
+    print(*result)",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390054224
+1390054225,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class Solution {
+4
+    public static void main(String[] args) {
+5
+        Scanner sc = new Scanner(System.in);
+6
+        int T = sc.nextInt();
+7
+        while (T-- > 0) {
+8
+            String s = sc.next();
+9
+            int n = s.length();
+10
+            int[] prefixOnes = new int[n + 1];
+11
+            int[] suffixZeros = new int[n + 1];
+12
+13
+            // Precompute prefix sum of ones
+14
+            for (int i = 0; i < n; i++) {
+15
+                prefixOnes[i + 1] = prefixOnes[i] + (s.charAt(i) == '1' ? 1 : 0);
+16
+            }
+17
+18
+            // Precompute suffix sum of zeros
+19
+            for (int i = n - 1; i >= 0; i--) {
+20
+                suffixZeros[n - i] = suffixZeros[n - i - 1] + (s.charAt(i) == '0' ? 1 : 0);
+21
+            }
+22
+23
+            int minCost = Integer.MAX_VALUE;
+24
+            // Try removing i characters from start, j characters from end
+25
+            for (int i = 0; i <= n; i++) { // prefix removals
+26
+                for (int j = 0; j <= n - i; j++) { // suffix removals
+27
+                    int onesRemoved = prefixOnes[i] + (prefixOnes[n] - prefixOnes[n - j]);
+28
+                    int zerosRemaining = 0;
+29
+                    // Count zeros between
+30
+                    for (int k = i; k < n - j; k++) {
+31
+                        if (s.charAt(k) == '0') zerosRemaining++;
+32
+                    }
+33
+                    minCost = Math.min(minCost, Math.max(zerosRemaining, onesRemoved));
+34
+                }
+35
+            }
+36
+            System.out.println(minCost);
+37
+        }
+38
+    }
+39
+}
+40",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054225
+1390054229,unknown,unknown,unknown,"1
+def min_effort_to_breach(test_cases):
+2
+    results = []
+3
+    for n, k, firewalls in test_cases:
+4
+        firewalls.sort()
+5
+        effort = sum(firewalls[:n - k])  # Regular effort
+6
+        for i in range(n - k, n):  # Apply security increase for skipped firewalls
+7
+            effort += firewalls[i] + (i - (n - k))
+8
+        results.append(str(effort))
+9
+    10
+    print(""\n"".join(results))
+11
+12
+# Read input
+13
+t = int(input())
+14
+test_cases = []
+15
+for _ in range(t):
+16
+    n, k = map(int, input().split())
+17
+    firewalls = list(map(int, input().split()))
+18
+    test_cases.append((n, k, firewalls))
+19
+20
+min_effort_to_breach(test_cases)
+21",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054229
+1390054220,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int T = sc.nextInt(); 
+8
+        9
+        while(T-- > 0) {
+10
+            int n = sc.nextInt();
+11
+            int k = sc.nextInt();
+12
+            int[] a = new int[n];
+13
+            for (int i = 0; i < n; i++){
+14
+                a[i] = sc.nextInt();
+15
+            }
+16
+            17
+           18
+            if(k >= n) {
+19
+                System.out.println(0);
+20
+                continue;
+21
+            }
+22
+            23
+         24
+            long INF = Long.MAX_VALUE / 2;
+25
+            long[] dp = new long[k+1];
+26
+            Arrays.fill(dp, INF);
+27
+            dp[0] = 0;
+28
+            29
+            30
+            for (int i = 0; i < n; i++) {
+31
+                int lim = Math.min(i+1, k);
+32
+                long[] newdp = new long[k+1];
+33
+                Arrays.fill(newdp, INF);
+34
+                35
+               36
+                for (int j = lim; j >= 0; j--) {
+37
+                   38
+                    newdp[j] = Math.min(newdp[j], dp[j] + a[i] + j);
+39
+                    40
+                   41
+                    if(j < k) {
+42
+                        newdp[j+1] = Math.min(newdp[j+1], dp[j]);
+43
+                    }
+44
+                }
+45
+                dp = newdp;
+46
+            }
+47
+            48
+           49
+            long ans = INF;
+50
+            for (int j = 0; j <= k; j++) {
+51
+                ans = Math.min(ans, dp[j]);
+52
+            }
+53
+            System.out.println(ans);
+54
+        }
+55
+        sc.close();
+56
+    }
+57
+}
+58",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054220
+1390054223,unknown,unknown,unknown,"1
+def min_decommissioning_cost(test_cases):
+2
+    results = []
+3
+    4
+    for servers in test_cases:
+5
+        n = len(servers)
+6
+        total_0 = servers.count('0')
+7
+        total_1 = n - total_0
+8
+        9
+        # Precompute prefix counts for 0s and 1s
+10
+        prefix_0 = [0] * (n + 1)
+11
+        prefix_1 = [0] * (n + 1)
+12
+        for i in range(1, n + 1):
+13
+            prefix_0[i] = prefix_0[i-1] + (servers[i-1] == '0')
+14
+            prefix_1[i] = prefix_1[i-1] + (servers[i-1] == '1')
+15
+        16
+        # Precompute suffix counts for 0s and 1s
+17
+        suffix_0 = [0] * (n + 1)
+18
+        suffix_1 = [0] * (n + 1)
+19
+        for j in range(1, n + 1):
+20
+            suffix_0[j] = suffix_0[j-1] + (servers[n - j] == '0')
+21
+            suffix_1[j] = suffix_1[j-1] + (servers[n - j] == '1')
+22
+        23
+        min_cost = float('inf')
+24
+        25
+        # Iterate over all possible prefixes (i)
+26
+        for i in range(n + 1):
+27
+            # The maximum j such that i + j <= n is j_max = n - i
+28
+            j_max = n - i
+29
+            30
+            # Binary search for the best j in [0, j_max]
+31
+            left = 0
+32
+            right = j_max
+33
+            best_j = 0
+34
+            best_cost = float('inf')
+35
+            36
+            while left <= right:
+37
+                mid = (left + right) // 2
+38
+                # Calculate remaining_0 and decommissioned_1 for j = mid
+39
+                remaining_0 = total_0 - (prefix_0[i] + suffix_0[mid])
+40
+                decommissioned_1 = prefix_1[i] + suffix_1[mid]
+41
+                current_cost = max(remaining_0, decommissioned_1)
+42
+                43
+                # Update best_j and best_cost if current_cost is better
+44
+                if current_cost < best_cost:
+45
+                    best_cost = current_cost
+46
+                    best_j = mid
+47
+                elif current_cost == best_cost and mid < best_j:
+48
+                    best_j = mid
+49
+                50
+                # Decide direction to search
+51
+                if decommissioned_1 < remaining_0:
+52
+                    # Need to remove more 1s (increase j)
+53
+                    left = mid + 1
+54
+                else:
+55
+                    # Need to remove fewer 1s (decrease j)
+56
+                    right = mid - 1
+57
+            58
+            # Check the best j found and neighboring values
+59
+            for j in [best_j - 1, best_j, best_j + 1]:
+60
+                if 0 <= j <= j_max:
+61
+                    remaining_0 = total_0 - (prefix_0[i] + suffix_0[j])
+62
+                    decommissioned_1 = prefix_1[i] + suffix_1[j]
+63
+                    current_cost = max(remaining_0, decommissioned_1)
+64
+                    if current_cost < best_cost:
+65
+                        best_cost = current_cost
+66
+            67
+            min_cost = min(min_cost, best_cost)
+68
+        69
+        results.append(min_cost)
+70
+    71
+    return results
+72
+73
+# Input reading
+74
+T = int(input())
+75
+test_cases = [input().strip() for _ in range(T)]
+76
+77
+# Get results
+78
+results = min_decommissioning_cost(test_cases)
+79
+80
+# Output results
+81
+for result in results:
+82
+    print(result)",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054223
+1390054222,unknown,unknown,unknown,"1
+def solve():
+2
+    s = input()
+3
+    n = len(s)
+4
+    5
+    ans = float('inf')
+6
+    7
+    for i in range(n + 1):
+8
+        for j in range(n - i + 1):
+9
+            10
+            decommissioned_ones = 0
+11
+            remaining_zeros = 0
+12
+            13
+            # Decommission from the beginning
+14
+            decommissioned_ones += s[:i].count('1')
+15
+            16
+            # Decommission from the end
+17
+            decommissioned_ones += s[n - j:].count('1')
+18
+            19
+            # Remaining string after decommissioning
+20
+            remaining_string = s[i:n - j]
+21
+            remaining_zeros = remaining_string.count('0')
+22
+            23
+            ans = min(ans, max(decommissioned_ones, remaining_zeros))
+24
+            25
+    print(ans)
+26
+27
+t = int(input())
+28
+for _ in range(t):
+29
+    solve()",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054222
+1390054214,unknown,unknown,unknown,"1
+import sys
+2
+from itertools import accumulate
+3
+4
+def min_effort(arr, k):
+5
+    n = len(arr)
+6
+    T = sum(arr)
+7
+    A = [arr[i] + (i+1) for i in range(n)]
+8
+    A.sort(reverse=True)
+9
+    P = [0] + list(accumulate(A))
+10
+    m_max = min(k, n)
+11
+    best = float('inf')
+12
+    for m in range(m_max + 1):
+13
+        cost = T + m * n - (m * m - m) // 2 - P[m]
+14
+        if cost < best:
+15
+            best = cost
+16
+    return best
+17
+18
+def solve():
+19
+    data = sys.stdin.read().strip().split()
+20
+    if not data:
+21
+        return
+22
+    t = int(data[0])
+23
+    index = 1
+24
+    res = []
+25
+    for _ in range(t):
+26
+        n = int(data[index]); index += 1
+27
+        k = int(data[index]); index += 1
+28
+        arr = list(map(int, data[index:index+n])); index += n
+29
+        res.append(str(min_effort(arr, k)))
+30
+    sys.stdout.write(""\n"".join(res))
+31
+32
+if __name__ == ""__main__"":
+33
+    solve()
+34",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054214
+1390054217,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        int T = sc.nextInt(); 
+8
+        9
+        while(T-- > 0) {
+10
+            int n = sc.nextInt();
+11
+            int k = sc.nextInt();
+12
+            int[] a = new int[n];
+13
+            for (int i = 0; i < n; i++){
+14
+                a[i] = sc.nextInt();
+15
+            }
+16
+            17
+           18
+            if(k >= n) {
+19
+                System.out.println(0);
+20
+                continue;
+21
+            }
+22
+            23
+         24
+            long INF = Long.MAX_VALUE / 2;
+25
+            long[] dp = new long[k+1];
+26
+            Arrays.fill(dp, INF);
+27
+            dp[0] = 0;
+28
+            29
+            30
+            for (int i = 0; i < n; i++) {
+31
+                int lim = Math.min(i+1, k);
+32
+                long[] newdp = new long[k+1];
+33
+                Arrays.fill(newdp, INF);
+34
+                35
+               36
+                for (int j = lim; j >= 0; j--) {
+37
+                   38
+                    newdp[j] = Math.min(newdp[j], dp[j] + a[i] + j);
+39
+                    40
+                   41
+                    if(j < k) {
+42
+                        newdp[j+1] = Math.min(newdp[j+1], dp[j]);
+43
+                    }
+44
+                }
+45
+                dp = newdp;
+46
+            }
+47
+            48
+           49
+            long ans = INF;
+50
+            for (int j = 0; j <= k; j++) {
+51
+                ans = Math.min(ans, dp[j]);
+52
+            }
+53
+            System.out.println(ans);
+54
+        }
+55
+        sc.close();
+56
+    }
+57
+}
+58",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054217
+1390054218,unknown,unknown,unknown,"1
+def min_decommissioning_cost(server_rack):
+2
+    n = len(server_rack)
+3
+    4
+    # Initialize counters
+5
+    min_cost = float('inf')
+6
+    7
+    # Try all possible combinations of removing prefix and suffix
+8
+    for i in range(n + 1):  # i = length of prefix to remove
+9
+        for j in range(n + 1 - i):  # j = length of suffix to remove
+10
+            if i + j > n:
+11
+                continue
+12
+                13
+            # Calculate what's left after removing prefix and suffix
+14
+            remaining = server_rack[i:n-j]
+15
+            16
+            if not remaining:
+17
+                continue  # Cannot remove all servers
+18
+                19
+            # Count idle servers remaining and active servers removed
+20
+            idle_remaining = remaining.count('0')
+21
+            active_removed = server_rack[:i].count('1') + server_rack[n-j:].count('1')
+22
+            23
+            # Cost is the maximum of these two
+24
+            cost = max(idle_remaining, active_removed)
+25
+            26
+            # Update min_cost if this is better
+27
+            min_cost = min(min_cost, cost)
+28
+    29
+    return min_cost
+30
+31
+# Process input
+32
+t = int(input())
+33
+results = []
+34
+35
+for _ in range(t):
+36
+    server_rack = input().strip()
+37
+    results.append(min_decommissioning_cost(server_rack))
+38
+39
+# Output results
+40
+for result in results:
+41
+    print(result)",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054218
+1390054211,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+#include <ext/pb_ds/assoc_container.hpp>
+3
+#include <ext/pb_ds/tree_policy.hpp>
+4
+#include <ext/pb_ds/detail/standard_policies.hpp>
+5
+#include <cmath>
+6
+#define int long long int
+7
+#define pb push_back
+8
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+9
+/*ASCII small case-> a-97 to z-122
+10
+upper case-> A-65 to Z-90*/
+11
+#define nl ""\n""
+12
+#define mp map<int, int>
+13
+#define all(v) v.begin(), v.end()
+14
+#define F first
+15
+#define S second
+16
+#define ump unordered_map<long long, int, custom_hash>
+17
+#define mstpi multiset<pair<int, int> >
+18
+#define mst multiset<int>
+19
+#define vec vector<int>
+20
+#define pi pair<int, int>
+21
+#define ld long double
+22
+#define vep vector<pair<int, int>>
+23
+#define ul unsigned long long
+24
+#define loop1 for (int i = 0; i < n; i++)
+25
+#define REP(i, a, b) for (int i = a; i <= b; i++)
+26
+#define NO cout << ""NO"" << endl
+27
+#define YES cout << ""YES"" << endl
+28
+using namespace std;
+29
+using namespace __gnu_pbds;
+30
+typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update>ordered_set; //find_by_order, order_of_key, greater_equal<int> -> making it desc order
+31
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+32
+const double PI = 3.1415926535;
+33
+const int inf = 1e18;
+34
+const int mod = 1000000007;
+35
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+36
+int modmul(int a, int b, int m)
+37
+{
+38
+    a %= m;
+39
+    b %= m;
+40
+    return (a * b) % m;
+41
+}
+42
+int modexp(int n, int x)
+43
+{
+44
+    int ans = 1;
+45
+    while (n > 0)
+46
+    {
+47
+        if (n & 1)
+48
+        {
+49
+            ans = (ans * x) % mod;
+50
+        }
+51
+        n >>= 1;
+52
+        x = (x * x) % mod;
+53
+    }
+54
+    return ans;
+55
+}
+56
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+57
+string add(string a, string b)
+58
+{
+59
+    string ans = """";
+60
+    int carry = 0;
+61
+    while (!a.empty() || !b.empty() || carry > 0)
+62
+    {
+63
+        int digitA = a.empty() ? 0 : a.back() - '0';
+64
+        int digitB = b.empty() ? 0 : b.back() - '0';
+65
+        int sum = digitA + digitB + carry;
+66
+        ans = to_string(sum % 10) + ans;
+67
+        carry = sum / 10;
+68
+        if (!a.empty())
+69
+            a.pop_back();
+70
+        if (!b.empty())
+71
+            b.pop_back();
+72
+    }
+73
+    return ans;
+74
+}
+75
+string ministrnum(string a, string b)
+76
+{
+77
+    if (a.length() > b.length())
+78
+        return b;
+79
+    else if (b.length() > a.length())
+80
+        return a;
+81
+    else
+82
+    {
+83
+        int n = a.length();
+84
+        for (int i = 0; i < n; i++)
+85
+        {
+86
+            if (a[i] > b[i])
+87
+                return b;
+88
+            else if (a[i] < b[i])
+89
+                return a;
+90
+        }
+91
+    }
+92
+    return a;
+93
+}
+94
+vector<int> sieve(int n) {
+95
+    vector<bool> isPrime(n + 1, true);
+96
+    vector<int> primes;
+97
+    if(n >= 0) isPrime[0] = false;
+98
+    if(n >= 1) isPrime[1] = false;
+99
+    for (int i = 2; i <= n; i++) {
+100
+        if (isPrime[i]) {
+101
+            primes.push_back(i);
+102
+            for (int j = 2 * i; j <= n; j += i)
+103
+                isPrime[j] = false;
+104
+        }
+105
+    }
+106
+    return primes;
+107
+}
+108
+109
+class SegmentTree {
+110
+public:
+111
+    int n;
+112
+    std::vector<int> tree;
+113
+    std::vector<int> lazy;
+114
+    115
+    SegmentTree(const std::vector<int>& arr) {
+116
+        n = arr.size();
+117
+        tree.resize(4 * n, 0);
+118
+        lazy.resize(4 * n, 0);
+119
+        build(arr, 0, n - 1, 0);
+120
+    }
+121
+    122
+    void build(const std::vector<int>& arr, int start, int end, int index) {
+123
+        if (start == end) {
+124
+            tree[index] = arr[start];
+125
+            return;
+126
+        }
+127
+        int mid = (start + end) / 2;
+128
+        build(arr, start, mid, 2 * index + 1);
+129
+        build(arr, mid + 1, end, 2 * index + 2);
+130
+        tree[index] = tree[2 * index + 1] + tree[2 * index + 2];
+131
+    }
+132
+    133
+    int queryRange(int start, int end, int l, int r, int index = 0) {
+134
+        if (lazy[index] != 0) {
+135
+            tree[index] += (end - start + 1) * lazy[index];
+136
+            if(start != end) {
+137
+                lazy[2 * index + 1] += lazy[index];
+138
+                lazy[2 * index + 2] += lazy[index];
+139
+            }
+140
+            lazy[index] = 0;
+141
+        }
+142
+        if (start > r || end < l)
+143
+            return 0;
+144
+        if (start >= l && end <= r)
+145
+            return tree[index];
+146
+        int mid = (start + end) / 2;
+147
+        return queryRange(start, mid, l, r, 2 * index + 1) +
+148
+               queryRange(mid + 1, end, l, r, 2 * index + 2);
+149
+    }
+150
+    151
+    void updateRange(int start, int end, int l, int r, int diff, int index = 0) {
+152
+        if(lazy[index] != 0) {
+153
+            tree[index] += (end - start + 1) * lazy[index];
+154
+            if(start != end) {
+155
+                lazy[2 * index + 1] += lazy[index];
+156
+                lazy[2 * index + 2] += lazy[index];
+157
+            }
+158
+            lazy[index] = 0;
+159
+        }
+160
+        if(start > r || end < l)
+161
+            return;
+162
+        if(start >= l && end <= r) {
+163
+            tree[index] += (end - start + 1) * diff;
+164
+            if(start != end) {
+165
+                lazy[2 * index + 1] += diff;
+166
+                lazy[2 * index + 2] += diff;
+167
+            }
+168
+            return;
+169
+        }
+170
+        int mid = (start + end) / 2;
+171
+        updateRange(start, mid, l, r, diff, 2 * index + 1);
+172
+        updateRange(mid + 1, end, l, r, diff, 2 * index + 2);
+173
+        tree[index] = tree[2 * index + 1] + tree[2 * index + 2];
+174
+    }
+175
+};
+176
+class DSU {
+177
+public:
+178
+    std::vector<int> parent, rank;
+179
+    180
+    DSU(int n) {
+181
+        parent.resize(n);
+182
+        rank.resize(n, 0);
+183
+        for (int i = 0; i < n; i++)
+184
+            parent[i] = i;
+185
+    }
+186
+    187
+    int find(int x) {
+188
+        if (parent[x] != x)
+189
+            parent[x] = find(parent[x]);
+190
+        return parent[x];
+191
+    }
+192
+    193
+    bool unionSets(int x, int y) {
+194
+        int rootX = find(x);
+195
+        int rootY = find(y);
+196
+        if (rootX == rootY)
+197
+            return false;
+198
+        if (rank[rootX] < rank[rootY])
+199
+            parent[rootX] = rootY;
+200
+        else if (rank[rootX] > rank[rootY])
+201
+            parent[rootY] = rootX;
+202
+        else {
+203
+            parent[rootY] = rootX;
+204
+            rank[rootX]++;
+205
+        }
+206
+        return true;
+207
+    }
+208
+};
+209
+210
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+211
+struct Node {
+212
+    int val;
+213
+    int weight, size;
+214
+    Node *left, *right;
+215
+    bool rev = false;
+216
+    Node(int c): val(c), weight(rng()), size(1), left(NULL), right(NULL) {}
+217
+};
+218
+ostream &operator<<(ostream &os, Node *n) {
+219
+    if(!n) return os;
+220
+    os << n -> left;
+221
+    os << n -> val;
+222
+    os << n -> right;
+223
+    return os;
+224
+}
+225
+int size(Node *Treap) {return Treap ? Treap -> size: 0;}
+226
+void push(Node* Treap) {
+227
+    if(!Treap) return;
+228
+    if(Treap -> rev) {
+229
+        Treap -> rev = false;
+230
+        swap(Treap->left, Treap->right);
+231
+        if(Treap -> left) Treap->left->rev ^= true;
+232
+        if(Treap -> right) Treap->right->rev ^= true;
+233
+    }
+234
+}
+235
+void pull(Node *Treap) {
+236
+    if(!Treap) return;
+237
+    push(Treap -> left), push(Treap -> right);
+238
+    Treap -> size = size(Treap -> left) + size(Treap -> right) + 1;
+239
+    return;
+240
+}
+241
+void split(Node *Treap, Node *&left, Node *&right, int val) {
+242
+    if(!Treap) {
+243
+        left = right = NULL;
+244
+        return;
+245
+    }
+246
+    push(Treap);
+247
+    if(size(Treap -> left) < val) {
+248
+        split(Treap -> right, Treap -> right, right, val - size(Treap->left) - 1);
+249
+        left = Treap;
+250
+    }
+251
+    else {
+252
+        split(Treap -> left, left, Treap -> left, val);
+253
+        right = Treap;
+254
+    }
+255
+    pull(Treap);
+256
+}
+257
+void merge(Node *&Treap, Node *left, Node *right) {
+258
+    push(left), push(right);
+259
+    if(left == NULL) {
+260
+        Treap = right;
+261
+        return;
+262
+    }
+263
+    if(right == NULL) {
+264
+        Treap = left;
+265
+        return;
+266
+    }
+267
+    if(left -> weight < right -> weight) {
+268
+        merge(right -> left, left, right -> left);
+269
+        Treap = right;
+270
+    }
+271
+    else {
+272
+        merge(left->right, left->right, right);
+273
+        Treap = left;
+274
+    }
+275
+    pull(Treap);
+276
+}
+277
+void inOrder(Node *curr, vector<int> &res) {
+278
+    if(curr == NULL) return;
+279
+    push(curr);
+280
+    inOrder(curr->left, res);
+281
+    res.pb(curr->val);
+282
+    inOrder(curr->right, res);
+283
+    pull(curr);
+284
+}
+285
+struct Treap {
+286
+    Node *root = nullptr;
+287
+    void insert(int i, int val) {
+288
+        Node *l, *r;
+289
+        split(root, l, r, i);
+290
+        Node *v = new Node(val);
+291
+        merge(l, l, v);
+292
+        merge(root, l, r);
+293
+    }
+294
+    295
+    void del(int i) {
+296
+        Node *l, *r;
+297
+        split(root, l, r, i);
+298
+        split(r, root, r, 1);
+299
+        merge(root, l, r);
+300
+    }
+301
+    302
+    void update(int l, int r, function<void(Node *)> f) {
+303
+        Node *a, *b, *c;
+304
+        split(root, a, b, l-1);
+305
+        split(b, b, c, r-l+1);
+306
+        if(b) {f(b);}
+307
+        merge(root, a, b);
+308
+        merge(root, root, c);
+309
+    }
+310
+    311
+    vector<int> allPr() {
+312
+        vector<int> res;
+313
+        inOrder(root, res);
+314
+        return res;
+315
+    }
+316
+    317
+    void cycShft(int l, int r) {
+318
+        Node *a, *b, *c, *d;
+319
+        split(root, a, b, l-1);
+320
+        split(b, b, c, r-l+1);
+321
+        split(b, b, d, r-l);
+322
+        merge(root, a, d);
+323
+        merge(root, root, b);
+324
+        merge(root, root, c);
+325
+    }
+326
+};
+327
+vector<int> computePrefix(const string &pattern) {
+328
+    int n = pattern.size();
+329
+    vector<int> prefix(n, 0);
+330
+    for (int i = 1, j = 0; i < n; i++) {
+331
+        while (j > 0 && pattern[i] != pattern[j])
+332
+            j = prefix[j - 1];
+333
+        if (pattern[i] == pattern[j])
+334
+            j++;
+335
+        prefix[i] = j;
+336
+    }
+337
+    return prefix;
+338
+}
+339
+340
+vector<int> KMPSearch(const string &text, const string &pattern) {
+341
+    vector<int> prefix = computePrefix(pattern);
+342
+    vector<int> occurrences;
+343
+    for (int i = 0, j = 0; i < (int)text.size(); i++) {
+344
+        while (j > 0 && text[i] != pattern[j])
+345
+            j = prefix[j - 1];
+346
+        if (text[i] == pattern[j])
+347
+            j++;
+348
+        if (j == (int)pattern.size()) {
+349
+            occurrences.push_back(i - j + 1);
+350
+            j = prefix[j - 1];
+351
+        }
+352
+    }
+353
+    return occurrences;
+354
+}
+355
+void solve()
+356
+{
+357
+    int n, ans = 1e9;
+358
+    string s;
+359
+    cin>>s;
+360
+    n = s.size();
+361
+    362
+    vector<int> pref(n, 0);
+363
+    for(int i = 0; i<n; i++) {
+364
+        pref[i] = s[i] == '1';
+365
+        if(i) pref[i] += pref[i - 1];
+366
+    }
+367
+    368
+    369
+    for(int i = 0; i<n; i++) {
+370
+        for(int j = i; j<n; j++) {
+371
+            int cnt1 = (i?pref[i-1]:0) + pref[n-1] - (j!=n-1?pref[j+1]:pref[n-1]), cnt0 = (j - i + 1) - (pref[j] - (i?pref[i-1]:0));
+372
+            ans = min(ans, max(cnt1, cnt0)); 
+373
+        }
+374
+    }
+375
+    cout<<ans<<'\n';
+376
+}
+377
+int32_t main()
+378
+{
+379
+    ios_base ::sync_with_stdio(0);
+380
+    cin.tie(0);
+381
+    cout.tie(0);
+382
+    int t = 1;
+383
+    cin >> t;
+384
+    while (t--)
+385
+        solve();
+386
+}",93,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054211

@@ -1,0 +1,825 @@
+submission_id,username,problem_name,language,code,page,url
+1390054549,unknown,unknown,unknown,"1
+import sys
+2
+import threading
+3
+4
+def main():
+5
+    T = int(sys.stdin.readline())
+6
+    7
+    for _ in range(T):
+8
+        n, k = map(int, sys.stdin.readline().split())
+9
+        a = list(map(int, sys.stdin.readline().split()))
+10
+11
+        benefits = []
+12
+        for i in range(n):
+13
+            benefit = a[i] - (n - i - 1)
+14
+            benefits.append((benefit, i))
+15
+        16
+        # Sort by benefit descending
+17
+        benefits.sort(reverse=True)
+18
+19
+        skipped = [False] * n
+20
+21
+        # Mark the top k firewalls to skip
+22
+        for i in range(k):
+23
+            _, idx = benefits[i]
+24
+            skipped[idx] = True
+25
+26
+        # Calculate total effort
+27
+        total_effort = 0
+28
+        penalty = 0  # number of skipped firewalls so far
+29
+        for i in range(n):
+30
+            if skipped[i]:
+31
+                penalty += 1
+32
+            else:
+33
+                total_effort += a[i] + penalty
+34
+35
+        print(total_effort)
+36
+37
+# Run main() inside a separate thread to avoid recursion limit issues in large input
+38
+threading.Thread(target=main).start()
+39
+40
+41",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054549
+1390054551,unknown,unknown,unknown,"1
+def max_ones_with_at_most_k_zeros(s, k):
+2
+3
+    left = 0
+4
+5
+    zeros = 0
+6
+7
+    max_ones = 0
+8
+9
+    n = len(s)
+10
+11
+    for right in range(n):
+12
+13
+        if s[right] == '0':
+14
+15
+            zeros += 1
+16
+17
+        while zeros > k:
+18
+19
+            if s[left] == '0':
+20
+21
+                zeros -= 1
+22
+23
+            left += 1
+24
+25
+        current_ones = (right - left + 1) - zeros
+26
+27
+        max_ones = max(max_ones, current_ones)
+28
+29
+    30
+31
+    return max_ones
+32
+33
+def main():
+34
+35
+    T = int(input())
+36
+37
+    for _ in range(T):
+38
+39
+        s = input().strip()
+40
+41
+        n = len(s)
+42
+43
+        total_ones = s.count('1')
+44
+45
+        # Calculate max consecutive ones
+46
+47
+        max_consecutive_ones = 0
+48
+49
+        current = 0
+50
+51
+        for c in s:
+52
+53
+            if c == '1':
+54
+55
+                current += 1
+56
+57
+                max_consecutive_ones = max(max_consecutive_ones, current)
+58
+59
+            else:
+60
+61
+                current = 0
+62
+63
+        if total_ones == 0 or total_ones == max_consecutive_ones:
+64
+65
+            print(0)
+66
+67
+            continue
+68
+69
+        total_zeros = n - total_ones
+70
+71
+        low, high = 0, max(total_ones, total_zeros)
+72
+73
+        answer = high
+74
+75
+        while low <= high:
+76
+77
+            mid = (low + high) // 2
+78
+79
+            required_ones = max(0, total_ones - mid)
+80
+81
+            if required_ones == 0:
+82
+83
+                answer = mid
+84
+85
+                high = mid - 1
+86
+87
+                continue
+88
+89
+            max_ones = max_ones_with_at_most_k_zeros(s, mid)
+90
+91
+            if max_ones >= required_ones:
+92
+93
+                answer = mid
+94
+95
+                high = mid - 1
+96
+97
+            else:
+98
+99
+                low = mid + 1
+100
+101
+        print(answer)
+102
+103
+if __name__ == ""__main__"":
+104
+105
+    main()",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054551
+1390054553,unknown,unknown,unknown,"1
+def min_firewall_effort_optimized(n, k, firewalls):
+2
+    3
+    if k >= n:
+4
+        return 0  # If we can skip all firewalls, effort is 0
+5
+    6
+    min_effort = float('inf')
+7
+    8
+    for i in range(1 << n):
+9
+        skipped_count = bin(i).count('1')
+10
+        if skipped_count <= k:
+11
+            current_effort = 0
+12
+            skipped = 0
+13
+            for j in range(n):
+14
+                if (i >> j) & 1:
+15
+                    skipped += 1
+16
+                else:
+17
+                    current_effort += firewalls[j] + skipped
+18
+            min_effort = min(min_effort, current_effort)
+19
+    20
+    return min_effort
+21
+22
+if __name__ == ""__main__"":
+23
+    t = int(input())
+24
+    for _ in range(t):
+25
+        n, k = map(int, input().split())
+26
+        firewalls = list(map(int, input().split()))
+27
+        result = min_firewall_effort_optimized(n, k, firewalls)
+28
+        print(result)
+29",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054553
+1390054545,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+int main() {
+5
+    int T;
+6
+    cin >> T; 
+7
+    for (int t = 0; t < T; t++) {
+8
+        string s;
+9
+        cin >> s; 
+10
+        int n = s.length();
+11
+12
+    13
+        vector<int> prefix_0(n + 1, 0);
+14
+        vector<int> prefix_1(n + 1, 0);
+15
+        for (int i = 1; i <= n; i++) {
+16
+            prefix_0[i] = prefix_0[i - 1] + (s[i - 1] == '0' ? 1 : 0);
+17
+            prefix_1[i] = prefix_1[i - 1] + (s[i - 1] == '1' ? 1 : 0);
+18
+        }
+19
+20
+      21
+        auto check = [&](int k) {
+22
+            int l = 0;
+23
+         24
+            for (int r = 0; r < n; r++) {
+25
+              26
+                while (l <= r && prefix_0[r + 1] - prefix_0[l] > k) {
+27
+                    l++;
+28
+                }
+29
+                // wtf ,  check number of 1's decommissioned
+30
+                if (l <= r && prefix_1[l] + (prefix_1[n] - prefix_1[r + 1]) <= k) {
+31
+                    return true;
+32
+                }
+33
+            }
+34
+      35
+            if (prefix_1[n] <= k) {
+36
+                return true;
+37
+            }
+38
+            return false;
+39
+        };
+40
+41
+        // Binary search for minimum cost
+42
+        int low = 0, high = n;
+43
+        while (low < high) {
+44
+            int mid = (low + high) / 2;
+45
+            if (check(mid)) {
+46
+                high = mid;
+47
+            } else {
+48
+                low = mid + 1;
+49
+            }
+50
+        }
+51
+        cout << low << endl;
+52
+    }
+53
+    return 0;
+54
+}",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054545
+1390054546,unknown,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+int main() {
+9
+    ios::sync_with_stdio(false);
+10
+    cin.tie(nullptr);
+11
+    12
+    int T;
+13
+    cin >> T;
+14
+    while(T--) {
+15
+        string s;
+16
+        cin >> s;
+17
+        int n = s.size();
+18
+        19
+        // Build prefix sums for zeros and ones.
+20
+        // prefix0[i] = number of '0's in s[0, i)
+21
+        // prefix1[i] = number of '1's in s[0, i)
+22
+        vector<int> prefix0(n+1, 0), prefix1(n+1, 0);
+23
+        for (int i = 0; i < n; i++) {
+24
+            prefix0[i+1] = prefix0[i] + (s[i] == '0');
+25
+            prefix1[i+1] = prefix1[i] + (s[i] == '1');
+26
+        }
+27
+        int totalOnes = prefix1[n];
+28
+        29
+        // We'll binary search for the minimal cost C in the range [0, n].
+30
+        int low = 0, high = n, ans = n;
+31
+        while(low <= high) {
+32
+            int mid = (low + high) / 2;
+33
+            bool feasible = false;
+34
+            35
+            // For each possible prefix removal (i.e. for each starting index l of the kept substring)
+36
+            for (int l = 0; l <= n; l++) {
+37
+                // In the kept substring s[l, r), the zeros count is: prefix0[r] - prefix0[l].
+38
+                // We require that prefix0[r] - prefix0[l] <= mid.
+39
+                // That is, prefix0[r] <= prefix0[l] + mid.
+40
+                // Because prefix0 is non-decreasing, we can use upper_bound:
+41
+                int allowed = prefix0[l] + mid;
+42
+                // Find the first index r (in [l, n+1)) where prefix0[r] > allowed.
+43
+                int r = upper_bound(prefix0.begin() + l, prefix0.end(), allowed) - prefix0.begin();
+44
+                // Then the maximum r with zeros constraint is r_max = r - 1.
+45
+                if(r - 1 < l) continue; // should not happen because at least r = l exists.
+46
+                int r_max = r - 1;
+47
+                // Ones kept in s[l, r_max) is:
+48
+                int onesKept = prefix1[r_max] - prefix1[l];
+49
+                // We need onesKept >= totalOnes - mid.
+50
+                if(onesKept >= totalOnes - mid) {
+51
+                    feasible = true;
+52
+                    break;
+53
+                }
+54
+            }
+55
+            56
+            if(feasible) {
+57
+                ans = mid;
+58
+                high = mid - 1;
+59
+            } else {
+60
+                low = mid + 1;
+61
+            }
+62
+        }
+63
+        64
+        cout << ans << ""\n"";
+65
+    }
+66
+    return 0;
+67
+}",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054546
+1390054547,unknown,unknown,unknown,"1
+def min_decommission_cost(rack):
+2
+    n = len(rack)
+3
+    # Precompute prefix sums:
+4
+    # active_prefix[i] = number of '1's in rack[0:i]
+5
+    # idle_prefix[i] = number of '0's in rack[0:i]
+6
+    active_prefix = [0] * (n + 1)
+7
+    idle_prefix = [0] * (n + 1)
+8
+    for i in range(n):
+9
+        active_prefix[i + 1] = active_prefix[i] + (1 if rack[i] == '1' else 0)
+10
+        idle_prefix[i + 1] = idle_prefix[i] + (1 if rack[i] == '0' else 0)
+11
+    12
+    A = active_prefix[n]  # total active servers
+13
+14
+    # Check if it's possible to achieve a cost <= C.
+15
+    def can_achieve(C):
+16
+        # For each starting index, we try to find a minimal j such that:
+17
+        # active_prefix[j] - active_prefix[i] >= A - C  (i.e. at least A - C active servers in segment)
+18
+        # and check if idle_prefix[j] - idle_prefix[i] <= C.
+19
+        for i in range(n + 1):
+20
+            # Required active servers in the segment:
+21
+            req = A - C
+22
+            # We need to find the smallest j in [i, n] with:
+23
+            # active_prefix[j] >= active_prefix[i] + req.
+24
+            lo_j, hi_j = i, n + 1
+25
+            while lo_j < hi_j:
+26
+                mid = (lo_j + hi_j) // 2
+27
+                if active_prefix[mid] >= active_prefix[i] + req:
+28
+                    hi_j = mid
+29
+                else:
+30
+                    lo_j = mid + 1
+31
+            j = lo_j
+32
+            if j <= n and active_prefix[j] >= active_prefix[i] + req:
+33
+                # Check if the idle servers in the segment [i, j] are at most C.
+34
+                if idle_prefix[j] - idle_prefix[i] <= C:
+35
+                    return True
+36
+        return False
+37
+38
+    # The answer must lie between 0 and max(A, n - A)
+39
+    lo, hi = 0, max(A, n - A)
+40
+    ans = hi
+41
+    while lo <= hi:
+42
+        mid = (lo + hi) // 2
+43
+        if can_achieve(mid):
+44
+            ans = mid
+45
+            hi = mid - 1
+46
+        else:
+47
+            lo = mid + 1
+48
+    return ans
+49
+50
+def main():
+51
+    t = int(input().strip())
+52
+    for _ in range(t):
+53
+        rack = input().strip()
+54
+        result = min_decommission_cost(rack)
+55
+        print(result)
+56
+57
+if __name__ == ""__main__"":
+58
+    main()
+59",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054547
+1390054537,unknown,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class Main {
+4
+    public static void main(String[] args) {
+5
+        Scanner sc = new Scanner(System.in);
+6
+        int t = sc.nextInt();
+7
+8
+        while (t-- > 0) {
+9
+            int n = sc.nextInt(), k = sc.nextInt();
+10
+            int[] a = new int[n];
+11
+            for (int i = 0; i < n; i++) a[i] = sc.nextInt();
+12
+            System.out.println(minEffort(n, k, a));
+13
+        }
+14
+        sc.close();
+15
+    }
+16
+17
+    static int minEffort(int n, int k, int[] a) {
+18
+        int[][] dp = new int[n + 1][k + 1];
+19
+20
+        for (int i = n - 1; i >= 0; i--) {
+21
+            for (int skip = k; skip >= 0; skip--) {
+22
+                int take = a[i] + skip + dp[i + 1][skip];
+23
+                int leave = (skip < k) ? dp[i + 1][skip + 1] : Integer.MAX_VALUE;
+24
+                dp[i][skip] = Math.min(take, leave);
+25
+            }
+26
+        }
+27
+28
+        return dp[0][0];
+29
+    }
+30
+}
+31",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054537
+1390054543,unknown,unknown,unknown,"1
+t = int(input())
+2
+3
+for _ in range(t):
+4
+    n, k = map(int, input().split())
+5
+    firewalls = list(map(int, input().split()))
+6
+7
+    if k >= n:  
+8
+        print(0)
+9
+        continue
+10
+11
+    min_effort = sum(firewalls)  
+12
+13
+    for i in range(n - k + 1): 
+14
+        effort = 0
+15
+        skipped = 0
+16
+17
+        for j in range(n):
+18
+            if i <= j < i + k:  
+19
+                skipped += 1
+20
+                continue
+21
+            22
+            effort += firewalls[j] + skipped  
+23
+        min_effort = min(min_effort, effort)  
+24
+25
+    print(min_effort)
+26",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054543
+1390054533,unknown,unknown,unknown,"1
+def min_effort(n, k, firewalls):  
+2
+    dp = [[float('inf')] * (k + 1) for _ in range(n + 1)]  
+3
+    dp[0][0] = 0  
+4
+5
+    for i in range(1, n + 1):  
+6
+        for j in range(k + 1):  
+7
+            dp[i][j] = dp[i - 1][j] + firewalls[i - 1] + j  
+8
+            if j > 0:  
+9
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - 1])  
+10
+11
+    return min(dp[n])  
+12
+13
+T = int(input())  
+14
+for _ in range(T):  
+15
+    n, k = map(int, input().split())  
+16
+    firewalls = list(map(int, input().split()))  
+17
+    print(min_effort(n, k, firewalls))
+18",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054533
+1390054531,unknown,unknown,unknown,"1
+def min_effort_to_breach(n, k, strengths):
+2
+    if k >= n:
+3
+        return 0
+4
+        5
+    impacts = []
+6
+    7
+    for i in range(n):
+8
+        impact = strengths[i] - (n - i - 1)
+9
+        impacts.append((impact, i))
+10
+    11
+    impacts.sort(reverse=True)
+12
+    13
+    to_skip = set(impacts[i][1] for i in range(k))
+14
+    15
+    total_effort = 0
+16
+    penalty = 0
+17
+    18
+    for i in range(n):
+19
+        if i in to_skip:
+20
+            penalty += 1
+21
+        else:
+22
+            total_effort += strengths[i] + penalty
+23
+    24
+    return total_effort
+25
+26
+def solve_test_cases():
+27
+    t = int(input())  
+28
+    results = []
+29
+    30
+    for _ in range(t):
+31
+        n, k = map(int, input().split())
+32
+        strengths = list(map(int, input().split()))
+33
+        results.append(min_effort_to_breach(n, k, strengths))
+34
+    35
+    return results
+36
+37
+def main():
+38
+    results = solve_test_cases()
+39
+    40
+    for result in results:
+41
+        print(result)
+42
+43
+if __name__ == ""__main__"":
+44
+    main()",77,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054531

@@ -1,0 +1,54 @@
+[2025-03-17 03:53:59] 
+==== Processing Page 1/190 ====
+[2025-03-17 03:54:02] Found 10 'View' buttons on page 1
+[2025-03-17 03:54:02] Processing batch 1 of 4
+[2025-03-17 03:54:03] Opened submission 1/10 (ID: 1390069729)
+[2025-03-17 03:54:04] Opened submission 2/10 (ID: 1390069704)
+[2025-03-17 03:54:05] Opened submission 3/10 (ID: 1390069692)
+[2025-03-17 03:54:10] Successfully extracted submission 1390069692
+[2025-03-17 03:54:10] Successfully extracted submission 1390069704
+[2025-03-17 03:54:11] Successfully extracted submission 1390069729
+[2025-03-17 03:54:14] Processing batch 2 of 4
+[2025-03-17 03:54:15] Opened submission 4/10 (ID: 1390063420)
+[2025-03-17 03:54:16] Opened submission 5/10 (ID: 1390063339)
+[2025-03-17 03:54:17] Opened submission 6/10 (ID: 1390062518)
+[2025-03-17 03:54:22] Successfully extracted submission 1390062518
+[2025-03-17 03:54:23] Successfully extracted submission 1390063339
+[2025-03-17 03:54:24] Successfully extracted submission 1390063420
+[2025-03-17 03:54:27] Processing batch 3 of 4
+[2025-03-17 03:54:28] Opened submission 7/10 (ID: 1390062213)
+[2025-03-17 03:54:29] Opened submission 8/10 (ID: 1390059556)
+[2025-03-17 03:54:30] Opened submission 9/10 (ID: 1390059531)
+[2025-03-17 03:54:35] Successfully extracted submission 1390059531
+[2025-03-17 03:54:35] Successfully extracted submission 1390062213
+[2025-03-17 03:54:35] Successfully extracted submission 1390059556
+[2025-03-17 03:54:39] Processing batch 4 of 4
+[2025-03-17 03:54:40] Opened submission 10/10 (ID: 1390059512)
+[2025-03-17 03:54:45] Successfully extracted submission 1390059512
+[2025-03-17 03:54:48] Saved 10 submissions from page 1
+[2025-03-17 03:54:48] Waiting 7.9 seconds before navigating to the next page
+[2025-03-17 03:55:06] Error navigating to next page: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF6E39DFE45+26629]
+	(No symbol) [0x00007FF6E3946010]
+	(No symbol) [0x00007FF6E37D931A]
+	(No symbol) [0x00007FF6E382F8E7]
+	(No symbol) [0x00007FF6E382FB1C]
+	(No symbol) [0x00007FF6E38834A7]
+	(No symbol) [0x00007FF6E3857AEF]
+	(No symbol) [0x00007FF6E3880169]
+	(No symbol) [0x00007FF6E3857883]
+	(No symbol) [0x00007FF6E3820550]
+	(No symbol) [0x00007FF6E3821803]
+	GetHandleVerifier [0x00007FF6E3D372BD+3529853]
+	GetHandleVerifier [0x00007FF6E3D4DA22+3621858]
+	GetHandleVerifier [0x00007FF6E3D424D3+3575443]
+	GetHandleVerifier [0x00007FF6E3AAB77A+860474]
+	(No symbol) [0x00007FF6E395088F]
+	(No symbol) [0x00007FF6E394CBC4]
+	(No symbol) [0x00007FF6E394CD66]
+	(No symbol) [0x00007FF6E393C2C9]
+	BaseThreadInitThunk [0x00007FF8C19EE8D7+23]
+	RtlUserThreadStart [0x00007FF8C2B1BF6C+44]
+
+[2025-03-17 03:55:06] Scraping complete! Total submissions scraped: 10

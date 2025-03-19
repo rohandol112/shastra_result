@@ -1,0 +1,799 @@
+submission_id,username,problem_name,language,code,page,url
+1390054922,unknown,unknown,unknown,"1
+def min_decommissioning_cost(test_cases):
+2
+    results = []
+3
+    for s in test_cases:
+4
+        n = len(s)
+5
+        total_ones = s.count('1')
+6
+        total_zeros = s.count('0')
+7
+        min_cost = float('inf')
+8
+        for i in range(n + 1):  
+9
+            for j in range(i, n + 1):  
+10
+                remaining_zeros = s[i:j].count('0')
+11
+                remaining_ones = s[i:j].count('1')
+12
+                removed_ones = total_ones - remaining_ones
+13
+                cost = max(remaining_zeros, removed_ones)
+14
+                min_cost = min(min_cost, cost)
+15
+        results.append(min_cost)
+16
+    return results
+17
+T = int(input())  
+18
+test_cases = [input().strip() for _ in range(T)]
+19
+results = min_decommissioning_cost(test_cases)
+20
+for result in results:
+21
+    print(result)
+22",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054922
+1390054923,unknown,unknown,unknown,"1
+import sys
+2
+import threading
+3
+4
+def main():
+5
+    T = int(sys.stdin.readline())
+6
+    7
+    for _ in range(T):
+8
+        n, k = map(int, sys.stdin.readline().split())
+9
+        a = list(map(int, sys.stdin.readline().split()))
+10
+11
+        benefits = []
+12
+        for i in range(n):
+13
+            benefit = a[i] - (n - i - 1)
+14
+            benefits.append((benefit, i))
+15
+        16
+        benefits.sort(reverse=True)
+17
+18
+        skipped = [False] * n
+19
+20
+        for i in range(k):
+21
+            _, idx = benefits[i]
+22
+            skipped[idx] = True
+23
+24
+        25
+        total_effort = 0
+26
+        penalty = 0  
+27
+        for i in range(n):
+28
+            if skipped[i]:
+29
+                penalty += 1
+30
+            else:
+31
+                total_effort += a[i] + penalty
+32
+33
+        print(total_effort)
+34
+35
+threading.Thread(target=main).start()",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054923
+1390054924,unknown,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+#include <bits/stdc++.h>
+7
+using namespace std;
+8
+9
+int solve(vector<int>&arr, int i, int skip, int inc,vector<vector<int>>&dp) {
+10
+    int n = arr.size();
+11
+    if(i==n){
+12
+        return 0;
+13
+    }
+14
+    if(dp[i][skip]!=-1)return dp[i][skip];
+15
+    //skip
+16
+    int ans = INT_MAX;
+17
+    if(skip>0) {
+18
+        ans = min(ans,solve(arr,i+1,skip-1,inc+1,dp));
+19
+    }
+20
+    //no skip
+21
+    ans = min(ans,arr[i]+inc + solve(arr,i+1,skip,inc,dp));
+22
+    return dp[i][skip]= ans;
+23
+}
+24
+25
+26
+int main() {
+27
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+28
+    int t;
+29
+    cin>>t;
+30
+    while(t--) {
+31
+        int n,skip;
+32
+        cin>>n>>skip;
+33
+        vector<int>arr;
+34
+        vector<vector<int>>dp(n,vector<int>(skip+1,-1));
+35
+        while(n--) {
+36
+            int a;
+37
+            cin>>a;
+38
+            arr.push_back(a);
+39
+        }
+40
+        cout<<solve(arr,0,skip,0,dp)<<endl;
+41
+    }
+42
+    return 0;
+43
+}",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054924
+1390054917,unknown,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.Scanner;
+3
+4
+public class Main {
+5
+6
+    public static void main(String[] args) {
+7
+        Scanner sc = new Scanner(System.in);
+8
+        int T = sc.nextInt();
+9
+        sc.nextLine(); // Consume the newline after T
+10
+        while (T-- > 0) {
+11
+            String s = sc.nextLine().trim();
+12
+            int n = s.length();
+13
+            int totalOnes = 0;
+14
+            int maxConsecutiveOnes = 0;
+15
+            int currentConsecutiveOnes = 0;
+16
+            17
+            // Calculate totalOnes and maxConsecutiveOnes
+18
+            for (char c : s.toCharArray()) {
+19
+                if (c == '1') {
+20
+                    currentConsecutiveOnes++;
+21
+                    maxConsecutiveOnes = Math.max(maxConsecutiveOnes, currentConsecutiveOnes);
+22
+                    totalOnes++;
+23
+                } else {
+24
+                    currentConsecutiveOnes = 0;
+25
+                }
+26
+            }
+27
+            28
+            // Handle cases where the cost is trivially 0
+29
+            if (totalOnes == 0) {
+30
+                System.out.println(0);
+31
+                continue;
+32
+            }
+33
+            if (maxConsecutiveOnes == totalOnes) {
+34
+                System.out.println(0);
+35
+                continue;
+36
+            }
+37
+            38
+            int totalZeros = n - totalOnes;
+39
+            int low = 0;
+40
+            int high = Math.max(totalOnes, totalZeros);
+41
+            int answer = high;
+42
+            43
+            // Binary search for the minimal possible cost
+44
+            while (low <= high) {
+45
+                int mid = (low + high) / 2;
+46
+                int requiredOnes = Math.max(0, totalOnes - mid);
+47
+                48
+                if (requiredOnes == 0) {
+49
+                    answer = mid;
+50
+                    high = mid - 1;
+51
+                    continue;
+52
+                }
+53
+                54
+                int maxOnes = maxOnesWithAtMostKZeros(s, mid);
+55
+                if (maxOnes >= requiredOnes) {
+56
+                    answer = mid;
+57
+                    high = mid - 1;
+58
+                } else {
+59
+                    low = mid + 1;
+60
+                }
+61
+            }
+62
+            63
+            System.out.println(answer);
+64
+        }
+65
+        sc.close();
+66
+    }
+67
+    68
+    // Helper function to calculate maximum ones in any window with at most k zeros
+69
+    private static int maxOnesWithAtMostKZeros(String s, int k) {
+70
+        int left = 0;
+71
+        int zeros = 0;
+72
+        int maxOnes = 0;
+73
+        int n = s.length();
+74
+        75
+        for (int right = 0; right < n; right++) {
+76
+            if (s.charAt(right) == '0') {
+77
+                zeros++;
+78
+            }
+79
+            // Shrink the window if zeros exceed k
+80
+            while (zeros > k) {
+81
+                if (s.charAt(left) == '0') {
+82
+                    zeros--;
+83
+                }
+84
+                left++;
+85
+            }
+86
+            // Calculate current number of ones in the window
+87
+            int currentOnes = (right - left + 1) - zeros;
+88
+            maxOnes = Math.max(maxOnes, currentOnes);
+89
+        }
+90
+        91
+        return maxOnes;
+92
+    }
+93
+}",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054917
+1390054918,unknown,unknown,unknown,"1
+def min_cost_to_decommission(rack):
+2
+    length = len(rack)
+3
+    min_cost = float('inf')
+4
+    5
+    for prefix in range(length + 1):
+6
+        for suffix in range(length + 1 - prefix):
+7
+            remaining = rack[prefix:length - suffix]
+8
+            9
+            if not remaining:
+10
+                continue
+11
+            12
+            idle_count = remaining.count('0')
+13
+            active_removed = rack[:prefix].count('1') + rack[length - suffix:].count('1')
+14
+            15
+            cost = max(idle_count, active_removed)
+16
+            min_cost = min(min_cost, cost)
+17
+    18
+    return min_cost if min_cost != float('inf') else 0
+19
+20
+def process_cases():
+21
+    test_cases = int(input().strip())
+22
+    results = []
+23
+    24
+    for _ in range(test_cases):
+25
+        rack = input().strip()
+26
+        results.append(min_cost_to_decommission(rack))
+27
+    28
+    print(""\n"".join(map(str, results)))
+29
+30
+process_cases()",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054918
+1390054921,unknown,unknown,unknown,"1
+def min_decommission_cost(s: str) -> int:
+2
+    n = len(s)
+3
+    ones_pos = [i for i, ch in enumerate(s) if ch == '1']
+4
+    T = len(ones_pos)
+5
+    6
+    if T == 0:
+7
+        return 0
+8
+    9
+    zeros_total = s.count('0')
+10
+    ans = min(zeros_total, T) 
+11
+    12
+    for X in range(1, T + 1):
+13
+        for i in range(0, T - X + 1):
+14
+            left = ones_pos[i]
+15
+            right = ones_pos[i + X - 1]
+16
+            length = right - left + 1
+17
+            zeros_in_block = length - X
+18
+            candidate = max(zeros_in_block, T - X)
+19
+            ans = min(ans, candidate)
+20
+    21
+    return ans
+22
+23
+if __name__ == '__main__':
+24
+    T = int(input().strip())
+25
+    for _ in range(T):
+26
+        s = input().strip()
+27
+        print(min_decommission_cost(s))
+28",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054921
+1390054911,unknown,unknown,unknown,"1
+import java.util.*;
+2
+public class Main {
+3
+    public static void main(String[] args) {
+4
+        Scanner sc = new Scanner(System.in);
+5
+        int t = sc.nextInt();
+6
+        while (t-- > 0) {
+7
+            int n = sc.nextInt(), k = sc.nextInt();
+8
+            int[] a = new int[n];
+9
+            for (int i = 0; i < n; i++) a[i] = sc.nextInt();
+10
+            System.out.println(minEffort(n, k, a));
+11
+        }
+12
+        sc.close();
+13
+    }
+14
+    15
+    static int minEffort(int n, int k, int[] a) {
+16
+        int[] curr = new int[k + 1];
+17
+        int[] next = new int[k + 1];
+18
+19
+        for (int i = n - 1; i >= 0; i--) {
+20
+            for (int skip = 0; skip <= k; skip++) {
+21
+                int take = a[i] + skip;
+22
+                if (take < 0) take = Integer.MAX_VALUE; 
+23
+                else if (i < n - 1) {
+24
+                    if (take <= Integer.MAX_VALUE - next[skip])
+25
+                        take += next[skip];
+26
+                    else
+27
+                        take = Integer.MAX_VALUE;
+28
+                }
+29
+30
+                int leave = Integer.MAX_VALUE;
+31
+                if (skip < k) leave = next[skip + 1];
+32
+                33
+                curr[skip] = Math.min(take, leave);
+34
+            }
+35
+36
+            int[] temp = next;
+37
+            next = curr;
+38
+            curr = temp;
+39
+        }
+40
+        41
+        return next[0];
+42
+    }
+43
+}",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390054911
+1390054913,unknown,unknown,unknown,"1
+#include <iostream>
+2
+#include <string>
+3
+#include <vector>
+4
+#include <algorithm>
+5
+#include <climits>
+6
+7
+using namespace std;
+8
+9
+int findMinimumCost(const string& servers) {
+10
+    int n = servers.size();
+11
+    12
+    // Precompute prefix and suffix counts of active servers (1's)
+13
+    vector<int> prefixActive(n + 1, 0);
+14
+    vector<int> suffixActive(n + 1, 0);
+15
+    16
+    for (int i = 0; i < n; i++) {
+17
+        prefixActive[i + 1] = prefixActive[i] + (servers[i] == '1');
+18
+    }
+19
+    20
+    for (int i = n - 1; i >= 0; i--) {
+21
+        suffixActive[i] = suffixActive[i + 1] + (servers[i] == '1');
+22
+    }
+23
+    24
+    int minCost = INT_MAX;
+25
+    int totalActive = prefixActive[n];
+26
+    27
+    // Try all valid combinations of front and end removals
+28
+    for (int frontRemove = 0; frontRemove <= n; frontRemove++) {
+29
+        for (int endRemove = 0; endRemove <= n - frontRemove; endRemove++) {
+30
+            // Skip if we're not removing anything
+31
+            if (frontRemove == 0 && endRemove == 0) continue;
+32
+            33
+            // Calculate remaining length
+34
+            int remainingLength = n - frontRemove - endRemove;
+35
+            36
+            // Calculate active servers removed
+37
+            int activeRemoved = prefixActive[frontRemove] + suffixActive[n - endRemove];
+38
+            39
+            // Calculate idle servers remaining
+40
+            int totalRemaining = remainingLength;
+41
+            int activeRemaining = totalActive - activeRemoved;
+42
+            int idleRemaining = totalRemaining - activeRemaining;
+43
+            44
+            // Calculate cost
+45
+            int cost = max(idleRemaining, activeRemoved);
+46
+            47
+            // Update minimum cost
+48
+            minCost = min(minCost, cost);
+49
+        }
+50
+    }
+51
+    52
+    return minCost;
+53
+}
+54
+55
+int main() {
+56
+    ios_base::sync_with_stdio(false);
+57
+    cin.tie(NULL);
+58
+    59
+    int t;
+60
+    cin >> t;
+61
+    62
+    for (int i = 0; i < t; i++) {
+63
+        string servers;
+64
+        cin >> servers;
+65
+        cout << findMinimumCost(servers) << endl;
+66
+    }
+67
+    68
+    return 0;
+69
+}",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054913
+1390054914,unknown,unknown,unknown,"1
+import sys, bisect
+2
+def solve():
+3
+    d = sys.stdin.read().split()
+4
+    if not d:
+5
+        return
+6
+    t = int(d[0])
+7
+    idx = 1
+8
+    r = []
+9
+    for _ in range(t):
+10
+        s = d[idx]
+11
+        idx += 1
+12
+        n = len(s)
+13
+        p1 = [0] * (n + 1)
+14
+        p0 = [0] * (n + 1)
+15
+        for i in range(n):
+16
+            p1[i + 1] = p1[i] + (s[i] == '1')
+17
+            p0[i + 1] = p0[i] + (s[i] == '0')
+18
+        zt = p0[n]
+19
+        ot = p1[n]
+20
+        s1 = [0] * (n + 1)
+21
+        s0 = [0] * (n + 1)
+22
+        for j in range(n):
+23
+            s1[j + 1] = s1[j] + (s[n - 1 - j] == '1')
+24
+            s0[j + 1] = s0[j] + (s[n - 1 - j] == '0')
+25
+        def chk(x):
+26
+            for i in range(n + 1):
+27
+                if p1[i] > x:
+28
+                    break
+29
+                as1 = x - p1[i]
+30
+                jmx = bisect.bisect_right(s1, as1) - 1
+31
+                nd = zt - x - p0[i]
+32
+                jmn = 0 if nd <= 0 else bisect.bisect_left(s0, nd)
+33
+                if jmn <= jmx and jmn <= n - i:
+34
+                    return True
+35
+            return False
+36
+        l, h = 0, max(zt, ot)
+37
+        ans = h
+38
+        while l <= h:
+39
+            m = (l + h) // 2
+40
+            if chk(m):
+41
+                ans = m
+42
+                h = m - 1
+43
+            else:
+44
+                l = m + 1
+45
+        r.append(str(ans))
+46
+    sys.stdout.write(""\n"".join(r))
+47
+if __name__ == '__main__':
+48
+    solve()
+49",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390054914
+1390054910,unknown,unknown,unknown,"1
+def find_earliest_faults(n, k, arr):
+2
+    if n < k or n < 1 or k < 1:
+3
+        return []
+4
+    result = []
+5
+    for i in range(0, n - k + 1):
+6
+        batch = arr[i:i+k]
+7
+        earliest_fault = 0
+8
+        for num in batch:
+9
+            if num < 0:
+10
+                earliest_fault = num
+11
+                break
+12
+        result.append(earliest_fault)
+13
+    return result
+14
+15
+t = int(input())
+16
+for _ in range(t):
+17
+    n, k = map(int, input().split())
+18
+    arr = list(map(int, input().split()))
+19
+    result = find_earliest_faults(n, k, arr)
+20
+    print(*result)",59,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390054910

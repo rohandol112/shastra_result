@@ -1,0 +1,93 @@
+1
+import java.util.Scanner;
+2
+3
+public class ServerDecommissioning {
+4
+    public static void main(String[] args) {
+5
+        Scanner scanner = new Scanner(System.in);
+6
+        int t = scanner.nextInt();
+7
+        scanner.nextLine(); // Consume the newline
+8
+9
+        for (int i = 0; i < t; i++) {
+10
+            String serverRack = scanner.nextLine();
+11
+            int minCost = findMinimumCost(serverRack);
+12
+            System.out.println(minCost);
+13
+        }
+14
+        scanner.close();
+15
+    }
+16
+17
+    public static int findMinimumCost(String serverRack) {
+18
+        int n = serverRack.length();
+19
+        int minCost = Integer.MAX_VALUE;
+20
+        21
+        // Try all possible combinations of removing servers from the beginning and end
+22
+        for (int front = 0; front <= n; front++) {
+23
+            for (int back = 0; back <= n - front; back++) {
+24
+                // Calculate the servers that will remain after decommissioning
+25
+                String remainingServers = serverRack.substring(front, n - back);
+26
+                27
+                // Calculate the cost factors
+28
+                int remainingIdleServers = countChar(remainingServers, '0');
+29
+                int decommissionedActiveServers = countChar(serverRack.substring(0, front), '1') + 
+30
+                                                countChar(serverRack.substring(n - back, n), '1');
+31
+                32
+                // The cost is the maximum of the two factors
+33
+                int cost = Math.max(remainingIdleServers, decommissionedActiveServers);
+34
+                35
+                minCost = Math.min(minCost, cost);
+36
+            }
+37
+        }
+38
+        39
+        return minCost;
+40
+    }
+41
+    42
+    private static int countChar(String str, char target) {
+43
+        int count = 0;
+44
+        for (int i = 0; i < str.length(); i++) {
+45
+            if (str.charAt(i) == target) {
+46
+                count++;
+47
+            }
+48
+        }
+49
+        return count;
+50
+    }
+51
+}

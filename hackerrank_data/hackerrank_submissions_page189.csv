@@ -1,0 +1,387 @@
+submission_id,username,problem_name,language,code,page,url
+1390046296,unknown,unknown,unknown,"1
+def solve(s):
+2
+    pos = [i for i, ch in enumerate(s) if ch == '1']
+3
+    n = len(pos)
+4
+5
+    if n == 0 or pos[-1] - pos[0] == n - 1:
+6
+        print(0)
+7
+        return
+8
+9
+    left, right = 0, n
+10
+11
+    while right - left > 1:
+12
+        mid = (left + right) // 2
+13
+        x = n - mid
+14
+15
+        possible = False
+16
+        for i in range(mid + 1):
+17
+            l = pos[i]
+18
+            r = pos[i + x - 1]
+19
+            if (r - l + 1) - x <= mid:
+20
+                possible = True
+21
+                break
+22
+23
+        if possible:
+24
+            right = mid
+25
+        else:
+26
+            left = mid
+27
+28
+    print(right)
+29
+30
+if __name__ == ""__main__"":
+31
+    t = int(input().strip())
+32
+33
+    for _ in range(t):
+34
+        s = input().strip()
+35
+        solve(s)",189,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390046296
+1390052056,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(arr, k):
+4
+    n = len(arr)
+5
+    result = []
+6
+    dq = deque()  # To store indices of negative numbers
+7
+    8
+    # Process the first window
+9
+    for i in range(k):
+10
+        if arr[i] < 0:
+11
+            dq.append(i)
+12
+    13
+    # Store the result for the first window
+14
+    result.append(arr[dq[0]] if dq else 0)
+15
+    16
+    # Process the remaining windows
+17
+    for i in range(k, n):
+18
+        # Remove elements that are out of the current window
+19
+        if dq and dq[0] < i - k + 1:
+20
+            dq.popleft()
+21
+        22
+        # Add the current element if it is negative
+23
+        if arr[i] < 0:
+24
+            dq.append(i)
+25
+        26
+        # Store the result for the current window
+27
+        result.append(arr[dq[0]] if dq else 0)
+28
+    29
+    return result
+30
+31
+# Reading input
+32
+t = int(input())  # Number of test cases
+33
+for _ in range(t):
+34
+    n, k = map(int, input().split())  # Size of array and batch size
+35
+    arr = list(map(int, input().split()))  # Array elements
+36
+    37
+    # Get the results and print as space-separated values
+38
+    print(*earliest_faulty_readings(arr, k))
+39",189,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052056
+1390052059,unknown,unknown,unknown,"1
+from collections import deque
+2
+3
+def earliest_faulty_readings(arr, n, k):
+4
+    result = []
+5
+    dq = deque()  # Store indices of negative numbers
+6
+7
+    # Process the first window
+8
+    for i in range(k):
+9
+        if arr[i] < 0:
+10
+            dq.append(i)
+11
+    12
+    # Process remaining windows
+13
+    for i in range(n - k + 1):
+14
+        # If deque is not empty, the front of the queue is the earliest negative
+15
+        if dq:
+16
+            result.append(arr[dq[0]])
+17
+        else:
+18
+            result.append(0)
+19
+20
+        # Remove elements that are out of this window
+21
+        if dq and dq[0] == i:
+22
+            dq.popleft()
+23
+24
+        # Add the next element of the window
+25
+        if i + k < n and arr[i + k] < 0:
+26
+            dq.append(i + k)
+27
+28
+    print(*result)  # Print space-separated output
+29
+30
+# Read input
+31
+t = int(input())  # Number of test cases
+32
+for _ in range(t):
+33
+    n, k = map(int, input().split())  # Size of array and batch size
+34
+    arr = list(map(int, input().split()))  # Array elements
+35
+    earliest_faulty_readings(arr, n, k)
+36",189,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/faulty-sensor-readings/submissions/code/1390052059
+1390046257,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+#define ll long long
+5
+#define ld long double
+6
+7
+void solve() {
+8
+  string s;
+9
+  cin >> s;
+10
+11
+  vector<int> pos;
+12
+  int n = s.length();
+13
+14
+  for (int i = 0; i < n; ++i) {
+15
+    if (s[i] == '1') {
+16
+      pos.push_back(i);
+17
+    }
+18
+  }
+19
+20
+  int lf = 0, rg = pos.size();
+21
+22
+  while (rg - lf > 1) {
+23
+    int mid = (lf + rg) / 2;
+24
+    int k = pos.size();
+25
+    int x = k - mid;
+26
+27
+    bool possible = false;
+28
+    for (int i = 0; i <= mid; ++i) {
+29
+      int l = pos[i];
+30
+      int r = pos[i + x - 1];
+31
+      if (r - l + 1 - x <= mid) {
+32
+        possible = true;
+33
+        break;
+34
+      }
+35
+    }
+36
+37
+    if (possible) {
+38
+      rg = mid;
+39
+    } else {
+40
+      lf = mid;
+41
+    }
+42
+  }
+43
+44
+  if (pos.empty() || pos.back() - pos[0] == pos.size() - 1) {
+45
+    cout << 0 << endl;
+46
+  } else {
+47
+    cout << rg << endl;
+48
+  }
+49
+}
+50
+51
+int main() {
+52
+  ios::sync_with_stdio(0);
+53
+  cin.tie(0);
+54
+55
+  ll t;
+56
+  cin >> t;
+57
+58
+  while (t--) {
+59
+    solve();
+60
+  }
+61
+62
+  return 0;
+63
+}
+64",189,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/server-pruning/submissions/code/1390046257
+1390046239,unknown,unknown,unknown,"1
+#include <bits/stdc++.h>
+2
+using namespace std;
+3
+4
+#define ll long long
+5
+#define ld long double
+6
+7
+void solve() {
+8
+  ll n, k;
+9
+  cin >> n >> k;
+10
+11
+  vector<ll> strengths(n);
+12
+  ll tot = 0;
+13
+  for (ll i = 0; i < n; i++) {
+14
+    cin >> strengths[i];
+15
+    tot += strengths[i];
+16
+  }
+17
+18
+  vector<ll> skip(n);
+19
+  for (ll i = 0; i < n; i++) {
+20
+    skip[i] = strengths[i] - (n - i - 1);
+21
+  }
+22
+  sort(skip.rbegin(), skip.rend());
+23
+24
+  for (ll i = 0; i < k; i++) {
+25
+    tot -= skip[i];
+26
+  }
+27
+  tot -= k * (k - 1) / 2;
+28
+29
+  cout << tot << '\n';
+30
+}
+31
+32
+int main() {
+33
+  ios::sync_with_stdio(0);
+34
+  cin.tie(0);
+35
+36
+  ll t;
+37
+  cin >> t;
+38
+39
+  while (t--) {
+40
+    solve();
+41
+  }
+42
+43
+  return 0;
+44
+}",189,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-13-a/challenges/breach-firewall/submissions/code/1390046239
