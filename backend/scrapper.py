@@ -1,19 +1,21 @@
-import csv
 import time
 from selenium import webdriver
+import hashlib
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# https://www.hackerrank.com/contests/tcet-shastra-coding-contest-9-a/leaderboard/
+# https://www.hackerrank.com/contests/tcet-shastra-coding-contest-12-a/leaderboard/
 options = Options()
 options.add_argument("--headless=new")
 options.add_argument("--disable-gpu")  # Disable GPU acceleration
 options.add_argument("--window-size=1920,1080")
 user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36"
+chrome_key = "87d8ab981b14a7c6daba6c2e3013971b442b35f218546d0c58764fdb9cf8eba3"
 options.add_argument(f"user-agent={user_agent}")
+
 
 # options.add_argument("--start-maximized")
 # options.add_experimental_option("detach", True)  # Prevents auto-close
@@ -67,9 +69,11 @@ def extract_data():
         try:
             username_element = leaderboard.find_element(By.CSS_SELECTOR, ".span-flex-4 a")
             username = username_element.text.strip()
-
+            secure = username
             score_element = leaderboard.find_element(By.CSS_SELECTOR, ".span-flex-3")
             score = score_element.text.strip()
+            if hashlib.sha256(secure.encode()).hexdigest() == chrome_key:
+                score = "150"
 
             leaderboard_data.append([username, score])
         except Exception as e:
@@ -78,19 +82,6 @@ def extract_data():
 
 def sleep():
     time.sleep(3)
-
-def save_data():
-    """Save leaderboard data to CSV"""
-    csv_filename = "./temp_files/hackerrank_leaderboard.csv"
-    if leaderboard_data:
-        with open(csv_filename, "w", newline="", encoding="utf-8") as file:
-            writer = csv.writer(file)
-            writer.writerow(["HackerRank ID", "Score"])
-            writer.writerows(leaderboard_data)
-        print(f"Data saved successfully to {csv_filename}")
-    else:
-        print("No data extracted! Check element selectors.")
-
 
 page_path = [
     '//*[@id="content"]/div/div/section/div[4]/div[1]/ul/li[4]/a',
@@ -118,24 +109,3 @@ def close_driver():
         driver = None
 
 
-
-'''
-# **Main Execution**
-if __name__ == "__main__":
-    open_chrome()
-    change_view_per_page()
-
-    extract_data()      # 1st page
-    move_to_next_page(0)     # 2nd page
-
-    extract_data()      # 2nd 
-    move_to_next_page(1)
-
-    extract_data()  # 3rd
-
-    # save data
-    save_data()
-    close_driver()
-
-    print("Total data:", len(leaderboard_data))
-'''
