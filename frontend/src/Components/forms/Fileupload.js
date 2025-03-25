@@ -1,6 +1,8 @@
 import React, { useState } from 'react'; 
 import { CSVDownload } from "react-csv";
 
+const API_URL = process.env.REACT_APP_API_URL || "https://shastra-result-1.onrender.com/";
+
 const FileUploadPage = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState([]);
@@ -64,7 +66,7 @@ const FileUploadPage = () => {
         formData.append('hackerRankUrl', hackerRankUrl); 
       }
 
-      const response = await fetch('http://127.0.0.1:5000/upload', {
+      const response = await fetch(`${API_URL}/upload`, {
         method: 'POST', 
         body: formData
       });
