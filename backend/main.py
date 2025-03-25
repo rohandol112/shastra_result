@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
-from scrapper import start_driver,open_chrome, change_view_per_page, extract_data, move_to_next_page, save_data, close_driver
+from scrapper import start_driver, open_chrome, change_view_per_page, extract_data, move_to_next_page, save_data, \
+    close_driver
 from cleaner import clean_csv
 from combiner import combine_files
 import os
@@ -13,22 +14,23 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+
 @app.route('/upload', methods=['POST'])
 def upload_csv():
     try:
         hacker_rank_url = request.form.get('hackerRankUrl')
-        
+
         if not hacker_rank_url:
             return jsonify({"error": "HackerRank URL is required"}), 400
 
         if 'file' not in request.files:
             return jsonify({"error": "No file part in request"}), 400  # Handle missing file
-    
+
         file = request.files['file']
         print(file)
         if file.filename == '':
             return jsonify({"error": "No selected file"}), 400
-        
+
         # Convert file data to DataFrame
         if file.filename.endswith('.csv'):
             df = pd.read_csv(StringIO(file.read().decode('utf-8')))
@@ -42,7 +44,7 @@ def upload_csv():
         # clean the csv we got
         cleaned_df = clean_csv(df)
 
-        # scraping data of leaderboad
+        # scraping data of leaderboard
         start_driver()
         open_chrome(hacker_rank_url)
         change_view_per_page()
@@ -59,13 +61,17 @@ def upload_csv():
 
         merged_df = merged_df.drop_duplicates(subset=['HackerRank ID'], keep='first')
 
-        ordered_json = [OrderedDict(row) for row in merged_df.to_dict(orient='records')]    # converted dataframe to json
-        # print(ordered_json[0])
+        ordered_json = [OrderedDict(row) for row in merged_df.to_dict(orient='records')]  # converted dataframe to json
         return jsonify(ordered_json)  # Sending as a list
 
     except Exception as e:
-        print("The error is: ",e)
-        return jsonify({"error": str(e)}), 500 
+        print("The error is: ", e)
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get port from environment variable, default to 5000 if not set
+    port = int(os.environ.get('PORT', 5000))
+
+    # Listen on all available interfaces
+    app.run(host='0.0.0.0', port=port, debug=False)

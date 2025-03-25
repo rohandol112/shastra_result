@@ -1,113 +1,108 @@
-Sr No.,UID,Student Name,HackerRank ID,Test-1 ,Test -2,Unnamed: 6,Unnamed: 7,Unnamed: 8,Unnamed: 9,Unnamed: 10,Unnamed: 11
-1.0,21-AI&DS03-25,Rahul Baldev Chauhan,NOT REGISTERED,,,,,,,,
-2.0,21-AI&DS19-25,Kanishk Deepak Mandrelia,NOT REGISTERED,,,,,,,,
-3.0,21-AI&DS26-25,Ayush Pandey,NOT REGISTERED,,,,,,,Total Question,2.0
-4.0,21-AI&DS37-25,Mohd Kaif Shaikh,NOT REGISTERED,,,,,,,Marks/Question,50.0
-5.0,21-AI&DS48-25,Shreyash Manoj Singh,NOT REGISTERED,,,,,,,Total Marks ,100.0
-6.0,21-AI&ML11-25,Sahil Kishor Gupta,NOT REGISTERED,,,,,,,,
-7.0,21-AI&ML13-25,Bhavya Jitendra Jain,NOT REGISTERED,,,,,,,,
-8.0,21-AI&ML15-25,Jayant Nag Sai Vasa,jayantvasa2,AB,100,,,,,,
-9.0,21-AI&ML18-25,Uwais Mohammad Anis Kasmani,NOT REGISTERED,,,,,,,,
-10.0,21-AI&ML22-25,Mayank Kapoor,mayank03kapoor,,100,,,,,,
-11.0,21-AI&ML29-25,Vibhanshu Pandey,pandeyvibhanshu1,100,100,,,,,,
-12.0,21-AI&ML34-25,Kartik Vijaykumar Prajapati,NOT REGISTERED,,,,,,,,
-13.0,21-AI&ML36-25,Ketan Jaysing Rathod,NOT REGISTERED,,,,,,,,
-14.0,21-AI&ML38-25,Satyam Rushikesh Rudrakanthwar,satyamrudrakant1,100,AB,,,,,,
-15.0,21-AI&ML42-25,Ayush Ajeet Singh,NOT REGISTERED,,,,,,,,
-16.0,21-AI&ML55-25,Yash Satyaprakash Vishwakarma,evyash03,AB,AB,,,,,,
-17.0,21-AI&ML62-25,Yogesh Suresh Gehlot,NOT REGISTERED,,,,,,,,
-18.0,21-AI&ML62-25,Yogesh Suresh Gehlot,NOT REGISTERED,,,,,,,,
-19.0,21-COMPA20-25,Durgesh Yogesh Chaudhari,NOT REGISTERED,,,,,,,,
-20.0,21-COMPA29-25,Aayush Vinod Dubey,aayush121203,50,AB,,,,,,
-21.0,21-COMPA30-25,Anuj Bramhadev Dubey,NOT REGISTERED,,,,,,,,
-22.0,21-COMPA31-25,Ayush Manjesh Dubey,dubeyayush067,,,,,,,,
-23.0,21-COMPA35-25,Durgesh Kumar Dwivedi,h1032210417,,,,,,,,
-24.0,21-COMPA49-25,Ravi Umesh Gupta,Ravi02,,,,,,,,
-25.0,21-COMPA52-25,Om Rajesh Hinge,NOT REGISTERED,,,,,,,,
-26.0,21-COMPB03-25,Chirayu Manish Khandelwal,NOT REGISTERED,,,,,,,,
-27.0,21-COMPB10-25,Mahadik Vaishnav Suryakant,h1032210456,,,,,,,,
-28.0,21-COMPB13-25,Aakash Rajkumar Maurya,aakashmourya65,100,AB,,,,,,
-29.0,21-COMPB25-25,Atharv Rajesh More,atharvmore30,,,,,,,,
-30.0,21-COMPB29-25,Khushii Nikhade,h1032210475,AB,100,,,,,,
-31.0,21-COMPB30-25,Nirala Arushi Ramekbal,NOT REGISTERED,,,,,,,,
-32.0,21-COMPB31-25,Pratham Paresh Oza,NOT REGISTERED,,,,,,,,
-33.0,21-COMPB49-25,Aman Pramod Rajbhar,amancode10,100,50,,,,,,
-34.0,21-COMPB54-25,Kunal Rawal,kunalrawal78,AB,100,,,,,,
-35.0,21-COMPC04-25,Saquib Sanaullah Shaikh,NOT REGISTERED,,,,,,,,
-36.0,21-COMPC15-25,Aakansha Ashok Singh,saakansha645,,,,,,,,
-37.0,21-COMPC17-25,Amitkumar Karunkumar Singh,amitkarun4559,,100,,,,,,
-38.0,21-COMPC18-25,Ankush Kumar Singh,iamankushsingh11,100,AB,,,,,,
-39.0,21-COMPC25-25,Shreya singh,NOT REGISTERED,,,,,,,,
-40.0,21-COMPC29-25,Smithi Sureshan,smithisureshan,,,,,,,,
-41.0,21-COMPC30-25,Ansh Motilal Solanki,NOT REGISTERED,,,,,,,,
-42.0,21-COMPC55-25,Rahul Chakbahadur Yadav,NOT REGISTERED,,,,,,,,
-43.0,21-COMPC61-25,Vishal Suryanath Yadav,vishalyadav26091,AB,100,,,,,,
-44.0,21-CS&E01-25,Kaushal Manoj Agarwal,7kaushal,100,AB,,,,,,
-45.0,21-CS&E17-25,Harshita Sanjiv Khandelwal,NOT REGISTERED,,,,,,,,
-46.0,21-CS&E27-25,Vinayak Nagendra Nayak,NOT REGISTERED,,,,,,,,
-47.0,21-CS&E28-25,Aditi Yogesh Nikam,NOT REGISTERED,,,,,,,,
-48.0,21-CS&E29-25,Raj Chandrashekhar Nishad,NOT REGISTERED,,,,,,,,
-49.0,21-CS&E38-25,Maupa Anil Samanta,NOT REGISTERED,,,,,,,,
-50.0,21-CS&E47-25,Himanshu Bharat Singh,NOT REGISTERED,,,,,,,,
-51.0,21-CS&E52-25,Vaibhav Singh,NOT REGISTERED,,,,,,,,
-52.0,21-CS&E55-25,Shivam Nageshwar Tiwari,NOT REGISTERED,,,,,,,,
-53.0,21-CS&E60-25,Karan Santosh Wagh,NOT REGISTERED,,,,,,,,
-54.0,21-E&CS14-25,Siddharth Satish Gupta,h1032210332,AB,100,,,,,,
-55.0,21-E&CS29-25,Chahat Sanjay Mishra,Rm70092,AB,AB,,,,,,
-56.0,21-E&CS45-25,Venkatesh Satyanarayan Sakali,NOT REGISTERED,,,,,,,,
-57.0,21-E&CS49-25,Harshit MukeshKumar Sharma,ER_Harshit1523,AB,100,,,,,,
-58.0,21-E&CS56-25,Vinit Satish Singh,NOT REGISTERED,,,,,,,,
-59.0,21-E&CS59-25,Abhishek Hakim Yadav,NOT REGISTERED,,,,,,,,
-60.0,21-ITA08-25,Pratham Dinesh Bagrecha,NOT REGISTERED,,,,,,,,
-61.0,21-ITA11-25,Pranav Krishnakant Bhavsar,h1032210585,AB,100,,,,,,
-62.0,21-ITA14-25,Kawal Manoj Chaudhari,chaudharikawal01,AB,100,,,,,,
-63.0,21-ITA18-25,Yash Amit Dave,NOT REGISTERED,,,,,,,,
-64.0,21-ITA20-25,Mukund Deepak Dhanuka,mukunddhanukast1,AB,100,,,,,,
-65.0,21-ITA27-25,Aryan Gaur,aryangaur380,100,100,,,,,,
-66.0,21-ITA33-25,MOHIT PRAVIND GUPTA,NOT REGISTERED,,,,,,,,
-67.0,21-ITA37-25,Sujal Harinder Gupta,h1032210611,AB,50,,,,,,
-68.0,21-ITA38-25,Tejal Hiralal Gupta,tejalgupta12345,AB,100,,,,,,
-69.0,21-ITA50-25,Moksha Sanjay Kothari,mokshakothari09,AB,100,,,,,,
-70.0,21-ITA52-25,Priya Umesh Kumar Kushwaha,priyakushwaha121,AB,100,,,,,,
-71.0,21-ITA53-25,Abhijeet Mahalik,abhijeetmahalik1,AB,100,,,,,,
-72.0,21-ITA56-25,Chandragupta Maurya,warinfinity89,AB,50,,,,,,
-73.0,21-ITA60-25,Tanmay Murkute,TanmayAI,AB,100,,,,,,
-74.0,21-ITA63-25,ISHA NEGI,h1032210637,AB,100,,,,,,
-75.0,21-ITA64-25,Himanshu Shyamlal Pal,NOT REGISTERED,,,,,,,,
-76.0,21-ITA65-25,Mangesh Pal,NOT REGISTERED,,,,,,,,
-77.0,21-ITB01-25,Pal Nilesh Ramvilas,expenilesh31,AB,100,,,,,,
-78.0,21-ITB08-25,Vishnuyash Arvind Pandey,wassupnigggaa,AB,100,,,,,,
-79.0,21-ITB15-25,Pooja kumari prajapati, @poojaprajapati23,,,,,,,,
-80.0,21-ITB16-25,Sumit Jawaharlal Prajapati,NOT REGISTERED,,,,,,,,
-81.0,21-ITB20-25,Anushka Murlidhar Rao,anushkarao03,,,,,,,,
-82.0,21-ITB29-25,.Harshit Sharma,NOT REGISTERED,,,,,,,,
-83.0,21-ITB47-25,Shrishti Shravan Singh,shrishtisingh087,,,,,,,,
-84.0,21-ITB48-25,Srishti Jayshyam Singh,srishtijsingh201,,,,,,,,
-85.0,21-ITB57-25,Bhajandas Ashudas Vaishnav,bhajandas9892,50,AB,,,,,,
-86.0,21-ITB61-25,ABHISHEK DHANESH YADAV,abhishekyadav03,,,,,,,,
-87.0,21-ITB64-25,Shivam Shambhoonath Yadav,yadavshivam6033,AB,100,,,,,,
-88.0,22-COMPA66-25,Aditya Narasingh Choudhary,NOT REGISTERED,,,,,,,,
-89.0,22-COMPA71-25,Prasad Ganpat Padwal,NOT REGISTERED,,,,,,,,
-90.0,22-COMPB68-25,Harsh Suresh Raval,NOT REGISTERED,,,,,,,,
-91.0,22-CSE&CS68-25,Shaikh umme atufa,NOT REGISTERED,,,,,,,,
-92.0,22-E&CS65-25,Abhishek Sanjay Jaiswal,abhishekjaiswa49,AB,100,,,,,,
-93.0,22-E&CS69-25,AMINA ALTAF SHAIKH,Aminashaikh0050,,,,,,,,
-94.0,22-E&CS70-25,Tarunkumar Singh,NOT REGISTERED,,,,,,,,
-95.0,22-ITB67-25,Sunny Sanjay Manjrekar,sunnymanjrekar88,AB,100,,,,,,
-96.0,21-ITA13-25 ,Aditya Bolke,aditya_bolke2020,AB,50,,,,,,
-97.0,22-AI&ML69-25,Gracy Verma,gracyverma962,AB,100,,,,,,
-98.0,21-AI&ML32-25,Sakshi Patil,sakshispatil7769,AB,100,,,,,,
-99.0,21-IoT21-25 ,Shruti Sharma,sharmashruti8903,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,,,nan,,,,,,,,
-,"         SD/-                                         SD/-                                                      SD/-        
+Sr No.,Batch ,Branch/Div,UID,Roll No.,Student Name,HackerRank ID,1-A,2-A,3-A,4-A,5-A,6-A,Total Marks,Marks in %,Attended Contests,Attendence in %
+1.0,Batch-5,COMP-B,22-COMPB04-26,4.0,ADITYA MISHRA MEERA,mishraaditya12a,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+2.0,Batch-5,COMP-B,22-COMPB11-26,11.0,NAKHWA NIMESH VISHWAS SMITA,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+3.0,Batch-5,COMP-B,22-COMPB13-26,13.0,NAYAK MANASVI MANOJ VEENA,nayakmanasvi16,137.5,150.0,150.0,137.5,137.5,100.0,812.5,90.27777778,6.0,100.0
+4.0,Batch-5,COMP-B,22-COMPB30-26,30.0,PRAJAPATI AMAN SHIVPRAKASH RINA,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+5.0,Batch-5,AI&DS-A,22-AI&DSA42-26,42.0,KHAN AYAN JAWED ANWER JUVERIA,Khan190904,0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.0,100.0
+6.0,Batch-5,AI&DS-A,22-AI&DSA51-26,51.0,MAURYA HARSH RAMAKANT REKHA,harshm8540,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+7.0,Batch-5,AI&DS-A,22-AI&DSA59-26,59.0,NAYAK TANMAY GANESH PREETHI,nayaktanmayg,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+8.0,Batch-5,AI&DS-A,23-AI&DSA64-26,64.0,YELURKAR PRASHANT ERAPPA SUSHILA,prashantyelurka1,137.5,150.0,150.0,150.0,150.0,150.0,887.5,98.61111111,6.0,100.0
+9.0,Batch-5,AI&DS-A,23-AI&DSA66-26,66.0,MISHRA SAAKSHI RAJESH MADHURI,h1032231260,137.5,150.0,150.0,150.0,150.0,150.0,887.5,98.61111111,6.0,100.0
+10.0,Batch-5,AI&DS-A,23-AI&DSA68-26,68.0,YADAV SAHUL SURESH SUSHILA,sahulsureshyada1,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+11.0,Batch-5,AI&DS-A,23-AI&DSA69-26,69.0,SETH DHARMIK SANTOSH JYOTI,sethdharmik5,100,150.0,150.0,150.0,150.0,150.0,850.0,94.44444444,6.0,100.0
+12.0,Batch-5,AI&DS-B,22-AI&DSB19-26,19.0,SAWANT SAURABHA RAJENDRA RUCHITA,saurabha_srs75,100,150.0,50.0,0.0,0.0,0.0,300.0,33.33333333,6.0,100.0
+13.0,Batch-5,AI&DS-B,22-AI&DSB22-26,22.0,SHARMA SUSHIL VINOD RENU,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+14.0,Batch-5,AI&DS-B,22-AI&DSB30-26,30.0,SINGH RISHI SUDHIR SEEMA,rishissingh1811,0,150.0,150.0,150.0,150.0,0.0,600.0,66.66666667,6.0,100.0
+15.0,Batch-5,AI&DS-B,22-AI&DSB39-26,39.0,TANISHQ RAJ RAKESHKUMAR RAKHI,tanishqraj2112,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+16.0,Batch-5,AI&DS-B,22-AI&DSB48-26,48.0,YADAV AAYUSH RAKESH VANDANA,aayu_sh7021,50,150.0,0.0,0.0,0.0,0.0,200.0,22.22222222,6.0,100.0
+17.0,Batch-5,AI&ML,22-AI&ML10-26,10.0,GUPTA ANKITA SUNIL RUPWATI,ank1020ita,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+18.0,Batch-5,AI&ML,22-AI&ML14-26,14.0,JAIN MEET JAYESH HARSHA,meetj665,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+19.0,Batch-5,AI&ML,22-AI&ML17-26,17.0,KHANAL AYUSH GOVIND MADHAVI,ayushkhanal47,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+20.0,Batch-5,AI&ML,22-AI&ML21-26,21.0,MAURYA PRABHAT RAVINDRA GUDDIDEVI,prabhatmaurya751,150,0.0,150.0,125.0,150.0,0.0,575.0,63.88888889,6.0,100.0
+21.0,Batch-5,AI&ML,22-AI&ML22-26,22.0,MISHRA NIKHIL NIRAH BEENA,mishranirajk121,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+22.0,Batch-5,AI&ML,22-AI&ML41-26,41.0,RATHOD TARANG PANKAJ HARSHILA,tarang_rathod,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+23.0,Batch-5,COMP-A,22-COMPA20-26,20.0,DHYANI ADITYA KAMLESH BHARTI,h10322202882,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+24.0,Batch-5,COMP-A,22-COMPA22-26,22.0,GAGGAR RAGINI SUDHIR RINKI,CODING CLUB,,,,,,,,,,
+25.0,Batch-5,COMP-A,22-COMPA52-26,52.0,KULKARNI ARCHIS AVINASH SANGEETA,archiskulkarni41,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+26.0,Batch-5,COMP-A,22-COMPA57-26,57.0,MAHAJAN ANUSHKA ASHISH HARSHLATA,anushkambtech,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+27.0,Batch-5,COMP-B,22-COMPB42-26,42.0,SARKAR SUDEEP SANATKUMAR KRISHNA,sarkarsudeep0409,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+28.0,Batch-5,COMP-C,22-COMPC01-26,1.0,SINGH ARNAV VINAY NISHA,avsingh02as02,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+29.0,Batch-5,COMP-C,22-COMPC13-26,13.0,SINGH VIKRANT SHARAD BEENA,vikrantsingh2021,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+30.0,Batch-5,COMP-C,22-COMPC31-26,31.0,TIWARI UTKARSH SANTOSHKUMAR NEELAM,CODING CLUB,,,,,,,,,,
+31.0,Batch-5,COMP-C,22-COMPC37-26,37.0,VARSHNEY SANSKAR SANJAY SANGEETA,varshneysanskar1,100,150.0,150.0,125.0,150.0,150.0,825.0,91.66666667,6.0,100.0
+32.0,Batch-5,COMP-C,22-COMPC45-26,45.0,WAGH PRATIK JEEVAN PRATIBHA,pratik23w,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+33.0,Batch-5,CS&E,22-CS&E30-26,30.0,PABLA GURJYOT SINGH JASWINDER SINGH RAVINDER KAUR,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+34.0,Batch-5,CS&E,22-CS&E43-26,43.0,SAIL RUSHIKESH RAHUL ADITI,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+35.0,Batch-5,E&CS,22-E&CS15-26,15.0,GUPTA SAASHA SAGAR NIMISHA,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+36.0,Batch-5,E&CS,22-E&CS38-26,38.0,PATIL PRANAV PRASHANT PRAGATI,h1032221525,0,150.0,150.0,137.5,133.33,150.0,720.83,80.09222222,6.0,100.0
+37.0,Batch-5,E&CS,22-E&CS43-26,43.0,RAI AMIT JAIPRAKASH SUNITA,amitrai6537,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+38.0,Batch-5,E&CS,23-E&CS64-26,64.0,MARATHE VEDANT ANIL ASMITA,vedant19marathe,0,137.5,150.0,150.0,133.33,150.0,720.83,80.09222222,6.0,100.0
+39.0,Batch-5,E&TC-A,22-E&TCA43-26,43.0,KAPADIA JAHANVI PARASBHAI VARSHABEN,jahaanvvi12,150,150.0,150.0,125.0,150.0,150.0,875.0,97.22222222,6.0,100.0
+40.0,Batch-5,E&TC-A,22-E&TCA57-26,57.0,NARICHANIA TISHA CHIRAG HEENA,tisha3930,150,150.0,0.0,0.0,0.0,150.0,450.0,50.0,6.0,100.0
+41.0,Batch-5,E&TC-B,22-E&TCB24-26,24.0,SHREYASH RAJU GODE UJWALA,shreyashgode77,137.5,150.0,150.0,150.0,150.0,150.0,887.5,98.61111111,6.0,100.0
+42.0,Batch-5,IT-A,22-ITA15-26,15.0,CHAUHAN VARUN SRIRAM LALMATI,chauhanvarun10t1,150,137.5,150.0,150.0,150.0,150.0,887.5,98.61111111,6.0,100.0
+43.0,Batch-5,IT-A,22-ITA18-26,18.0,CHORDIA SHLOK VINOD PRAMILA,shlokchordia297,150,150.0,150.0,150.0,100.0,150.0,850.0,94.44444444,6.0,100.0
+44.0,Batch-5,IT-A,22-ITA22-26,22.0,DALVI SANSKRUTI SANTOSH SUSHAMA,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+45.0,Batch-5,IT-A,22-ITA25-26,25.0,DAYMA RIDDHI SACHIN KAVITA,riddhidayma04,0,0.0,150.0,150.0,150.0,150.0,600.0,66.66666667,6.0,100.0
+46.0,Batch-5,IT-A,22-ITA29-26,29.0,GARG SPARSH DEVENDRA YOGITA,h1032221597,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+47.0,Batch-5,IT-A,22-ITA38-26,38.0,JAGDALE AISHWARYA MUKUND SUNITA,aishwaryajagdal1 ,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+48.0,Batch-5,IT-A,22-ITA40-26,40.0,JAIN HARDIK VISHAL KUMAR NAMITA,h1032221599,150,0.0,150.0,150.0,0.0,150.0,600.0,66.66666667,6.0,100.0
+49.0,Batch-5,IT-A,22-ITA46-26,46.0,JAISWAL PRANAY DINESH LAXMI,pranayjaiswal151,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+50.0,Batch-5,IT-A,22-ITA48-26,48.0,JANUGADE PRATHAMESH VIJAY DIPALI,prathameshjang1,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+51.0,Batch-5,IT-A,22-ITA50-26,50.0,JHA RITESH KUMAR SANTOSH KUMAR RANJEETA,jhar27018,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+52.0,Batch-5,IT-A,22-ITA53-26,53.0,KENI PARSHAD YOGENDRA YUGA,parshadk04,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+53.0,Batch-5,IT-A,22-ITA56-26,56.0,KHAN AASIM AFROZ MUSHTAK,h1032220672,100,0.0,150.0,150.0,0.0,100.0,500.0,55.55555556,6.0,100.0
+54.0,Batch-5,IT-A,22-ITA59-26,59.0,KHANDELWAL BHAVESH ABHISHEK RADHA,2bhaveshk,150,150.0,150.0,125.0,150.0,150.0,875.0,97.22222222,6.0,100.0
+55.0,Batch-5,IT-A,22-ITA60-26,60.0,KHOPKAR SOHAM SATISH MANASI,soham_khopkar,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+56.0,Batch-5,IT-B,22-ITB06-26,6.0,MASHALKAR SAKSHI VIJAY GOURI,sakshimashalkar1,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+57.0,Batch-5,IT-B,22-ITB32-26,32.0,PANDEY HARSH SANTOSH POOJA,pandeyharsh0337,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+58.0,Batch-5,IT-B,22-ITB35-26,35.0,PARMAR NILESH NENARAM VIDHYA,nileshparmaroff1,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+59.0,Batch-5,IT-B,22-ITB39-26,39.0,PATIL ARYA TUSHAR ANITA,h1032220677,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+60.0,Batch-5,IT-B,22-ITB53-26,53.0,RANGREJ DANISH DILSHAD AHMED ZAIBUNISHA,rangrejd82,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+61.0,Batch-5,IT-C,22-ITC01-26,1.0,SHAIKH ASHRAF SALIM YASMIN,ashrafsshaikh7,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+62.0,Batch-5,IT-C,22-ITC02-26,2.0,SHARMA KARAN RAJKUMAR SUDHA,h1032220505,0,150.0,150.0,150.0,150.0,150.0,750.0,83.33333333,6.0,100.0
+63.0,Batch-5,IT-C,22-ITC07-26,7.0,SHINDE SAIRAJ PRADIP SMITA,sairajshinde3124,,150.0,0.0,150.0,150.0,150.0,600.0,66.66666667,5.0,83.33333333
+64.0,Batch-5,IT-C,22-ITC09-26,9.0,SHUKLA ARVIND HARISHANKAR MAMTA,h1032221052,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+65.0,Batch-5,IT-C,22-ITC11-26,11.0,SHUKLA PALLAVI MANOJ VANDANA,shuklapallavi76,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+66.0,Batch-5,IT-C,22-ITC13-26,13.0,SINGH ARYA VARDHAN ANUJ SANDHYA,aryavardhnsingh,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+67.0,Batch-5,IT-C,22-ITC22-26,22.0,SINGH POOJA DHANANJAY SONIDEVI,h1032221055,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+68.0,Batch-5,IT-C,22-ITC24-26,24.0,SINGH RYTHM RAKESH RITA,rythm_singh03,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+69.0,Batch-5,IT-C,22-ITC30-26,30.0,SINGH SUSHANT SUDHANSHU MAMTA,Not Registered,,,,,,,0.0,0.0,0.0,0.0
+70.0,Batch-5,IT-C,22-ITC53-26,53.0,YADAV DEEPAK NAVRATAN YASHODA DEVI,dny9136833946,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+71.0,Batch-5,IT-C,22-ITC62-26,62.0,YADAV SUNIDHI AWADHKISHORE SAMANTI,h1032221642,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+72.0,Batch-5,IT-C,23-ITC65-26,65.0,SYED UZAIR AMAN SYED HAREES SADIYA FARAHA,_youknowzair65,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+73.0,Batch-5,IT-C,23-ITC69-26,69.0,Praneel shah,praneelshah_ind1,150,150.0,150.0,150.0,150.0,150.0,900.0,100.0,6.0,100.0
+74.0,Batch-5,COMPB,22-COMPB60-26,60.0,Adarsh Singh ,adarshvijaysing1,150,150.0,150.0,137.5,150.0,150.0,887.5,98.61111111,6.0,100.0
+75.0,Batch-5,COMPB,22-COMPB62-26,62.0,Alok Ajay Singh,alok17082004,0,0.0,150.0,0.0,0.0,0.0,150.0,16.67,6.0,100.0
+,,,,,,nan,,,,,,,,,,
+,,,,,,Range,%Attendence,,,,,,,,,
+,,,,,,0-25,8,,,,,,,,,
+,,,,,,25-50,0,,,,,,,,,
+,,,,,,50-75,0,,,,,,,,,
+,,,,,,75-100,64,,,,,,,,,
+,,,,,,Total,72,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,,nan,,,,,,,,,,
+,,,,,"         SD/-                                         SD/-                                                      SD/-        
 Dr. Namdev Badhe              Dr. Amol Dapkekar                          Dr. Zahir Aalam                
-Program Coordinator           Training Officer                                  Dean(TP&IL)           ",,nan,,,,,,,,
+Program Coordinator           Training Officer                                  Dean(TP&IL)           ",nan,,,,,,,,,,
