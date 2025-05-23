@@ -1,35 +1,51 @@
 #!/usr/bin/env bash
-# build.sh - Render build script
+# Render-optimized build script for FastAPI + Selenium
 
-set -o errexit  # exit on error
+set -o errexit  # Exit immediately on error
+set -o pipefail # Catch failures in pipes
+set -o nounset  # Treat unset variables as errors
 
-echo "Starting Render build process..."
+echo "🛠 Starting Render build process..."
 
-# Update package lists
-apt-get update
-
-# Install system dependencies
-apt-get install -y \
+# ======================
+# System Dependencies
+# ======================
+echo "🔧 Installing system dependencies..."
+sudo apt-get update -y
+sudo apt-get install -y \
     wget \
     gnupg \
     unzip \
     curl \
     xvfb \
-    software-properties-common
+    software-properties-common \
+    libnss3 \
+    libgconf-2-4 \
+    libfontconfig1
 
-# Install Google Chrome
-echo "Installing Google Chrome..."
-wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-apt-get update
-apt-get install -y google-chrome-stable
+# ======================
+# Chrome Installation
+# ======================
+echo "🌐 Installing Google Chrome..."
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+sudo apt-get update -y
+sudo apt-get install -y google-chrome-stable
 
-# Verify Chrome installation
-google-chrome --version || echo "Chrome installation may have issues"
+# ======================
+# Chrome Verification
+# ======================
+echo "✅ Verifying Chrome installation..."
+if ! google-chrome --version; then
+    echo "❌ Chrome verification failed!"
+    exit 1
+fi
 
-# Install Python dependencies
-echo "Installing Python dependencies..."
-pip install --upgrade pip
+# ======================
+# Python Setup
+# ======================
+echo "🐍 Setting up Python environment..."
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-echo "Build completed successfully!"
+echo "🎉 Build completed successfully!"
