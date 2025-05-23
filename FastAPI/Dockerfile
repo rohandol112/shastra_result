@@ -24,13 +24,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Make build.sh executable (if it exists and is needed)
+RUN chmod +x build.sh 2>/dev/null || true
+
 # Set environment variables for Chrome
 ENV DISPLAY=:99
 ENV CHROME_BIN=/usr/bin/google-chrome
 ENV CHROME_PATH=/usr/bin/google-chrome
 
-# Expose port (adjust as needed)
+# Expose port for FastAPI
 EXPOSE 8000
 
-# Start command (adjust based on your app)
-CMD ["python", "main.py"]
+# Start FastAPI application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

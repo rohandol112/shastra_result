@@ -1,20 +1,16 @@
 services:
   - type: web
-    name: hackerrank-scraper-api
-    env: python
-    region: oregon
+    name: shastra-result
+    runtime: docker
+    repo: https://github.com/rohandol112/shastra_result
+    dockerfilePath: ./Dockerfile
+    numInstances: 1
     plan: starter
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn main:app -w 1 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT --timeout 300 --keep-alive 2 --max-requests 1000
+    healthCheckPath: /
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.4
-      - key: PORT
-        fromService:
-          type: web
-          name: hackerrank-scraper-api
-          property: port
-    scaling:
-      minInstances: 1
-      maxInstances: 3
-
+      - key: DISPLAY
+        value: ":99"
+      - key: CHROME_BIN
+        value: "/usr/bin/google-chrome"
+      - key: CHROME_PATH
+        value: "/usr/bin/google-chrome"
