@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Render-optimized build script for FastAPI + Selenium
+# Render-optimized build script (no sudo)
 
-set -o errexit  # Exit immediately on error
-set -o pipefail # Catch failures in pipes
-set -o nounset  # Treat unset variables as errors
+set -o errexit
+set -o pipefail
+set -o nounset
 
 echo "🛠 Starting Render build process..."
 
@@ -11,8 +11,8 @@ echo "🛠 Starting Render build process..."
 # System Dependencies
 # ======================
 echo "🔧 Installing system dependencies..."
-sudo apt-get update -y
-sudo apt-get install -y \
+apt-get update -y
+apt-get install -y \
     wget \
     gnupg \
     unzip \
@@ -27,25 +27,17 @@ sudo apt-get install -y \
 # Chrome Installation
 # ======================
 echo "🌐 Installing Google Chrome..."
-wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
-sudo apt-get update -y
-sudo apt-get install -y google-chrome-stable
-
-# ======================
-# Chrome Verification
-# ======================
-echo "✅ Verifying Chrome installation..."
-if ! google-chrome --version; then
-    echo "❌ Chrome verification failed!"
-    exit 1
-fi
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+apt-get update -y
+apt-get install -y google-chrome-stable
 
 # ======================
 # Python Setup
 # ======================
 echo "🐍 Setting up Python environment..."
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install poetry
+poetry install --no-dev
 
 echo "🎉 Build completed successfully!"
