@@ -1,8 +1,0 @@
-[2025-03-17 20:32:14] Loading data from hackerrank_data/all_submissions.csv
-[2025-03-17 20:32:14] Original dataset: 1855 rows, 1 unique problems
-[2025-03-17 20:32:14] Removed 10 submissions with missing or very short code
-[2025-03-17 20:32:15] Found 1 unique problems for plagiarism analysis
-[2025-03-17 20:32:15] Added 3 language-specific features
-[2025-03-17 20:32:15] Saving plagiarism-ready data to hackerrank_data/plagiarism_ready.csv
-[2025-03-17 20:32:15] Final dataset: 1847 rows, 1 unique problems
-[2025-03-17 20:32:15] Problem statistics saved to hackerrank_data\problem_statistics.csv

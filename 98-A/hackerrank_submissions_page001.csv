@@ -1,0 +1,695 @@
+submission_id,username,problem_name,language,code,page,url
+1388070358,01snehapandey01,unknown,unknown,"1
+import sys
+2
+3
+MOD = 10**9 + 7
+4
+5
+def count_valid_partitions(n, k, scores):
+6
+    scores.sort()
+7
+    dp = {}  # Memoization
+8
+9
+    def solve(index, current_partition, total_gap):
+10
+        if total_gap > k:
+11
+            return 0
+12
+        if index == n:
+13
+            return 1
+14
+15
+        state = (index, tuple(tuple(sorted(team)) for team in sorted(current_partition)), total_gap)
+16
+        if state in dp:
+17
+            return dp[state]
+18
+19
+        count = 0
+20
+        for i in range(len(current_partition)):
+21
+            new_team = current_partition[i] + (scores[index],)
+22
+            new_gap = max(new_team) - min(new_team) if len(new_team) > 1 else 0
+23
+            24
+            # Crucial change: Calculate the difference in gap, not the absolute gap
+25
+            gap_diff = new_gap - (max(current_partition[i]) - min(current_partition[i]) if current_partition[i] else 0)
+26
+            27
+            count = (count + solve(index + 1, current_partition[:i] + [new_team] + current_partition[i+1:], total_gap + gap_diff)) % MOD
+28
+29
+        # Only create a new partition if there are already existing teams, otherwise it is the first team
+30
+        if current_partition:
+31
+            count = (count + solve(index + 1, current_partition + [(scores[index],)], total_gap)) % MOD
+32
+        else:
+33
+            count = (count + solve(index + 1, [(scores[index],)], total_gap)) % MOD # Correctly handle first team creation
+34
+35
+        dp[state] = count
+36
+        return count
+37
+38
+    return solve(0, [], 0)
+39
+40
+def main():
+41
+    input_data = sys.stdin.read().splitlines()
+42
+    T = int(input_data[0].strip())
+43
+    index = 1
+44
+    results = []
+45
+46
+    for _ in range(T):
+47
+        n, k = map(int, input_data[index].split())
+48
+        scores = list(map(int, input_data[index + 1].split()))
+49
+        results.append(str(count_valid_partitions(n, k, scores)))
+50
+        index += 2
+51
+52
+    print(""\n"".join(results))
+53
+54
+if __name__ == ""__main__"":
+55
+    main()",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1388070358
+1388070399,01snehapandey01,unknown,unknown,"1
+import java.util.*;
+2
+3
+public class Main {
+4
+    public static void main(String[] args) {
+5
+        Scanner sc = new Scanner(System.in);
+6
+        7
+        int T = sc.nextInt();
+8
+        9
+        for (int t = 0; t < T; t++) {
+10
+            int n = sc.nextInt();
+11
+            int m = sc.nextInt();
+12
+            13
+            int[] a = new int[n];
+14
+            for (int i = 0; i < n; i++) {
+15
+                a[i] = sc.nextInt();
+16
+            }
+17
+            18
+            // Prefix sum array
+19
+            int[] A = new int[n + 1];
+20
+            for (int i = 0; i < n; i++) {
+21
+                A[i + 1] = A[i] + a[i];
+22
+            }
+23
+            24
+            // Using a map to store the DP states
+25
+            Map<String, Integer> dp = new HashMap<>();
+26
+            dp.put(m + "","" + 0, 0);
+27
+            28
+            for (int i = 0; i < n; i++) {
+29
+                Map<String, Integer> ndp = new HashMap<>();
+30
+                31
+                for (Map.Entry<String, Integer> entry : dp.entrySet()) {
+32
+                    String[] key = entry.getKey().split("","");
+33
+                    int last = Integer.parseInt(key[0]);
+34
+                    int s = Integer.parseInt(key[1]);
+35
+                    int c = entry.getValue();
+36
+                    37
+                    int mx = Math.min(last, m - s);
+38
+                    for (int b = 0; b <= mx; b++) {
+39
+                        int ns = s + b;
+40
+                        int nc = c + (i + 1 < n ? Math.abs(A[i + 1] - ns) : 0);
+41
+                        String newKey = b + "","" + ns;
+42
+                        43
+                        if (!ndp.containsKey(newKey) || ndp.get(newKey) > nc) {
+44
+                            ndp.put(newKey, nc);
+45
+                        }
+46
+                    }
+47
+                }
+48
+                dp = ndp;
+49
+            }
+50
+            51
+            // Find the minimum moves for the case where the sum of marbles is m
+52
+            int ans = Integer.MAX_VALUE;
+53
+            for (Map.Entry<String, Integer> entry : dp.entrySet()) {
+54
+                String[] key = entry.getKey().split("","");
+55
+                int s = Integer.parseInt(key[1]);
+56
+                57
+                if (s == m) {
+58
+                    ans = Math.min(ans, entry.getValue());
+59
+                }
+60
+            }
+61
+            62
+            System.out.println(ans);
+63
+        }
+64
+        65
+        sc.close();
+66
+    }
+67
+}",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1388070399
+1387888126,vasuverma063,unknown,unknown,"1
+def max_abs_difference(nums):
+2
+    n = len(nums)
+3
+    total_sum = sum(nums)
+4
+    left_sum = 0
+5
+    max_diff = 0
+6
+    7
+    for i in range(n - 1):
+8
+        left_sum += nums[i]
+9
+        right_sum = total_sum - left_sum
+10
+        max_diff = max(max_diff, abs(left_sum - right_sum))
+11
+    12
+    return max_diff
+13
+14
+T = int(input())
+15
+for _ in range(T):
+16
+    n = int(input())
+17
+    nums = list(map(int, input().split()))
+18
+    print(max_abs_difference(nums))",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387888126
+1387837006,hkailkhuri,unknown,unknown,"1
+def solve():
+2
+3
+    import sys
+4
+5
+    data = sys.stdin.read().strip().split()
+6
+7
+    t = int(data[0])
+8
+9
+    idx = 1
+10
+11
+    for _ in range(t):
+12
+13
+        n = int(data[idx]); idx += 1
+14
+15
+        nums = list(map(int, data[idx:idx+n]))
+16
+17
+        idx += n
+18
+19
+        20
+21
+        total_sum = sum(nums)
+22
+23
+        24
+25
+        prefix_sum = 0
+26
+27
+        max_diff = 0
+28
+29
+        for i in range(n - 1):
+30
+31
+            prefix_sum += nums[i]
+32
+33
+            diff = abs(2 * prefix_sum - total_sum)
+34
+35
+            if diff > max_diff:
+36
+37
+                max_diff = diff
+38
+39
+        40
+41
+        print(max_diff)
+42
+43
+solve()",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387837006
+1387884166,vasuverma063,unknown,unknown,"1
+def product_except_self(arr):
+2
+    n = len(arr)
+3
+    result = [1] * n
+4
+    5
+    left_product = 1
+6
+    for i in range(n):
+7
+        result[i] = left_product
+8
+        left_product *= arr[i]
+9
+    10
+    right_product = 1
+11
+    for i in range(n-1, -1, -1):
+12
+        result[i] *= right_product
+13
+        right_product *= arr[i]
+14
+    15
+    return result
+16
+17
+T = int(input())
+18
+for _ in range(T):
+19
+    n = int(input())
+20
+    arr = list(map(int, input().split()))
+21
+    print("" "".join(map(str, product_except_self(arr))))
+22",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387884166
+1387887902,vasuverma063,unknown,unknown,"1
+def min_operations_to_equalize(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    if total_energy % N != 0:
+4
+        return -1  # Impossible to equalize if total energy isn't divisible by N
+5
+    6
+    target = total_energy // N
+7
+    operations = 0
+8
+    9
+    for i in range(N):
+10
+        diff = energy[i] - target
+11
+        if diff % K != 0:
+12
+            return -1  # If difference is not a multiple of K, equalization isn't possible
+13
+        operations += abs(diff) // K
+14
+    15
+    return operations // 2  # Each operation affects two stations, so divide by 2
+16
+17
+T = int(input())
+18
+for _ in range(T):
+19
+    N, K = map(int, input().split())
+20
+    energy = list(map(int, input().split()))
+21
+    print(min_operations_to_equalize(N, K, energy))",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387887902
+1387835749,fauzanmujawar971,unknown,unknown,"1
+def max_absolute_difference(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        n, nums = t
+6
+        total_sum = sum(nums)
+7
+        prefix_sum = 0
+8
+        max_diff = 0
+9
+        10
+        # Iterate through possible partitions
+11
+        for i in range(n - 1):  # Last partition is invalid (requires two non-empty subarrays)
+12
+            prefix_sum += nums[i]
+13
+            suffix_sum = total_sum - prefix_sum
+14
+            max_diff = max(max_diff, abs(prefix_sum - suffix_sum))
+15
+        16
+        results.append(max_diff)
+17
+    18
+    return results
+19
+20
+21
+# Input handling
+22
+t = int(input())
+23
+test_cases = []
+24
+25
+for _ in range(t):
+26
+    n = int(input())
+27
+    nums = list(map(int, input().split()))
+28
+    test_cases.append((n, nums))
+29
+30
+# Compute results
+31
+results = max_absolute_difference(test_cases)
+32
+33
+# Output results
+34
+for res in results:
+35
+    print(res)",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835749
+1387835918,siddhibsawant221,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        Scanner scanner = new Scanner(System.in);
+8
+9
+        int T = scanner.nextInt(); // Read number of test cases
+10
+        while (T-- > 0) {
+11
+            int N = scanner.nextInt(); // Number of power stations
+12
+13
+            int[] nums = new int[N];
+14
+            for (int i = 0; i < N; i++) {
+15
+                nums[i] = scanner.nextInt(); // Energy at each station
+16
+            }
+17
+18
+            // Sort the array first
+19
+            Arrays.sort(nums);
+20
+21
+            // Create leftPartition and rightPartition arrays
+22
+            int[] leftPartition = new int[N / 2];
+23
+            int[] rightPartition = new int[N - N / 2]; // Remainder of the array
+24
+25
+            int sum1 = 0, sum2 = 0;
+26
+            27
+            // Fill the leftPartition (first half)
+28
+            for (int i = 0; i < N / 2; i++) {
+29
+                leftPartition[i] = nums[i];
+30
+                sum1 += leftPartition[i];
+31
+            }
+32
+33
+            // Fill the rightPartition (second half)
+34
+            for (int i = N / 2; i < N; i++) {
+35
+                rightPartition[i - N / 2] = nums[i]; // Correct indexing for rightPartition
+36
+                sum2 += rightPartition[i - N / 2];
+37
+            }
+38
+39
+            // Output the difference between the sum of rightPartition and leftPartition
+40
+            System.out.println(sum2 - sum1);
+41
+        }
+42
+43
+        scanner.close();
+44
+    }
+45
+}
+46",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835918
+1387835994,siddhibsawant221,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        Scanner scanner = new Scanner(System.in);
+8
+        9
+        int t = scanner.nextInt(); // Number of test cases
+10
+        while (t-- > 0) {
+11
+            int n = scanner.nextInt(); // Size of the array
+12
+            int[] nums = new int[n];
+13
+            14
+            for (int i = 0; i < n; i++) {
+15
+                nums[i] = scanner.nextInt(); // Array elements
+16
+            }
+17
+            18
+            // Calculate the total sum of the array
+19
+            int totalSum = 0;
+20
+            for (int i = 0; i < n; i++) {
+21
+                totalSum += nums[i];
+22
+            }
+23
+            24
+            // Calculate prefix sums and compute the maximum absolute difference
+25
+            int prefixSum = 0;
+26
+            int maxDiff = Integer.MIN_VALUE;
+27
+            28
+            // Try every possible partition
+29
+            for (int i = 0; i < n - 1; i++) {
+30
+                prefixSum += nums[i];
+31
+                int suffixSum = totalSum - prefixSum;
+32
+                33
+                // Compute the absolute difference for the current partition
+34
+                int diff = Math.abs(prefixSum - suffixSum);
+35
+                36
+                // Update the maximum difference
+37
+                maxDiff = Math.max(maxDiff, diff);
+38
+            }
+39
+            40
+            // Output the maximum absolute difference for this test case
+41
+            System.out.println(maxDiff);
+42
+        }
+43
+        44
+        scanner.close();
+45
+    }
+46
+}
+47",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835994
+1387835714,fauzanmujawar971,unknown,unknown,"1
+def minimum_operations_to_equalize(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        N, K, energy = t
+6
+        total_energy = sum(energy)
+7
+        8
+        # Check if equalization is possible
+9
+        if total_energy % N != 0:
+10
+            results.append(-1)
+11
+            continue
+12
+        13
+        target = total_energy // N
+14
+        diffs = [energy[i] - target for i in range(N)]
+15
+        16
+        # Check if all differences are divisible by K
+17
+        if any(diff % K != 0 for diff in diffs):
+18
+            results.append(-1)
+19
+            continue
+20
+        21
+        # Calculate minimum operations
+22
+        operations = 0
+23
+        imbalance = 0
+24
+        25
+        for diff in diffs:
+26
+            imbalance += diff // K
+27
+            operations += abs(imbalance)
+28
+        29
+        results.append(operations)
+30
+    31
+    return results
+32
+33
+34
+# Input handling
+35
+T = int(input())
+36
+test_cases = []
+37
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append((N, K, energy))
+42
+43
+# Compute results
+44
+results = minimum_operations_to_equalize(test_cases)
+45
+46
+# Output results
+47
+for res in results:
+48
+    print(res)",1,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387835714

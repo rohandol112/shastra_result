@@ -1,0 +1,787 @@
+submission_id,username,problem_name,language,code,page,url
+1387833002,h1032221497,unknown,unknown,"1
+def minimum_operations_to_equalize(T, test_cases):
+2
+    results = []
+3
+4
+    for t in range(T):
+5
+        N, K = test_cases[t][0]
+6
+        energy = test_cases[t][1]
+7
+8
+        total_energy = sum(energy)
+9
+10
+        # Check if equalization is possible
+11
+        if total_energy % N != 0:
+12
+            results.append(-1)
+13
+            continue
+14
+15
+        target_energy = total_energy // N
+16
+        operations = 0
+17
+        current_diff = 0
+18
+19
+        for i in range(N):
+20
+            diff = energy[i] - target_energy
+21
+            current_diff += diff
+22
+23
+            # If the current difference is not divisible by K, it's impossible to equalize
+24
+            if current_diff % K != 0:
+25
+                results.append(-1)
+26
+                break
+27
+28
+            # Increment operations by the absolute value of current difference divided by K
+29
+            operations += abs(current_diff) // K
+30
+        else:
+31
+            results.append(operations)
+32
+33
+    return results
+34
+35
+# Input reading
+36
+T = int(input())
+37
+test_cases = []
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append(((N, K), energy))
+42
+43
+# Solve and output results
+44
+results = minimum_operations_to_equalize(T, test_cases)
+45
+for result in results:
+46
+    print(result)",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833002
+1387833003,siddhantpal9082,unknown,unknown,"1
+def compute_product_except_self(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, values = case
+5
+        result = [1] * n
+6
+7
+        prefix = 1
+8
+        for i in range(n):
+9
+            result[i] = prefix
+10
+            prefix *= values[i]
+11
+12
+        suffix = 1
+13
+        for i in range(n - 1, -1, -1):
+14
+            result[i] *= suffix
+15
+            suffix *= values[i]
+16
+17
+        results.append(result)
+18
+    return results
+19
+20
+t = int(input())
+21
+test_cases = []
+22
+for _ in range(t):
+23
+    n = int(input())
+24
+    values = list(map(int, input().split()))
+25
+    test_cases.append((n, values))
+26
+27
+results = compute_product_except_self(test_cases)
+28
+for res in results:
+29
+    print("" "".join(map(str, res)))",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833003
+1387833001,tritampanja444,unknown,unknown,"1
+def product_except_self(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        n, values = t
+6
+        prefix = [1] * n
+7
+        suffix = [1] * n
+8
+        result = [0] * n
+9
+        10
+        # Compute prefix products
+11
+        for i in range(1, n):
+12
+            prefix[i] = prefix[i - 1] * values[i - 1]
+13
+        14
+        # Compute suffix products
+15
+        for i in range(n - 2, -1, -1):
+16
+            suffix[i] = suffix[i + 1] * values[i + 1]
+17
+        18
+        # Compute result using prefix and suffix
+19
+        for i in range(n):
+20
+            result[i] = prefix[i] * suffix[i]
+21
+        22
+        results.append(result)
+23
+    24
+    return results
+25
+26
+27
+# Input handling
+28
+T = int(input())
+29
+test_cases = []
+30
+31
+for _ in range(T):
+32
+    n = int(input())
+33
+    values = list(map(int, input().split()))
+34
+    test_cases.append((n, values))
+35
+36
+# Compute results
+37
+results = product_except_self(test_cases)
+38
+39
+# Output results
+40
+for res in results:
+41
+    print("" "".join(map(str, res)))
+42",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833001
+1387832993,swathiharish2349,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+void solution(vector<int>& arr, int product){
+9
+    int n = arr.size();
+10
+    int curr;
+11
+    for(int i=0; i<n; i++){
+12
+        curr=arr[i];
+13
+        cout<<product/curr<<"" "";
+14
+    }   
+15
+}
+16
+    17
+int main() {
+18
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+19
+    int t;
+20
+    cin>>t;
+21
+    while(t--){
+22
+        int n;
+23
+        cin>>n;
+24
+        vector<int> arr;
+25
+        int product=1;
+26
+        for(int i=0; i<n; i++){
+27
+            int ele;
+28
+            cin>>ele;
+29
+            arr.push_back(ele);
+30
+            product*=ele;
+31
+        }
+32
+        solution(arr, product);
+33
+        cout<<endl;
+34
+    }
+35
+    return 0;
+36
+}
+37",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832993
+1387832998,aagnihotri2203,unknown,unknown,"1
+def solve():
+2
+    import sys
+3
+    input_data = sys.stdin.read().strip().split()
+4
+    t = int(input_data[0])
+5
+    idx = 1
+6
+    7
+    for _ in range(t):
+8
+        n = int(input_data[idx])
+9
+        idx += 1
+10
+        arr = list(map(int, input_data[idx:idx+n]))
+11
+        idx += n
+12
+        13
+        zero_count = 0
+14
+        product_all = 1
+15
+        16
+        for val in arr:
+17
+            if val == 0:
+18
+                zero_count += 1
+19
+            else:
+20
+                product_all *= val
+21
+        22
+        result = [0]*n
+23
+        24
+        if zero_count > 1:
+25
+            print("" "".join(map(str, result)))
+26
+            continue
+27
+        elif zero_count == 1:
+28
+            for i in range(n):
+29
+                if arr[i] == 0:
+30
+                    result[i] = product_all
+31
+            print("" "".join(map(str, result)))
+32
+            continue
+33
+        else:
+34
+            for i in range(n):
+35
+                result[i] = product_all // arr[i]
+36
+            print("" "".join(map(str, result)))
+37
+38
+solve()",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832998
+1387833000,tiwarishashank14,unknown,unknown,"1
+#include <stdio.h>
+2
+3
+void solve() {
+4
+    int T;
+5
+    scanf(""%d"", &T);  // Read the number of test cases
+6
+    7
+    while (T--) {
+8
+        int n;
+9
+        scanf(""%d"", &n);  // Read the number of nodes
+10
+        11
+        int values[n];
+12
+        for (int i = 0; i < n; i++) {
+13
+            scanf(""%d"", &values[i]);  // Read the values of the nodes
+14
+        }
+15
+        16
+        // Initialize arrays for result, prefix, and suffix
+17
+        long long prefix[n];
+18
+        long long suffix = 1;
+19
+        long long result[n];
+20
+        21
+        // Calculate prefix products
+22
+        prefix[0] = values[0];
+23
+        for (int i = 1; i < n; i++) {
+24
+            prefix[i] = prefix[i - 1] * values[i];
+25
+        }
+26
+        27
+        // Calculate the result array using suffix products
+28
+        for (int i = n - 1; i >= 0; i--) {
+29
+            if (i == 0) {
+30
+                result[i] = suffix;  // First element is only the suffix product
+31
+            } else {
+32
+                result[i] = prefix[i - 1] * suffix;  // Multiply prefix and suffix
+33
+            }
+34
+            suffix *= values[i];  // Update suffix for the next element
+35
+        }
+36
+        37
+        // Print the result for the current test case
+38
+        for (int i = 0; i < n; i++) {
+39
+            printf(""%lld "", result[i]);
+40
+        }
+41
+        printf(""\n"");
+42
+    }
+43
+}
+44
+45
+int main() {
+46
+    solve();  // Call the solve function
+47
+    return 0;
+48
+}
+49
+50",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833000
+1387832987,hamso2107,unknown,unknown,"1
+def product_except_self(values):
+2
+    n = len(values)
+3
+    result = [1] * n
+4
+    5
+    # Calculate the product of all elements to the left of each index
+6
+    left_product = 1
+7
+    for i in range(n):
+8
+        result[i] = left_product
+9
+        left_product *= values[i]
+10
+    11
+    # Calculate the product of all elements to the right of each index and multiply with the left product
+12
+    right_product = 1
+13
+    for i in range(n-1, -1, -1):
+14
+        result[i] *= right_product
+15
+        right_product *= values[i]
+16
+    17
+    return result
+18
+19
+def main():
+20
+    import sys
+21
+    input = sys.stdin.read
+22
+    data = input().split()
+23
+    24
+    idx = 0
+25
+    T = int(data[idx])
+26
+    idx += 1
+27
+    28
+    for _ in range(T):
+29
+        n = int(data[idx])
+30
+        idx += 1
+31
+        values = list(map(int, data[idx:idx+n]))
+32
+        idx += n
+33
+        34
+        result = product_except_self(values)
+35
+        print(' '.join(map(str, result)))
+36
+37
+if __name__ == ""__main__"":
+38
+    main()",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832987
+1387832988,shubhamgupta3009,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+import java.text.*;
+4
+import java.math.*;
+5
+import java.util.regex.*;
+6
+7
+public class Solution {
+8
+9
+    public static void main(String[] args) {
+10
+        Scanner scanner = new Scanner(System.in);
+11
+        int T = scanner.nextInt();
+12
+13
+        for (int t = 0; t < T; t++) {
+14
+            int n = scanner.nextInt();
+15
+            int[] values = new int[n];
+16
+            for (int i = 0; i < n; i++) {
+17
+                values[i] = scanner.nextInt();
+18
+            }
+19
+20
+            int[] result = new int[n];
+21
+            int totalProduct = 1;
+22
+            int zeroCount = 0;
+23
+24
+            for (int value : values) {
+25
+                if (value == 0) {
+26
+                    zeroCount++;
+27
+                } else {
+28
+                    totalProduct *= value;
+29
+                }
+30
+            }
+31
+32
+            for (int i = 0; i < n; i++) {
+33
+                if (zeroCount > 1) {
+34
+                    result[i] = 0;
+35
+                } else if (zeroCount == 1) {
+36
+                    if (values[i] == 0) {
+37
+                        result[i] = totalProduct;
+38
+                    } else {
+39
+                        result[i] = 0;
+40
+                    }
+41
+                } else {
+42
+                    result[i] = totalProduct / values[i];
+43
+                }
+44
+            }
+45
+46
+            for (int i = 0; i < n; i++) {
+47
+                System.out.print(result[i] + "" "");
+48
+            }
+49
+            System.out.println();
+50
+        }
+51
+52
+        scanner.close();
+53
+    }
+54
+}",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832988
+1387832992,h1032221480,unknown,unknown,"1
+def minimum_operations():
+2
+    T = int(input())  # Number of test cases
+3
+    results = []
+4
+    5
+    for _ in range(T):
+6
+        N, K = map(int, input().split())  # Number of stations and units of energy per operation
+7
+        energy = list(map(int, input().split()))  # Energy levels at each station
+8
+        9
+        # Check if equalization is possible
+10
+        total_energy = sum(energy)
+11
+        if total_energy % N != 0:
+12
+            results.append(-1)
+13
+            continue
+14
+        15
+        # Target energy level for each station
+16
+        target_energy = total_energy // N
+17
+        18
+        # Calculate difference array
+19
+        diff = [energy[i] - target_energy for i in range(N)]
+20
+        21
+        # Check if all differences are divisible by K
+22
+        if any(d % K != 0 for d in diff):
+23
+            results.append(-1)
+24
+            continue
+25
+        26
+        # Count the number of operations needed
+27
+        operations = 0
+28
+        balance = 0
+29
+        for d in diff:
+30
+            balance += d // K
+31
+            operations += abs(balance)
+32
+        33
+        results.append(operations)
+34
+    35
+    # Print the results for all test cases
+36
+    print(""\n"".join(map(str, results)))
+37
+38
+39
+# Call the function to execute
+40
+minimum_operations()
+41",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387832992
+1387832984,ankitayadav25310,unknown,unknown,"1
+def solve_testcase(N, K, energy):
+2
+    # Calculate total energy and target
+3
+    total_energy = sum(energy)
+4
+    5
+    # Check if equal distribution is possible
+6
+    if total_energy % N != 0:
+7
+        return -1
+8
+    9
+    target = total_energy // N
+10
+    11
+    # If already equalized
+12
+    if all(e == target for e in energy):
+13
+        return 0
+14
+    15
+    # For each position, calculate how many transfers are needed
+16
+    total_transfers = 0
+17
+    excess = 0  # Keep track of excess/deficit as we go around the circle
+18
+    19
+    for i in range(N):
+20
+        # Current position's excess/deficit including previous remainder
+21
+        curr_with_excess = energy[i] + excess
+22
+        23
+        # How far are we from target at this position
+24
+        diff_from_target = curr_with_excess - target
+25
+        26
+        # This difference will need to be transferred to next position
+27
+        excess = diff_from_target
+28
+        29
+        # If we need to make transfers
+30
+        if diff_from_target != 0:
+31
+            # If we can't transfer in K-unit chunks
+32
+            if abs(diff_from_target) % K != 0:
+33
+                return -1
+34
+                35
+            # Add number of K-unit transfers needed
+36
+            total_transfers += abs(diff_from_target) // K
+37
+    38
+    # After going around the circle, if there's any remainder, it's impossible
+39
+    if excess != 0:
+40
+        return -1
+41
+        42
+    return total_transfers
+43
+44
+def main():
+45
+    # Read number of test cases
+46
+    T = int(input())
+47
+    48
+    # Process each test case
+49
+    for _ in range(T):
+50
+        # Read N and K
+51
+        N, K = map(int, input().split())
+52
+        53
+        # Read energy array
+54
+        energy = list(map(int, input().split()))
+55
+        56
+        # Solve current test case
+57
+        result = solve_testcase(N, K, energy)
+58
+        59
+        # Print result
+60
+        print(result)
+61
+62
+if __name__ == ""__main__"":
+63
+    main()",101,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387832984

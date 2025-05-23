@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import { CSVDownload } from "react-csv";
 
-const API_URL = process.env.REACT_APP_API_URL || "https://shastra-result-1.onrender.com/";
+const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 
 const FileUploadPage = () => {
   const [file, setFile] = useState(null);

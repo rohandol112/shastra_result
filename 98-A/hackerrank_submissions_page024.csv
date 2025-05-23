@@ -1,0 +1,701 @@
+submission_id,username,problem_name,language,code,page,url
+1387834366,rahulyadav2005a1,unknown,unknown,"1
+def max_absolute_difference(t, test_cases):
+2
+3
+    results = []
+4
+5
+    for test in test_cases:
+6
+7
+        n, nums = test
+8
+9
+        prefix = [0] * n
+10
+11
+        suffix = [0] * n
+12
+13
+        prefix[0] = nums[0]
+14
+15
+        for i in range(1, n):
+16
+17
+            prefix[i] = prefix[i - 1] + nums[i]
+18
+19
+        suffix[-1] = nums[-1]
+20
+21
+        for i in range(n - 2, -1, -1):
+22
+23
+            suffix[i] = suffix[i + 1] + nums[i]
+24
+25
+        max_diff = 0
+26
+27
+        for i in range(n - 1):  # Partition at i
+28
+29
+            left_sum = prefix[i]
+30
+31
+            right_sum = suffix[i + 1]
+32
+33
+            max_diff = max(max_diff, abs(left_sum - right_sum))
+34
+35
+        results.append(max_diff)
+36
+37
+    return results
+38
+39
+t = int(input())
+40
+41
+test_cases = []
+42
+43
+for _ in range(t):
+44
+45
+    n = int(input())
+46
+47
+    nums = list(map(int, input().split()))
+48
+49
+    test_cases.append((n, nums))
+50
+51
+results = max_absolute_difference(t, test_cases)
+52
+53
+for res in results:
+54
+55
+    print(res)",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834366
+1387834367,1_ashwarya,unknown,unknown,"1
+def min_operations(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    4
+    if total_energy % N != 0:
+5
+        return -1  
+6
+    7
+    target = total_energy // N
+8
+    operations = 0
+9
+    current_balance = 0
+10
+    11
+    for i in range(N):
+12
+        diff = energy[i] - target
+13
+        current_balance += diff
+14
+       15
+        operations += abs(current_balance) // K
+16
+        17
+    return operations
+18
+19
+T = int(input())
+20
+21
+for _ in range(T):
+22
+    N, K = map(int, input().split())
+23
+    energy = list(map(int, input().split()))
+24
+ 25
+    result = min_operations(N, K, energy)
+26
+    print(result)
+27",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834367
+1387834369,h1032221720,unknown,unknown,"1
+#include <cmath>
+2
+#include <cstdio>
+3
+#include <vector>
+4
+#include <iostream>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+int maxAbsDifference(const vector<int>& nums) {
+9
+    int n = nums.size();
+10
+    11
+    12
+    vector<int> prefixSum(n);
+13
+    prefixSum[0] = nums[0];
+14
+    for (int i = 1; i < n; i++) {
+15
+        prefixSum[i] = prefixSum[i - 1] + nums[i];
+16
+    }
+17
+    18
+    int totalSum = prefixSum[n - 1];
+19
+    int maxDiff = 0;
+20
+    21
+    for (int i = 0; i < n - 1; i++) {
+22
+        int leftSum = prefixSum[i];  
+23
+        int rightSum = totalSum - leftSum;  
+24
+        maxDiff = max(maxDiff, abs(leftSum - rightSum));
+25
+    }
+26
+    27
+    return maxDiff;
+28
+}
+29
+int main() {
+30
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+31
+     int t;
+32
+    cin >> t; 
+33
+    34
+    while (t--) {
+35
+        int n;
+36
+        cin >> n;  
+37
+        vector<int> nums(n);
+38
+        for (int i = 0; i < n; i++) {
+39
+            cin >> nums[i];  
+40
+        }
+41
+        42
+        cout << maxAbsDifference(nums) << endl; 
+43
+    }
+44
+    return 0;
+45
+}
+46",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834369
+1387834358,h1032220278,unknown,unknown,"1
+def minoperations(n,k,energies):
+2
+    totalenergy=sum(energies)
+3
+    if(totalenergy%n!=0):
+4
+        return -1
+5
+    target=totalenergy//n
+6
+    operations=0
+7
+    balance=0
+8
+    for i in range(n):
+9
+        diff=energies[i]-target
+10
+        balance+=diff
+11
+        12
+        if(balance%k!=0):
+13
+            return -1
+14
+        operations+=abs(balance//k)
+15
+        return operations
+16
+T=int(input())
+17
+for i in range(T):
+18
+    n,k=map(int,input().split())
+19
+    energies=list(map(int,input().split()))
+20
+    print(minoperations(n,k,energies))",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834358
+1387834360,abhaywadkar2004,unknown,unknown,"1
+t=int(input())
+2
+for _ in range(t):
+3
+    n=int(input())
+4
+    arr=list(map(int,input().split()))
+5
+    summ=sum(arr)
+6
+    ans=0
+7
+    total=0
+8
+    for i in range(n-1):
+9
+        total+=arr[i]
+10
+        comp=summ-total
+11
+        ans=max(ans,abs(comp-total))
+12
+    print(ans)",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834360
+1387834363,h1032220829,unknown,unknown,"1
+def product_array(values):
+2
+    """"""
+3
+    Calculates the product of all elements in the array except the element at the current index.
+4
+5
+    Args:
+6
+        values: A list of integers.
+7
+8
+    Returns:
+9
+        A list of integers, where each element is the product of all other elements in the original list.
+10
+    """"""
+11
+12
+    n = len(values)
+13
+    result = [1] * n
+14
+15
+    # Calculate left product
+16
+    left_product = 1
+17
+    for i in range(n):
+18
+        result[i] = left_product
+19
+        left_product *= values[i]
+20
+21
+    # Calculate right product
+22
+    right_product = 1
+23
+    for i in range(n - 1, -1, -1):
+24
+        result[i] *= right_product
+25
+        right_product *= values[i]
+26
+27
+    return result
+28
+29
+30
+if __name__ == ""__main__"":
+31
+    T = int(input())  # Number of test cases
+32
+33
+    for _ in range(T):
+34
+        n = int(input())  # Length of the array
+35
+        values = list(map(int, input().split()))  # Input array
+36
+37
+        result = product_array(values)
+38
+        print(*result)  # Print the result as space-separated values
+39",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387834363
+1387834350,HarshShrivastava,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        Scanner sc=new Scanner(System.in);
+8
+        int t=sc.nextInt();
+9
+        while(t>0){
+10
+            int n=sc.nextInt();
+11
+            long a[]=new long[n];
+12
+            int k=sc.nextInt();
+13
+            int i;
+14
+            long total=0;
+15
+            for(i=0;i<n;i++){
+16
+                a[i]=sc.nextLong();
+17
+                total+=a[i];
+18
+            }
+19
+            if(total%n!=0)
+20
+                System.out.println(-1);
+21
+            else{
+22
+                i=0;
+23
+                int count=0;
+24
+                int steps=0;
+25
+                while(true){
+26
+                    i%=n;
+27
+                    if(a[(i+1)%n]==a[i]){
+28
+                        count+=1;
+29
+                    }
+30
+                    if(a[(i+1)%n]<a[i]&&a[i]-a[(i+1)%n]>=k){
+31
+                        a[(i+1)%n]+=k;
+32
+                        a[i]-=k;
+33
+                        steps+=1;
+34
+                        count=0;
+35
+                    }
+36
+                    if(count==n){
+37
+                        System.out.println(steps);
+38
+                        break;
+39
+                    }
+40
+                    i++;
+41
+                }
+42
+            }
+43
+            t--;
+44
+        }
+45
+    }
+46
+}",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834350
+1387834352,pandeysneha3004,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner scanner = new Scanner(System.in);
+7
+        int T = scanner.nextInt(); 
+8
+        9
+        while (T-- > 0) {
+10
+            int n = scanner.nextInt();
+11
+            int[] values = new int[n];
+12
+            13
+            for (int i = 0; i < n; i++) {
+14
+                values[i] = scanner.nextInt();
+15
+            }
+16
+            17
+            int[] result = productExceptSelf(values);
+18
+            printArray(result);
+19
+        }
+20
+        21
+        scanner.close();
+22
+    }
+23
+    24
+    private static int[] productExceptSelf(int[] nums) {
+25
+        int n = nums.length;
+26
+        int[] result = new int[n];
+27
+        28
+        result[0] = 1;
+29
+        for (int i = 1; i < n; i++) {
+30
+            result[i] = result[i - 1] * nums[i - 1];
+31
+        }
+32
+        33
+        int rightProduct = 1;
+34
+        for (int i = n - 1; i >= 0; i--) {
+35
+            result[i] = result[i] * rightProduct;
+36
+            rightProduct *= nums[i];
+37
+        }
+38
+        39
+        return result;
+40
+    }
+41
+    42
+    private static void printArray(int[] arr) {
+43
+        for (int i = 0; i < arr.length; i++) {
+44
+            System.out.print(arr[i]);
+45
+            if (i < arr.length - 1) {
+46
+                System.out.print("" "");
+47
+            }
+48
+        }
+49
+        System.out.println(); // Re-typed this line to avoid non-ASCII characters
+50
+    }
+51
+}
+52",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387834352
+1387834356,swayam_prajapat1,unknown,unknown,"1
+def solve():
+2
+    n = int(input())
+3
+    nums = list(map(int, input().split()))
+4
+5
+    max_diff = 0
+6
+    total_sum = sum(nums)
+7
+    current_sum = 0
+8
+9
+    for i in range(n - 1):
+10
+        current_sum += nums[i]
+11
+        sum1 = current_sum
+12
+        sum2 = total_sum - sum1
+13
+        diff = abs(sum1 - sum2)
+14
+        max_diff = max(max_diff, diff)
+15
+16
+    print(max_diff)
+17
+18
+19
+t = int(input())
+20
+for _ in range(t):
+21
+    solve()",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834356
+1387834346,utsavsingh2826,unknown,unknown,"1
+import java.util.Scanner;
+2
+3
+public class MaxDifference {
+4
+5
+    // Method to solve the problem
+6
+7
+    public static void solve() {
+8
+9
+        Scanner scanner = new Scanner(System.in);
+10
+11
+        12
+13
+        // Get number of test cases
+14
+15
+        int t = scanner.nextInt();
+16
+17
+        18
+19
+        for (int _ = 0; _ < t; _++) {
+20
+21
+            // Read n (number of elements in the array)
+22
+23
+            int n = scanner.nextInt();
+24
+25
+            int[] nums = new int[n];
+26
+27
+            28
+29
+            // Read the array
+30
+31
+            for (int i = 0; i < n; i++) {
+32
+33
+                nums[i] = scanner.nextInt();
+34
+35
+            }
+36
+37
+            38
+39
+            // Calculate the total sum
+40
+41
+            int totalSum = 0;
+42
+43
+            for (int i = 0; i < n; i++) {
+44
+45
+                totalSum += nums[i];
+46
+47
+            }
+48
+49
+            50
+51
+            // Initialize left sum and max difference
+52
+53
+            int leftSum = 0;
+54
+55
+            int maxDifference = 0;
+56
+57
+            58
+59
+            // Iterate through the array and calculate max difference
+60
+61
+            for (int i = 0; i < n - 1; i++) {
+62
+63
+                leftSum += nums[i];
+64
+65
+                int rightSum = totalSum - leftSum;
+66
+67
+                maxDifference = Math.max(maxDifference, Math.abs(leftSum - rightSum));
+68
+69
+            }
+70
+71
+            72
+73
+            // Print the result for this test case
+74
+75
+            System.out.println(maxDifference);
+76
+77
+        }
+78
+79
+        80
+81
+        scanner.close();
+82
+83
+    }
+84
+85
+    public static void main(String[] args) {
+86
+87
+        // Call the solve method to run the solution
+88
+89
+        solve();
+90
+91
+    }
+92
+93
+}
+94
+95
+96
+97
+98
+99
+    ",24,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834346

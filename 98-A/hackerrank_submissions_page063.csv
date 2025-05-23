@@ -1,0 +1,660 @@
+submission_id,username,problem_name,language,code,page,url
+1387833590,harshpal0050,unknown,unknown,"1
+def minimum_operations_to_equalize(test_cases):
+2
+3
+    results = []
+4
+5
+    6
+7
+    for t in test_cases:
+8
+9
+        N, K, energy = t
+10
+11
+        total_energy = sum(energy)
+12
+13
+        14
+15
+        # Check if equalization is possible
+16
+17
+        if total_energy % N != 0:
+18
+19
+            results.append(-1)
+20
+21
+            continue
+22
+23
+        24
+25
+        target = total_energy // N
+26
+27
+        diffs = [energy[i] - target for i in range(N)]
+28
+29
+        30
+31
+        # Check if all differences are divisible by K
+32
+33
+        if any(diff % K != 0 for diff in diffs):
+34
+35
+            results.append(-1)
+36
+37
+            continue
+38
+39
+        40
+41
+        # Calculate minimum operations
+42
+43
+        operations = 0
+44
+45
+        imbalance = 0
+46
+47
+        48
+49
+        for diff in diffs:
+50
+51
+            imbalance += diff // K
+52
+53
+            operations += abs(imbalance)
+54
+55
+        56
+57
+        results.append(operations)
+58
+59
+    60
+61
+    return results
+62
+63
+# Input handling
+64
+65
+T = int(input())
+66
+67
+test_cases = []
+68
+69
+for _ in range(T):
+70
+71
+    N, K = map(int, input().split())
+72
+73
+    energy = list(map(int, input().split()))
+74
+75
+    test_cases.append((N, K, energy))
+76
+77
+# Compute results
+78
+79
+results = minimum_operations_to_equalize(test_cases)
+80
+81
+# Output results
+82
+83
+for res in results:
+84
+85
+    print(res)# Enter your code here. Read input from STDIN. Print output to STDOUT",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833590
+1387833591,h1032220798,unknown,unknown,"1
+def product_array(arr):
+2
+    n = len(arr)
+3
+    left = [1] * n
+4
+    right = [1] * n
+5
+6
+    # Calculate left product array
+7
+    for i in range(1, n):
+8
+        left[i] = left[i-1] * arr[i-1]
+9
+10
+    # Calculate right product array
+11
+    for i in range(n-2, -1, -1):
+12
+        right[i] = right[i+1] * arr[i+1]
+13
+14
+    # Calculate result array
+15
+    result = [left[i] * right[i] for i in range(n)]
+16
+17
+    return result
+18
+19
+# Get number of test cases
+20
+t = int(input())
+21
+22
+for _ in range(t):
+23
+    n = int(input())
+24
+    arr = list(map(int, input().split()))
+25
+    result = product_array(arr)
+26
+    print(*result)",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833591
+1387833596,codedot,unknown,unknown,"1
+t=int(input())
+2
+for _ in range(t):
+3
+ n=int(input())
+4
+ values=list(map(int,input().split()))
+5
+ result=[1]*n
+6
+ total_product=1
+7
+ for value in values:
+8
+  total_product*=value
+9
+ for i in range(n):
+10
+  result[i]=total_product//values[i]
+11
+ print(*result)
+12",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833596
+1387833587,pawanmudaliar081,unknown,unknown,"1
+def max_absolute_difference(t, test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, nums = case
+5
+6
+        prefix_sum = [0] * n
+7
+        prefix_sum[0] = nums[0]
+8
+        for i in range(1, n):
+9
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i]
+10
+        11
+        total_sum = prefix_sum[-1]
+12
+        max_diff = 0
+13
+14
+        for i in range(n - 1):
+15
+            left_sum = prefix_sum[i]
+16
+            right_sum = total_sum - left_sum
+17
+            max_diff = max(max_diff, abs(left_sum - right_sum))
+18
+        19
+        results.append(max_diff)
+20
+    21
+    return results
+22
+23
+if __name__ == ""__main__"":
+24
+    t = int(input())
+25
+    test_cases = []
+26
+    for _ in range(t):
+27
+        n = int(input())
+28
+        nums = list(map(int, input().split()))
+29
+        test_cases.append((n, nums))
+30
+    31
+    results = max_absolute_difference(t, test_cases)
+32
+    for res in results:
+33
+        print(res)
+34",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387833587
+1387833588,sanika_wani,unknown,unknown,"1
+def product_array(arr):
+2
+    n = len(arr)
+3
+    left = [1] * n
+4
+    right = [1] * n
+5
+6
+   7
+    for i in range(1, n):
+8
+        left[i] = left[i-1] * arr[i-1]
+9
+10
+   11
+    for i in range(n-2, -1, -1):
+12
+        right[i] = right[i+1] * arr[i+1]
+13
+14
+    15
+    result = [left[i] * right[i] for i in range(n)]
+16
+17
+    return result
+18
+19
+20
+T = int(input())
+21
+22
+for _ in range(T):
+23
+    n = int(input())
+24
+    arr = list(map(int, input().split()))
+25
+    result = product_array(arr)
+26
+    print(*result)",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833588
+1387833589,shshloka,unknown,unknown,"1
+def equalize_energy(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        N, K, energy = case
+5
+        total_energy = sum(energy)
+6
+        if total_energy % N != 0:
+7
+            results.append(-1)
+8
+            continue
+9
+        target = total_energy // N
+10
+        operations = 0
+11
+        cumulative_diff = 0
+12
+        for e in energy:
+13
+            diff = e - target
+14
+            cumulative_diff += diff
+15
+            operations += abs(cumulative_diff)
+16
+        if cumulative_diff != 0:
+17
+            results.append(-1)
+18
+        else:
+19
+            results.append(operations // K)
+20
+    return results
+21
+22
+def main():
+23
+    import sys
+24
+    input = sys.stdin.read
+25
+    data = input().split()
+26
+    idx = 0
+27
+    T = int(data[idx])
+28
+    idx += 1
+29
+    test_cases = []
+30
+    for _ in range(T):
+31
+        N = int(data[idx])
+32
+        K = int(data[idx+1])
+33
+        idx += 2
+34
+        energy = list(map(int, data[idx:idx+N]))
+35
+        idx += N
+36
+        test_cases.append((N, K, energy))
+37
+    results = equalize_energy(test_cases)
+38
+    for res in results:
+39
+        print(res)
+40
+41
+if __name__ == ""__main__"":
+42
+    main()",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833589
+1387833581,h1032220053,unknown,unknown,"1
+def minimum_operations_to_equalize(T, test_cases):
+2
+    results = []
+3
+4
+    for t in range(T):
+5
+        N, K = test_cases[t][0]
+6
+        energy = test_cases[t][1]
+7
+8
+        total_energy = sum(energy)
+9
+10
+        # Check if equalization is possible
+11
+        if total_energy % N != 0:
+12
+            results.append(-1)
+13
+            continue
+14
+15
+        target_energy = total_energy // N
+16
+        operations = 0
+17
+        current_diff = 0
+18
+19
+        for i in range(N):
+20
+            diff = energy[i] - target_energy
+21
+            current_diff += diff
+22
+23
+            # If the current difference is not divisible by K, it's impossible to equalize
+24
+            if current_diff % K != 0:
+25
+                results.append(-1)
+26
+                break
+27
+28
+            # Increment operations by the absolute value of current difference divided by K
+29
+            operations += abs(current_diff) // K
+30
+        else:
+31
+            results.append(operations)
+32
+33
+    return results
+34
+35
+# Input reading
+36
+T = int(input())
+37
+test_cases = []
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append(((N, K), energy))
+42
+43
+# Solve and output results
+44
+results = minimum_operations_to_equalize(T, test_cases)
+45
+for result in results:
+46
+    print(result)",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833581
+1387833584,h1032221613,unknown,unknown,"1
+def minimum_operations_to_equalize(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        N, K, energy = t
+6
+        total_energy = sum(energy)
+7
+        8
+        # Check if equalization is possible
+9
+        if total_energy % N != 0:
+10
+            results.append(-1)
+11
+            continue
+12
+        13
+        target = total_energy // N
+14
+        diffs = [energy[i] - target for i in range(N)]
+15
+        16
+        # Check if all differences are divisible by K
+17
+        if any(diff % K != 0 for diff in diffs):
+18
+            results.append(-1)
+19
+            continue
+20
+        21
+        # Calculate minimum operations
+22
+        operations = 0
+23
+        imbalance = 0
+24
+        25
+        for diff in diffs:
+26
+            imbalance += diff // K
+27
+            operations += abs(imbalance)
+28
+        29
+        results.append(operations)
+30
+    31
+    return results
+32
+33
+34
+# Input handling
+35
+T = int(input())
+36
+test_cases = []
+37
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append((N, K, energy))
+42
+43
+# Compute results
+44
+results = minimum_operations_to_equalize(test_cases)
+45
+46
+# Output results
+47
+for res in results:
+48
+    print(res)",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833584
+1387833585,sohampatil1807,unknown,unknown,"1
+with Ada.Text_IO, Ada.Integer_Text_IO;
+2
+use Ada;
+3
+4
+procedure Solution is
+5
+-- Enter your code here. Read input from STDIN. Print output to STDOUT
+6
+def solve_product_array(values, n):
+7
+    """"""
+8
+    Calculate product of all elements except self for each position.
+9
+    Uses O(1) extra space (not counting the output array).
+10
+    """"""
+11
+   12
+    if n < 2:
+13
+        return []
+14
+        15
+    # Initialize result array
+16
+    result = [0] * n
+17
+    18
+ 19
+    20
+  21
+    result[0] = 1
+22
+    for i in range(1, n):
+23
+        result[i] = values[i - 1] * result[i - 1]
+24
+    25
+   26
+    right_product = 1
+27
+    for i in range(n - 1, -1, -1):
+28
+        result[i] = result[i] * right_product
+29
+        right_product *= values[i]
+30
+    31
+    return result
+32
+33
+def main():
+34
+   35
+    T = int(input())
+36
+    37
+  38
+    for _ in range(T):
+39
+       40
+        n = int(input())
+41
+        42
+        43
+        values = list(map(int, input().split()))
+44
+        45
+        46
+        result = solve_product_array(values, n)
+47
+        48
+        49
+        print("" "".join(map(str, result)))
+50
+51
+if _name_ == ""_main_"":
+52
+    main()
+53
+54
+end Solution",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833585
+1387833580,navinbohara5,unknown,unknown,"1
+def max_absolute_difference(n, nums):
+2
+    total_sum = sum(nums)
+3
+    left_sum = 0
+4
+    max_diff = float('-inf')
+5
+6
+    7
+    for i in range(n - 1):  
+8
+        left_sum += nums[i]
+9
+        right_sum = total_sum - left_sum
+10
+        max_diff = max(max_diff, abs(left_sum - right_sum))
+11
+    12
+    return max_diff
+13
+14
+15
+T = int(input())  
+16
+for _ in range(T):
+17
+    n = int(input())  
+18
+    nums = list(map(int, input().split()))  
+19
+20
+    21
+    print(max_absolute_difference(n, nums))
+22",63,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387833580

@@ -1,0 +1,606 @@
+submission_id,username,problem_name,language,code,page,url
+1387834179,h1032221701,unknown,unknown,"1
+import sys
+2
+3
+def max_absolute_difference(nums):
+4
+    """"""
+5
+    Calculates the maximum absolute difference between the sums of two contiguous subarrays.
+6
+7
+    Args:
+8
+      nums: A list of integers.
+9
+10
+    Returns:
+11
+      The maximum absolute difference.
+12
+    """"""
+13
+14
+    n = len(nums)
+15
+    prefix_sum = [0] * (n + 1)
+16
+17
+    # Calculate prefix sum
+18
+    for i in range(1, n + 1):
+19
+        prefix_sum[i] = prefix_sum[i - 1] + nums[i - 1]
+20
+21
+    max_diff = 0
+22
+    for i in range(1, n):
+23
+        left_sum = prefix_sum[i]
+24
+        right_sum = prefix_sum[n] - left_sum
+25
+        max_diff = max(max_diff, abs(left_sum - right_sum))
+26
+27
+    return max_diff
+28
+29
+# Get input using sys.stdin.read()
+30
+input_data = sys.stdin.read().strip()
+31
+32
+if input_data:  # Ensure input is not empty
+33
+    lines = input_data.splitlines()
+34
+    t = int(lines[0])  # Number of test cases
+35
+    results = []
+36
+37
+    idx = 1
+38
+    for _ in range(t):
+39
+        n = int(lines[idx])  # Array size
+40
+        nums = list(map(int, lines[idx + 1].split()))  # Array elements
+41
+        results.append(max_absolute_difference(nums))
+42
+        idx += 2
+43
+44
+    # Output all results
+45
+    for res in results:
+46
+        print(res)
+47",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834179
+1387834180,gupta_aniket0408,unknown,unknown,"1
+T = int(input())
+2
+3
+for _ in range(T):
+4
+    5
+    n = int(input())
+6
+    arr = list(map(int,input().split()))
+7
+    8
+    9
+10
+    prefix = [1] * n
+11
+    suffix = [1] * n
+12
+    result = [1] * n
+13
+14
+    for i in range(1, n):
+15
+        prefix[i] = prefix[i - 1] * arr[i - 1]
+16
+17
+    for i in range(n - 2, -1, -1):
+18
+        suffix[i] = suffix[i + 1] * arr[i + 1]
+19
+20
+    for i in range(n):
+21
+        result[i] = prefix[i] * suffix[i]
+22
+23
+    print(*result)
+24",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387834180
+1387834181,goswamyashutosh9,unknown,unknown,"1
+def min_operations_to_equalize_energy(T, test_cases):
+2
+    results = []
+3
+    for i in range(T):
+4
+        N, K = test_cases[i][0]
+5
+        energy = test_cases[i][1]
+6
+        7
+        total_energy = sum(energy)
+8
+        if total_energy % N != 0:
+9
+            results.append(-1)
+10
+            continue
+11
+        12
+        target_energy = total_energy // N
+13
+        operations = 0
+14
+        for j in range(N):
+15
+            if energy[j] > target_energy:
+16
+                operations += (energy[j] - target_energy) // K
+17
+        18
+        results.append(operations)
+19
+    20
+    return results
+21
+22
+# Sample Input
+23
+T = 3
+24
+test_cases = [
+25
+    [(3, 2), [4, 4, 4]],
+26
+    [(3, 1), [5, 3, 4]],
+27
+    [(4, 3), [5, 5, 5, 6]]
+28
+]
+29
+30
+# Function Call
+31
+results = min_operations_to_equalize_energy(T, test_cases)
+32
+for result in results:
+33
+    print(result)
+34",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834181
+1387834176,singhark94,unknown,unknown,"1
+def moe(test_cases):
+2
+    results = []
+3
+4
+    for t in range(len(test_cases)):
+5
+        N, K, energy = test_cases[t]
+6
+        total_energy = sum(energy)
+7
+        if total_energy % N != 0:
+8
+            results.append(-1)
+9
+            continue
+10
+        11
+        target = total_energy // N
+12
+        operations = 0
+13
+        balance = 0  
+14
+        for i in range(N):
+15
+            balance += energy[i] - target
+16
+            if balance % K != 0:
+17
+                operations = -1
+18
+                break
+19
+            operations += abs(balance) // K
+20
+        21
+        results.append(operations if operations != -1 else -1)
+22
+    23
+    return results
+24
+25
+T = int(input())
+26
+test_cases = []
+27
+28
+for _ in range(T):
+29
+    N, K = map(int, input().split())
+30
+    energy = list(map(int, input().split()))
+31
+    test_cases.append((N, K, energy))
+32
+results = moe(test_cases)
+33
+for res in results:
+34
+    print(res)",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834176
+1387834178,h1032221013,unknown,unknown,"1
+def max_subarray_difference(n, nums):
+2
+    max_diff = float('-inf')
+3
+    prefix_sum = [0] * (n + 1)
+4
+    for i in range(n):
+5
+        prefix_sum[i + 1] = prefix_sum[i] + nums[i]
+6
+    for i in range(1, n):
+7
+        left_sum = prefix_sum[i]
+8
+        right_sum = prefix_sum[n] - prefix_sum[i]
+9
+        curr_diff = abs(left_sum - right_sum)
+10
+        max_diff = max(max_diff, curr_diff)
+11
+    return max_diff
+12
+13
+def main():
+14
+    t = int(input())
+15
+    for _ in range(t):
+16
+        n = int(input())
+17
+        nums = list(map(int, input().split()))
+18
+        result = max_subarray_difference(n, nums)
+19
+        print(result)
+20
+21
+if __name__ == ""__main__"":
+22
+    main()
+23",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834178
+1387834177,smeetadeshra,unknown,unknown,"1
+def max_absolute_difference(t, test_cases):
+2
+    results = []
+3
+    for test in test_cases:
+4
+        n, nums = test
+5
+        prefix_sum = [0] * n
+6
+        prefix_sum[0] = nums[0]
+7
+        for i in range(1, n):
+8
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i]
+9
+        10
+        total_sum = prefix_sum[-1]
+11
+        max_diff = 0
+12
+        for i in range(n - 1):
+13
+            sum1 = prefix_sum[i]  # Sum of the first subarray
+14
+            sum2 = total_sum - sum1  # Sum of the second subarray
+15
+            max_diff = max(max_diff, abs(sum1 - sum2))
+16
+        17
+        results.append(max_diff)
+18
+    19
+    return results
+20
+t = int(input())
+21
+test_cases = []
+22
+for _ in range(t):
+23
+    n = int(input())
+24
+    nums = list(map(int, input().split()))
+25
+    test_cases.append((n, nums))
+26
+output1 = max_absolute_difference(t, test_cases)
+27
+for res in output1:
+28
+    print(res)
+29",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834177
+1387834171,ag9867603762,unknown,unknown,"1
+def max_absolute_difference(test_cases):
+2
+    results = []
+3
+4
+    for _ in range(test_cases):
+5
+        n = int(raw_input())
+6
+        nums = list(map(int, raw_input().split()))
+7
+        max_diff = 0
+8
+        prefix_sum = 0
+9
+        total_sum = sum(nums)
+10
+        for i in range(n - 1):
+11
+            prefix_sum += nums[i]
+12
+            suffix_sum = total_sum - prefix_sum
+13
+            max_diff = max(max_diff, abs(prefix_sum - suffix_sum))
+14
+15
+        results.append(max_diff)
+16
+    for res in results:
+17
+        print(res)
+18
+T = int(raw_input())
+19
+max_absolute_difference(T)
+20",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834171
+1387834174,ranegayatri625,unknown,unknown,"1
+def max_absolute_difference(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, nums = case
+5
+        total_sum = sum(nums)
+6
+        left_sum = 0
+7
+        max_diff = 0
+8
+        for i in range(n - 1):
+9
+            left_sum += nums[i]
+10
+            right_sum = total_sum - left_sum
+11
+            max_diff = max(max_diff, abs(left_sum - right_sum))
+12
+        results.append(max_diff)
+13
+    return results
+14
+15
+16
+t = int(input())
+17
+test_cases = []
+18
+for _ in range(t):
+19
+    n = int(input())
+20
+    nums = list(map(int, input().split()))
+21
+    test_cases.append((n, nums))
+22
+23
+results = max_absolute_difference(test_cases)
+24
+for res in results:
+25
+    print(res)",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834174
+1387834175,akshitha_ssays,unknown,unknown,"1
+def min_operations_to_equalize_energy(t, test_cases):
+2
+    results = []
+3
+    4
+    for test_case in test_cases:
+5
+        N, K = test_case[0], test_case[1]
+6
+        energies = test_case[2]
+7
+        8
+        total_energy = sum(energies)
+9
+        10
+        # Check if total energy is divisible by N
+11
+        if total_energy % N != 0:
+12
+            results.append(-1)
+13
+            continue
+14
+        15
+        target_energy = total_energy // N
+16
+        operations = 0
+17
+        balance = 0
+18
+        19
+        # Process each station
+20
+        for i in range(N):
+21
+            # Calculate the current difference from the target
+22
+            diff = energies[i] - target_energy
+23
+            balance += diff
+24
+            25
+            # We need to balance this difference by transferring multiples of K
+26
+            if balance % K != 0:
+27
+                results.append(-1)
+28
+                break
+29
+            operations += abs(balance) // K
+30
+        31
+        else:
+32
+            results.append(operations)
+33
+    34
+    return results
+35
+36
+# Input processing
+37
+t = int(input())  # number of test cases
+38
+test_cases = []
+39
+for _ in range(t):
+40
+    N, K = map(int, input().split())  # number of stations and units of energy that can be transferred in one operation
+41
+    energies = list(map(int, input().split()))  # energy at each station
+42
+    test_cases.append((N, K, energies))
+43
+44
+# Call function and print results
+45
+results = min_operations_to_equalize_energy(t, test_cases)
+46
+for result in results:
+47
+    print(result)",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834175
+1387834169,gusingevivek,unknown,unknown,"1
+def max_subarray_difference(n, nums):
+2
+    """"""
+3
+    Calculate maximum absolute difference between sums of two contiguous subarrays
+4
+    5
+    Args:
+6
+        n (int): Length of array
+7
+        nums (list): Input array of integers
+8
+        9
+    Returns:
+10
+        int: Maximum absolute difference possible
+11
+    """"""
+12
+    # We need to try all possible partitions
+13
+    # For each index i, we'll compare sum of elements before and after i
+14
+    max_diff = float('-inf')
+15
+    16
+    # Calculate prefix sums for efficient subarray sum calculation
+17
+    prefix_sum = [0] * (n + 1)
+18
+    for i in range(n):
+19
+        prefix_sum[i + 1] = prefix_sum[i] + nums[i]
+20
+    21
+    # Try all possible partitions
+22
+    # We need at least one element in each partition
+23
+    for i in range(1, n):
+24
+        # Left subarray sum: from index 0 to i-1
+25
+        left_sum = prefix_sum[i]
+26
+        27
+        # Right subarray sum: from index i to n-1
+28
+        right_sum = prefix_sum[n] - prefix_sum[i]
+29
+        30
+        # Calculate absolute difference
+31
+        curr_diff = abs(left_sum - right_sum)
+32
+        33
+        # Update maximum difference if current difference is larger
+34
+        max_diff = max(max_diff, curr_diff)
+35
+    36
+    return max_diff
+37
+38
+def main():
+39
+    # Read number of test cases
+40
+    t = int(input())
+41
+    42
+    # Process each test case
+43
+    for _ in range(t):
+44
+        # Read array size
+45
+        n = int(input())
+46
+        47
+        # Read array elements
+48
+        nums = list(map(int, input().split()))
+49
+        50
+        # Calculate and print result
+51
+        result = max_subarray_difference(n, nums)
+52
+        print(result)
+53
+54
+if __name__ == ""__main__"":
+55
+    main()",31,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834169

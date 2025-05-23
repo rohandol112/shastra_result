@@ -1,0 +1,780 @@
+submission_id,username,problem_name,language,code,page,url
+1387833702,h1032220053,unknown,unknown,"1
+def min_operations_to_equalize(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    4
+    # Check if it's possible to equalize
+5
+    if total_energy % N != 0:
+6
+        return -1
+7
+    8
+    target = total_energy // N
+9
+    current_diff = 0
+10
+    operations = 0
+11
+    12
+    for e in energy:
+13
+        current_diff += e - target
+14
+        if current_diff % K != 0:
+15
+            return -1
+16
+        operations += abs(current_diff) // K
+17
+    18
+    return operations
+19
+20
+# Input handling
+21
+T = int(input())
+22
+results = []
+23
+for _ in range(T):
+24
+    N, K = map(int, input().split())
+25
+    energy = list(map(int, input().split()))
+26
+    results.append(min_operations_to_equalize(N, K, energy))
+27
+28
+# Output results
+29
+print(*results, sep=""\n"")
+30",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833702
+1387833703,adiv40816,unknown,unknown,"1
+import sys
+2
+3
+def min_operations_to_equalize(n, k, energy):
+4
+    total_energy = sum(energy)
+5
+    6
+    # If total energy is not divisible by n, it's impossible to equalize
+7
+    if total_energy % n != 0:
+8
+        return -1
+9
+    10
+    target = total_energy // n  # Each station should have this much energy
+11
+    operations = 0
+12
+    13
+    for i in range(n):
+14
+        diff = energy[i] - target
+15
+        if diff % k != 0:
+16
+            return -1  # If difference is not a multiple of k, equalizing is impossible
+17
+        energy[i] -= diff
+18
+        energy[(i + 1) % n] += diff  # Transfer energy to the next station
+19
+        operations += abs(diff) // k
+20
+    21
+    return operations
+22
+23
+def main():
+24
+    t = int(input().strip())
+25
+    results = []
+26
+    for _ in range(t):
+27
+        n, k = map(int, input().strip().split())
+28
+        energy = list(map(int, input().strip().split()))
+29
+        results.append(str(min_operations_to_equalize(n, k, energy)))
+30
+    31
+    print(""\n"".join(results))
+32
+33
+if __name__ == ""__main__"":
+34
+    main()
+35",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833703
+1387833705,ritikalath2004,unknown,unknown,"1
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+2
+def solve():
+3
+    # Read the number of test cases
+4
+    T = int(input())
+5
+6
+    # Loop through each test case
+7
+    for _ in range(T):
+8
+        # Read the number of nodes (n)
+9
+        n = int(input())
+10
+11
+        # Read the node values
+12
+        values = list(map(int, input().split()))
+13
+14
+        # Initialize the result array and temporary variables for left and right products
+15
+        result = [1] * n
+16
+17
+        # Left product calculation (store the products from the left side of each node)
+18
+        left_product = 1
+19
+        for i in range(n):
+20
+            result[i] = left_product
+21
+            left_product *= values[i]
+22
+23
+        # Right product calculation (multiply the result with products from the right side of each node)
+24
+        right_product = 1
+25
+        for i in range(n-1, -1, -1):
+26
+            result[i] *= right_product
+27
+            right_product *= values[i]
+28
+29
+        # Print the result array
+30
+        print("" "".join(map(str, result)))
+31
+32
+# Call the solve function to execute
+33
+solve()",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833705
+1387833695,pratiksolves,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+using namespace std;
+4
+5
+int main() {
+6
+    int T;
+7
+    cin >> T;
+8
+    9
+    while (T--) {
+10
+        int N, K;
+11
+        cin >> N >> K;
+12
+        13
+        vector<long long> energy(N);
+14
+        long long total_energy = 0;
+15
+        16
+        for (int i = 0; i < N; ++i) {
+17
+            cin >> energy[i];
+18
+            total_energy += energy[i];
+19
+        }
+20
+        21
+        if (total_energy % N != 0) {
+22
+            cout << -1 << endl;
+23
+            continue;
+24
+        }
+25
+        26
+        long long target_energy = total_energy / N;
+27
+        long long operations = 0, surplus = 0;
+28
+        29
+        30
+        bool possible = true;
+31
+        for (int i = 0; i < N; ++i) {
+32
+            surplus += (energy[i] - target_energy);
+33
+            if (surplus % K != 0) {
+34
+                possible = false;
+35
+                break;
+36
+            }
+37
+            operations += abs(surplus / K);
+38
+        }
+39
+        40
+        41
+        if (possible)
+42
+            cout << operations << endl;
+43
+        else
+44
+            cout << -1 << endl;
+45
+    }
+46
+    47
+    return 0;
+48
+}
+49",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833695
+1387833696,h1032220062,unknown,unknown,"1
+def solve_testcase(N, K, energy):
+2
+3
+    # Calculate total energy and target
+4
+5
+    total_energy = sum(energy)
+6
+7
+    8
+9
+    # Check if equal distribution is possible
+10
+11
+    if total_energy % N != 0:
+12
+13
+        return -1
+14
+15
+    16
+17
+    target = total_energy // N
+18
+19
+    20
+21
+    # If already equalized
+22
+23
+    if all(e == target for e in energy):
+24
+25
+        return 0
+26
+27
+    28
+29
+    # For each position, calculate how many transfers are needed
+30
+31
+    total_transfers = 0
+32
+33
+    excess = 0  # Keep track of excess/deficit as we go around the circle
+34
+35
+    36
+37
+    for i in range(N):
+38
+39
+        # Current position's excess/deficit including previous remainder
+40
+41
+        curr_with_excess = energy[i] + excess
+42
+43
+        44
+45
+        # How far are we from target at this position
+46
+47
+        diff_from_target = curr_with_excess - target
+48
+49
+        50
+51
+        # This difference will need to be transferred to next position
+52
+53
+        excess = diff_from_target
+54
+55
+        56
+57
+        # If we need to make transfers
+58
+59
+        if diff_from_target != 0:
+60
+61
+            # If we can't transfer in K-unit chunks
+62
+63
+            if abs(diff_from_target) % K != 0:
+64
+65
+                return -1
+66
+67
+                68
+69
+            # Add number of K-unit transfers needed
+70
+71
+            total_transfers += abs(diff_from_target) // K
+72
+73
+    74
+75
+    # After going around the circle, if there's any remainder, it's impossible
+76
+77
+    if excess != 0:
+78
+79
+        return -1
+80
+81
+        82
+83
+    return total_transfers
+84
+85
+def main():
+86
+87
+    # Read number of test cases
+88
+89
+    T = int(input())
+90
+91
+    92
+93
+    # Process each test case
+94
+95
+    for _ in range(T):
+96
+97
+        # Read N and K
+98
+99
+        N, K = map(int, input().split())
+100
+101
+        102
+103
+        # Read energy array
+104
+105
+        energy = list(map(int, input().split()))
+106
+107
+        108
+109
+        # Solve current test case
+110
+111
+        result = solve_testcase(N, K, energy)
+112
+113
+        114
+115
+        # Print result
+116
+117
+        print(result)
+118
+119
+if __name__ == ""__main__"":
+120
+121
+    main()",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833696
+1387833697,omg40787,unknown,unknown,"1
+def equalize_energy(test_cases):
+2
+    results = []
+3
+4
+    for case in test_cases:
+5
+        N, K = case[0]
+6
+        energies = case[1]
+7
+8
+        # Calculate total energy
+9
+        total_energy = sum(energies)
+10
+11
+        # If total energy is not divisible by N, return -1
+12
+        if total_energy % N != 0:
+13
+            results.append(-1)
+14
+            continue
+15
+16
+        # Target energy for each station
+17
+        target_energy = total_energy // N
+18
+19
+        # Calculate the excess and deficit energy
+20
+        excess = 0
+21
+        deficit = 0
+22
+23
+        for energy in energies:
+24
+            if energy > target_energy:
+25
+                excess += (energy - target_energy)
+26
+            elif energy < target_energy:
+27
+                deficit += (target_energy - energy)
+28
+29
+        # Minimum number of operations required to balance excess and deficit
+30
+        if excess != deficit:
+31
+            results.append(-1)
+32
+        else:
+33
+            results.append(excess // K)
+34
+35
+    return results
+36
+37
+# Example usage:
+38
+test_cases = [
+39
+    ((3, 2), [4, 4, 4]),
+40
+    ((3, 1), [5, 3, 4]),
+41
+    ((4, 3), [5, 5, 5, 6])
+42
+]
+43
+44
+results = equalize_energy(test_cases)
+45
+for result in results:
+46
+    print(result)
+47",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833697
+1387833690,h1032220347,unknown,unknown,"1
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+2
+3
+def minimum_operations_to_equalize(T, test_cases):
+4
+5
+    results = []
+6
+7
+    8
+9
+    for t in range(T):
+10
+11
+        N, K = test_cases[t][""N""], test_cases[t][""K""]
+12
+13
+        energy = test_cases[t][""energy""]
+14
+15
+        16
+17
+        total_energy = sum(energy)
+18
+19
+        20
+21
+        # Check if total energy is divisible by N
+22
+23
+        if total_energy % N != 0:
+24
+25
+            results.append(-1)
+26
+27
+            continue
+28
+29
+        target = total_energy // N  # Target energy for each station
+30
+31
+        32
+33
+        # Calculate difference array to measure imbalance
+34
+35
+        diff = [energy[i] - target for i in range(N)]
+36
+37
+        38
+39
+        # Track prefix sum to balance the circle
+40
+41
+        prefix_sum = 0
+42
+43
+        operations = 0
+44
+45
+        for i in range(N):
+46
+47
+            prefix_sum += diff[i]
+48
+49
+            if prefix_sum % K != 0:  # If imbalance cannot be resolved with K
+50
+51
+                operations = -1
+52
+53
+                break
+54
+55
+            operations += abs(prefix_sum) // K
+56
+57
+        58
+59
+        results.append(operations if operations != -1 else -1)
+60
+61
+    return results
+62
+63
+# Input handling
+64
+65
+if __name__ == ""__main__"":
+66
+67
+    T = int(input())
+68
+69
+    test_cases = []
+70
+71
+    for _ in range(T):
+72
+73
+        N, K = map(int, input().split())
+74
+75
+        energy = list(map(int, input().split()))
+76
+77
+        test_cases.append({""N"": N, ""K"": K, ""energy"": energy})
+78
+79
+    results = minimum_operations_to_equalize(T, test_cases)
+80
+81
+    for res in results:
+82
+83
+        print(res)",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833690
+1387833692,h1032221356,unknown,unknown,"1
+def equalize_energy():
+2
+    T = int(input())  # Number of test cases
+3
+    results = []
+4
+    5
+    for _ in range(T):
+6
+        # Read N and K
+7
+        N, K = map(int, input().split())
+8
+        # Read the energy array
+9
+        energy = list(map(int, input().split()))
+10
+        11
+        total_energy = sum(energy)
+12
+        13
+        # Check if total energy is divisible by N
+14
+        if total_energy % N != 0:
+15
+            results.append(-1)
+16
+            continue
+17
+        18
+        target = total_energy // N
+19
+        balance = 0
+20
+        operations = 0
+21
+        possible = True
+22
+        23
+        # Calculate the number of operations
+24
+        for e in energy:
+25
+            # Calculate surplus/deficit at current station
+26
+            balance += e - target
+27
+            # If balance isn't divisible by K, it's impossible
+28
+            if balance % K != 0:
+29
+                possible = False
+30
+                break
+31
+            # Operations are determined by how much balance exists
+32
+            operations += abs(balance) // K
+33
+        34
+        if possible:
+35
+            results.append(operations)
+36
+        else:
+37
+            results.append(-1)
+38
+    39
+    # Print all results
+40
+    print(""\n"".join(map(str, results)))
+41
+42
+# Call the function
+43
+equalize_energy()
+44",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833692
+1387833691,paragchaudhary_1,unknown,unknown,"1
+def min_operations(n, k, energy):
+2
+    total_energy = sum(energy)
+3
+    if total_energy % n != 0:
+4
+        return -1
+5
+6
+    target_energy = total_energy // n
+7
+    operations = 0
+8
+9
+    for i in range(n):
+10
+        diff = energy[i] - target_energy
+11
+        if diff > 0:
+12
+            operations += (diff + k - 1) // k  
+13
+14
+    return operations
+15
+16
+17
+t = int(input())
+18
+19
+for _ in range(t):
+20
+    n, k = map(int, input().split())
+21
+    energy = list(map(int, input().split()))
+22
+    result = min_operations(n, k, energy)
+23
+    print(result)",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833691
+1387833688,kartikmadu2004,unknown,unknown,"1
+def solve():
+2
+    t = int(input())
+3
+    for _ in range(t):
+4
+        n = int(input())
+5
+        nums = list(map(int, input().split()))
+6
+        7
+        total_sum = sum(nums)
+8
+        left_sum = 0
+9
+        max_difference = 0
+10
+        11
+        for i in range(n - 1):
+12
+            left_sum += nums[i]
+13
+            right_sum = total_sum - left_sum
+14
+            max_difference = max(max_difference, abs(left_sum - right_sum))
+15
+        16
+        print(max_difference)
+17
+18
+solve()",56,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387833688

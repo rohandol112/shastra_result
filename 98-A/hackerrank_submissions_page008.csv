@@ -1,0 +1,623 @@
+submission_id,username,problem_name,language,code,page,url
+1387834958,mahakantsingh113,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <cmath>
+4
+using namespace std;
+5
+6
+int min_operations_to_equalize_energy(int N, int K, vector<int>& energy) {
+7
+    long long total_energy = 0;
+8
+    9
+    // Calculate total energy
+10
+    for (int i = 0; i < N; i++) {
+11
+        total_energy += energy[i];
+12
+    }
+13
+    14
+    // If total energy is not divisible by N, it's impossible to equalize
+15
+    if (total_energy % N != 0) {
+16
+        return -1;
+17
+    }
+18
+    19
+    long long target = total_energy / N;  // The energy each station should have
+20
+    long long operations = 0;
+21
+    long long balance = 0;  // Tracks the cumulative balance of energy
+22
+    23
+    // Traverse through each station to calculate the necessary transfers
+24
+    for (int i = 0; i < N; i++) {
+25
+        long long diff = energy[i] - target; // Difference from target energy
+26
+        balance += diff;  // Update the balance
+27
+        28
+        // If at any point the balance is not divisible by K, it's impossible to balance
+29
+        if (balance % K != 0) {
+30
+            return -1;  // Impossible to balance if balance is not divisible by K
+31
+        }
+32
+        33
+        // Add the absolute number of K-sized moves required
+34
+        operations += abs(balance / K);
+35
+    }
+36
+    37
+    return operations;  // Return the total number of operations required
+38
+}
+39
+40
+int main() {
+41
+    int T;
+42
+    cin >> T;  // Number of test cases
+43
+    44
+    while (T--) {
+45
+        int N, K;
+46
+        cin >> N >> K;  // Number of stations and the units that can be transferred
+47
+        48
+        vector<int> energy(N);
+49
+        for (int i = 0; i < N; i++) {
+50
+            cin >> energy[i];  // Energy at each station
+51
+        }
+52
+        53
+        // Call the function to get the minimum operations
+54
+        int result = min_operations_to_equalize_energy(N, K, energy);
+55
+        cout << result << endl;  // Output the result for each test case
+56
+    }
+57
+    58
+    return 0;
+59
+}
+60",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834958
+1387834977,shivanshu121004,unknown,unknown,"1
+def find_max_subarray_difference(n, nums):
+2
+3
+    if n < 2:
+4
+5
+        return 0
+6
+7
+    prefix_sums = [0] * (n + 1)
+8
+9
+    for i in range(n):
+10
+11
+        prefix_sums[i + 1] = prefix_sums[i] + nums[i]
+12
+13
+    14
+15
+    max_difference = 0
+16
+17
+    total_sum = prefix_sums[n]
+18
+19
+    for i in range(n - 1):
+20
+21
+        left_sum = prefix_sums[i + 1]
+22
+23
+        right_sum = total_sum - left_sum
+24
+25
+        current_difference = abs(left_sum - right_sum)
+26
+27
+        max_difference = max(max_difference, current_difference)
+28
+29
+    30
+31
+    return max_difference
+32
+33
+t = int(input())
+34
+35
+for _ in range(t):
+36
+37
+    n = int(input())
+38
+39
+    nums = list(map(int, input().split()))
+40
+41
+    result = find_max_subarray_difference(n, nums)
+42
+43
+    print(result)",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834977
+1387834965,veerchauhan6161,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+#include <cmath>
+4
+using namespace std;
+5
+6
+int main() {
+7
+    int T;
+8
+    cin >> T;  // Read number of test cases
+9
+    10
+    while (T--) {
+11
+        int N, K;
+12
+        cin >> N >> K;  // Read N (number of stations) and K (units of energy that can be transferred)
+13
+        14
+        vector<long long> energy(N);
+15
+        long long totalEnergy = 0;
+16
+        17
+        // Read energy values and calculate total energy
+18
+        for (int i = 0; i < N; ++i) {
+19
+            cin >> energy[i];
+20
+            totalEnergy += energy[i];
+21
+        }
+22
+        23
+        // Step 1: Check if equal distribution is possible
+24
+        if (totalEnergy % N != 0) {
+25
+            cout << -1 << endl;  // It's impossible to equalize the energy
+26
+            continue;
+27
+        }
+28
+        29
+        long long target = totalEnergy / N;  // The target energy each station should have
+30
+        31
+        // Step 2: Track the number of operations needed
+32
+        long long operations = 0;
+33
+        long long balance = 0;  // This will track the balance of energy
+34
+        35
+        for (int i = 0; i < N; ++i) {
+36
+            balance += energy[i] - target;  // Difference from target
+37
+            if (balance % K != 0) {
+38
+                operations = -1;  // If balance isn't a multiple of K, it's impossible
+39
+                break;
+40
+            }
+41
+            operations += abs(balance) / K;  // Accumulate the number of operations needed
+42
+        }
+43
+        44
+        // Output the result for this test case
+45
+        cout << operations << endl;
+46
+    }
+47
+48
+    return 0;
+49
+}",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834965
+1387834952,shravanimargaj02,unknown,unknown,"1
+def calculate_result(arr):
+2
+    # Calculate the result by summing the array and subtracting the smallest element
+3
+    return sum(arr) - min(arr)
+4
+5
+# Input reading
+6
+t = int(input())  # Number of test cases
+7
+for _ in range(t):
+8
+    n = int(input())  # Size of the array
+9
+    arr = list(map(int, input().split()))
+10
+    print(calculate_result(arr))
+11",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834952
+1387834955,shivanshu121004,unknown,unknown,"1
+def can_equalize(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    4
+    if total_energy % N != 0:
+5
+        return -1
+6
+        7
+    target_energy = total_energy // N
+8
+    operations = 0
+9
+    10
+    differences = [energy[i] - target_energy for i in range(N)]
+11
+    12
+    for diff in differences:
+13
+        if diff % K != 0:
+14
+            return -1
+15
+    16
+    curr_transfer = 0
+17
+    for i in range(N-1):
+18
+        curr_transfer += differences[i]
+19
+        if curr_transfer != 0:
+20
+            operations += abs(curr_transfer) // K
+21
+    22
+    curr_transfer += differences[N-1]
+23
+    if curr_transfer != 0:
+24
+        return -1
+25
+        26
+    return operations
+27
+28
+T = int(input())
+29
+for _ in range(T):
+30
+    N, K = map(int, input().split())
+31
+    energy = list(map(int, input().split()))
+32
+    result = can_equalize(N, K, energy)
+33
+    print(result)",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834955
+1387834957,h1032220278,unknown,unknown,"1
+def readValues():
+2
+    return list(map(int, input().split()))
+3
+4
+def calculateProduct(values):
+5
+    res = []
+6
+    totalProduct = 1
+7
+    for value in values:
+8
+        totalProduct *= value
+9
+    for value in values:
+10
+        res.append(totalProduct // value)
+11
+    return res
+12
+13
+testcases = int(input())
+14
+for t in range(testcases):
+15
+    n = int(input())
+16
+    values = readValues()
+17
+    result = calculateProduct(values)
+18
+    print("" "".join(map(str, result)))
+19",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387834957
+1387834929,dhruvsingh1604,unknown,unknown,"1
+def minimum_operations_to_equalize(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        N, K, energy = t
+6
+        total_energy = sum(energy)
+7
+        8
+        # Check if equalization is possible
+9
+        if total_energy % N != 0:
+10
+            results.append(-1)
+11
+            continue
+12
+        13
+        target = total_energy // N
+14
+        diffs = [energy[i] - target for i in range(N)]
+15
+        16
+        # Check if all differences are divisible by K
+17
+        if any(diff % K != 0 for diff in diffs):
+18
+            results.append(-1)
+19
+            continue
+20
+        21
+        # Calculate minimum operations
+22
+        operations = 0
+23
+        imbalance = 0
+24
+        25
+        for diff in diffs:
+26
+            imbalance += diff // K
+27
+            operations += abs(imbalance)
+28
+        29
+        results.append(operations)
+30
+    31
+    return results
+32
+33
+34
+# Input handling
+35
+T = int(input())
+36
+test_cases = []
+37
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append((N, K, energy))
+42
+43
+# Compute results
+44
+results = minimum_operations_to_equalize(test_cases)
+45
+46
+# Output results
+47
+for res in results:
+48
+    print(res)",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387834929
+1387834942,imharsh1910,unknown,unknown,"1
+def maximum_diff(arr):
+2
+    total_sum = sum(arr)
+3
+    min_diff = float('-inf')
+4
+    for i in range(len(arr) - 1):
+5
+        left_sum = sum(arr[:i+1])
+6
+        right_sum = total_sum - left_sum
+7
+        min_diff = max(min_diff, abs(left_sum - right_sum))
+8
+    return min_diff
+9
+10
+t = int(input())
+11
+for _ in range(t):
+12
+    n = int(input())
+13
+    arr = list(map(int, input().split()))
+14
+    print(maximum_diff(arr))
+15",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834942
+1387834951,dhruvsingh1604,unknown,unknown,"1
+def max_absolute_difference(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        n, nums = t
+6
+        total_sum = sum(nums)
+7
+        prefix_sum = 0
+8
+        max_diff = 0
+9
+        10
+        # Iterate through possible partitions
+11
+        for i in range(n - 1):  # Last partition is invalid (requires two non-empty subarrays)
+12
+            prefix_sum += nums[i]
+13
+            suffix_sum = total_sum - prefix_sum
+14
+            max_diff = max(max_diff, abs(prefix_sum - suffix_sum))
+15
+        16
+        results.append(max_diff)
+17
+    18
+    return results
+19
+20
+21
+# Input handling
+22
+t = int(input())
+23
+test_cases = []
+24
+25
+for _ in range(t):
+26
+    n = int(input())
+27
+    nums = list(map(int, input().split()))
+28
+    test_cases.append((n, nums))
+29
+30
+# Compute results
+31
+results = max_absolute_difference(test_cases)
+32
+33
+# Output results
+34
+for res in results:
+35
+    print(res)",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834951
+1387834921,veerchauhan6161,unknown,unknown,"1
+2
+#include <iostream>
+3
+#include <vector>
+4
+#include <cmath>
+5
+#include <algorithm>
+6
+using namespace std;
+7
+8
+int main() {
+9
+    int t;
+10
+    cin >> t;  // Read number of test cases
+11
+    12
+    while (t--) {
+13
+        int n;
+14
+        cin >> n;  // Read size of array
+15
+        16
+        vector<int> nums(n);
+17
+        for (int i = 0; i < n; ++i) {
+18
+            cin >> nums[i];  // Read array elements
+19
+        }
+20
+        21
+        // Step 1: Compute the total sum of the array
+22
+        int totalSum = 0;
+23
+        for (int num : nums) {
+24
+            totalSum += num;
+25
+        }
+26
+        27
+        // Step 2: Initialize variables for the prefix sum and the maximum absolute difference
+28
+        int prefixSum = 0;
+29
+        int maxAbsDifference = 0;
+30
+        31
+        // Step 3: Traverse the array and compute prefix sums and suffix sums
+32
+        for (int i = 0; i < n - 1; ++i) {
+33
+            prefixSum += nums[i];
+34
+            int suffixSum = totalSum - prefixSum;
+35
+            36
+            // Compute the absolute difference between prefix and suffix sums
+37
+            maxAbsDifference = max(maxAbsDifference, abs(prefixSum - suffixSum));
+38
+        }
+39
+        40
+        // Step 4: Output the result for this test case
+41
+        cout << maxAbsDifference << endl;
+42
+    }
+43
+44
+    return 0;
+45
+}",8,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387834921

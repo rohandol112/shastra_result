@@ -1,0 +1,797 @@
+submission_id,username,problem_name,language,code,page,url
+1387833306,shuklajaikishan1,unknown,unknown,"1
+def min_operations_to_equalize(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    4
+    # If total energy is not divisible by N, equalization is impossible
+5
+    if total_energy % N != 0:
+6
+        return -1
+7
+    8
+    target = total_energy // N
+9
+    operations = 0
+10
+    11
+    for i in range(N):
+12
+        diff = energy[i] - target
+13
+        14
+        # If the difference is not a multiple of K, we cannot make it equal
+15
+        if diff % K != 0:
+16
+            return -1
+17
+        18
+        operations += abs(diff) // K
+19
+    20
+    return operations // 2  # Each operation is counted twice (once for sending and once for receiving)
+21
+22
+23
+def main():
+24
+    T = int(input())  # Number of test cases
+25
+    26
+    for _ in range(T):
+27
+        N, K = map(int, input().split())  # Read N and K
+28
+        energy = list(map(int, input().split()))  # Read energy values
+29
+        30
+        # Compute and print result
+31
+        print(min_operations_to_equalize(N, K, energy))
+32
+33
+if __name__ == ""__main__"":
+34
+    main()
+35",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833306
+1387833304,h1032220149,unknown,unknown,"1
+import java.util.Scanner;
+2
+3
+public class ProductArrayPuzzle {
+4
+5
+    public static void main(String[] args) {
+6
+        Scanner scanner = new Scanner(System.in);
+7
+        int T = scanner.nextInt();
+8
+9
+        for (int i = 0; i < T; i++) {
+10
+            int n = scanner.nextInt();
+11
+            int[] values = new int[n];
+12
+13
+            for (int j = 0; j < n; j++) {
+14
+                values[j] = scanner.nextInt();
+15
+            }
+16
+17
+            int[] result = productArray(values);
+18
+19
+            for (int j = 0; j < n; j++) {
+20
+                System.out.print(result[j] + "" "");
+21
+            }
+22
+            System.out.println();
+23
+        }
+24
+    }
+25
+26
+    public static int[] productArray(int[] values) {
+27
+        int n = values.length;
+28
+        int[] left = new int[n];
+29
+        int[] right = new int[n];
+30
+        int[] result = new int[n];
+31
+32
+        // Calculate left product array
+33
+        left[0] = 1;
+34
+        for (int i = 1; i < n; i++) {
+35
+            left[i] = left[i - 1] * values[i - 1];
+36
+        }
+37
+38
+        // Calculate right product array
+39
+        right[n - 1] = 1;
+40
+        for (int i = n - 2; i >= 0; i--) {
+41
+            right[i] = right[i + 1] * values[i + 1];
+42
+        }
+43
+44
+        // Calculate result array
+45
+        for (int i = 0; i < n; i++) {
+46
+            result[i] = left[i] * right[i];
+47
+        }
+48
+49
+        return result;
+50
+    }
+51
+}",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833304
+1387833307,ayushchaudhary71,unknown,unknown,"1
+def compute_result(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, values = case
+5
+        # Initialize prefix and suffix arrays
+6
+        prefix = [1] * n
+7
+        suffix = [1] * n
+8
+        result = [1] * n
+9
+10
+        # Compute prefix products
+11
+        for i in range(1, n):
+12
+            prefix[i] = prefix[i - 1] * values[i - 1]
+13
+14
+        # Compute suffix products
+15
+        for i in range(n - 2, -1, -1):
+16
+            suffix[i] = suffix[i + 1] * values[i + 1]
+17
+18
+        # Compute result by multiplying prefix and suffix
+19
+        for i in range(n):
+20
+            result[i] = prefix[i] * suffix[i]
+21
+22
+        results.append(result)
+23
+24
+    return results
+25
+26
+27
+def main():
+28
+    T = int(input())  # Read number of test cases
+29
+    test_cases = []
+30
+31
+    for _ in range(T):
+32
+        n = int(input())  # Size of the array
+33
+        values = list(map(int, input().split()))  # Array elements
+34
+        test_cases.append((n, values))
+35
+36
+    # Compute results
+37
+    results = compute_result(test_cases)
+38
+39
+    # Print results
+40
+    for result in results:
+41
+        print("" "".join(map(str, result)))
+42
+43
+44
+if __name__ == ""__main__"":
+45
+    main()
+46",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833307
+1387833301,h1032221373,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+          Scanner scanner = new Scanner(System.in);
+8
+9
+        10
+        int T = scanner.nextInt();
+11
+12
+        while (T-- > 0) {
+13
+            int n = scanner.nextInt();
+14
+            int[] values = new int[n];
+15
+            int[] result = new int[n];
+16
+            int[] prefix = new int[n];
+17
+            int[] suffix = new int[n];
+18
+          19
+            for (int i = 0; i < n; i++) {
+20
+                values[i] = scanner.nextInt();
+21
+            }
+22
+             prefix[0] = 1;
+23
+            for (int i = 1; i < n; i++) {
+24
+                prefix[i] = prefix[i - 1] * values[i - 1];
+25
+            }
+26
+27
+            28
+            suffix[n - 1] = 1;
+29
+            for (int i = n - 2; i >= 0; i--) {
+30
+                suffix[i] = suffix[i + 1] * values[i + 1];
+31
+            }
+32
+33
+            34
+            for (int i = 0; i < n; i++) {
+35
+                result[i] = prefix[i] * suffix[i];
+36
+            }
+37
+38
+          39
+            for (int i = 0; i < n; i++) {
+40
+                System.out.print(result[i] + "" "");
+41
+            }
+42
+            System.out.println();
+43
+        }
+44
+45
+        scanner.close();
+46
+       47
+    }
+48
+}",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833301
+1387833303,laxmimehta0506,unknown,unknown,"1
+import java.util.Scanner;
+2
+3
+public class EnergyEqualization {
+4
+    5
+    public static int minOperations(int N, int K, int[] energy) {
+6
+        long totalEnergy = 0;
+7
+        8
+        // Calculate total energy
+9
+        for (int e : energy) {
+10
+            totalEnergy += e;
+11
+        }
+12
+        13
+        // If the total energy is not divisible by N, it's impossible to equalize
+14
+        if (totalEnergy % N != 0) {
+15
+            return -1;
+16
+        }
+17
+        18
+        // The target energy each station should have
+19
+        long target = totalEnergy / N;
+20
+        21
+        long currentBalance = 0;
+22
+        int operations = 0;
+23
+        24
+        // Iterate through each station to calculate the number of operations
+25
+        for (int i = 0; i < N; i++) {
+26
+            // Calculate the difference between current energy and target
+27
+            long diff = energy[i] - target;
+28
+            29
+            // Add the difference to the current balance
+30
+            currentBalance += diff;
+31
+            32
+            // If current balance is not divisible by K, it means it's impossible
+33
+            if (currentBalance % K != 0) {
+34
+                return -1;
+35
+            }
+36
+            37
+            // Number of operations is the absolute value of the balance divided by K
+38
+            operations += Math.abs(currentBalance / K);
+39
+        }
+40
+        41
+        return operations;
+42
+    }
+43
+    44
+    public static void main(String[] args) {
+45
+        Scanner sc = new Scanner(System.in);
+46
+        int T = sc.nextInt(); // Number of test cases
+47
+        48
+        while (T-- > 0) {
+49
+            int N = sc.nextInt(); // Number of stations
+50
+            int K = sc.nextInt(); // Energy transfer in one operation
+51
+            int[] energy = new int[N];
+52
+            53
+            for (int i = 0; i < N; i++) {
+54
+                energy[i] = sc.nextInt();
+55
+            }
+56
+            57
+            // Get the result for the current test case
+58
+            int result = minOperations(N, K, energy);
+59
+            System.out.println(result);
+60
+        }
+61
+        62
+        sc.close();
+63
+    }
+64
+}
+65",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833303
+1387833302,h1032221356,unknown,unknown,"1
+def product_except_self():
+2
+    # Reading number of test cases
+3
+    T = int(input())
+4
+    results = []
+5
+    6
+    for _ in range(T):
+7
+        # Read the size of the array
+8
+        n = int(input())
+9
+        # Read the values of the nodes
+10
+        values = list(map(int, input().split()))
+11
+        12
+        # Initialize the result array
+13
+        result = [1] * n
+14
+        15
+        # Compute prefix products
+16
+        prefix = 1
+17
+        for i in range(n):
+18
+            result[i] = prefix
+19
+            prefix *= values[i]
+20
+        21
+        # Compute suffix products and combine with prefix
+22
+        suffix = 1
+23
+        for i in range(n - 1, -1, -1):
+24
+            result[i] *= suffix
+25
+            suffix *= values[i]
+26
+        27
+        # Store the result for this test case
+28
+        results.append("" "".join(map(str, result)))
+29
+    30
+    # Print all results
+31
+    print(""\n"".join(results))
+32
+33
+# Call the function
+34
+product_except_self()
+35",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833302
+1387833299,harikeshyadav161,unknown,unknown,"1
+def moe(test_cases):
+2
+3
+    results = []
+4
+5
+    for t in range(len(test_cases)):
+6
+7
+        N, K, energy = test_cases[t]
+8
+9
+        total_energy = sum(energy)
+10
+11
+        if total_energy % N != 0:
+12
+13
+            results.append(-1)
+14
+15
+            continue
+16
+17
+        18
+19
+        target = total_energy // N
+20
+21
+        operations = 0
+22
+23
+        balance = 0  
+24
+25
+        for i in range(N):
+26
+27
+            balance += energy[i] - target
+28
+29
+            if balance % K != 0:
+30
+31
+                operations = -1
+32
+33
+                break
+34
+35
+            operations += abs(balance) // K
+36
+37
+        38
+39
+        results.append(operations if operations != -1 else -1)
+40
+41
+    42
+43
+    return results
+44
+45
+T = int(input())
+46
+47
+test_cases = []
+48
+49
+for _ in range(T):
+50
+51
+    N, K = map(int, input().split())
+52
+53
+    energy = list(map(int, input().split()))
+54
+55
+    test_cases.append((N, K, energy))
+56
+57
+results = moe(test_cases)
+58
+59
+for res in results:
+60
+61
+    print(res)",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833299
+1387833297,guptashrey856,unknown,unknown,"1
+def solve_test_cases():
+2
+    import sys
+3
+    input = sys.stdin.read
+4
+    data = input().strip().split(""\n"")
+5
+6
+    idx = 0
+7
+    T = int(data[idx])
+8
+    idx += 1
+9
+10
+    results = []
+11
+12
+    for _ in range(T):
+13
+        # Read N and K
+14
+        N, K = map(int, data[idx].split())
+15
+        idx += 1
+16
+        # Read energy levels
+17
+        energy = list(map(int, data[idx].split()))
+18
+        idx += 1
+19
+20
+        total_energy = sum(energy)
+21
+22
+        # If the total energy is not divisible by N, it's impossible
+23
+        if total_energy % N != 0:
+24
+            results.append(""-1"")
+25
+            continue
+26
+27
+        target_energy = total_energy // N
+28
+        operations = 0
+29
+        balance = 0
+30
+        possible = True
+31
+32
+        # Check and calculate the number of operations required
+33
+        for e in energy:
+34
+            diff = e - target_energy
+35
+            balance += diff
+36
+            if balance % K != 0:
+37
+                possible = False
+38
+                break
+39
+            operations += abs(balance // K)
+40
+41
+        results.append(str(operations) if possible else ""-1"")
+42
+43
+    # Output all results
+44
+    sys.stdout.write(""\n"".join(results) + ""\n"")
+45
+46
+if __name__ == ""__main__"":
+47
+    solve_test_cases()",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833297
+1387833300,HarshShrivastava,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        Scanner sc=new Scanner(System.in);
+8
+        int t=sc.nextInt();
+9
+        while(t>0){
+10
+            int n=sc.nextInt();
+11
+            int input[]=new int[n];
+12
+            int i;
+13
+            long product=1;
+14
+            for(i=0;i<n;i++){
+15
+                input[i]=sc.nextInt();
+16
+                if(input[i]!=0)
+17
+                    product*=input[i];
+18
+            }
+19
+            long result[]=new long[n];
+20
+            for(i=0;i<n;i++){
+21
+                result[i]=input[i]!=0?product/input[i]:product;
+22
+            }    
+23
+            for(i=0;i<n;i++)
+24
+                System.out.print(result[i]+"" "");
+25
+            System.out.println();
+26
+            t--;
+27
+        }
+28
+    }
+29
+}",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387833300
+1387833294,shshloka,unknown,unknown,"1
+def equalize_energy(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        N, K, energy = case
+5
+        total_energy = sum(energy)
+6
+        if total_energy % N != 0:
+7
+            results.append(-1)
+8
+            continue
+9
+        target = total_energy // N
+10
+        operations = 0
+11
+        cumulative_diff = 0
+12
+        for e in energy:
+13
+            diff = e - target
+14
+            cumulative_diff += diff
+15
+            operations += abs(cumulative_diff)
+16
+        if cumulative_diff != 0:
+17
+            results.append(-1)
+18
+        else:
+19
+            results.append(operations // K)
+20
+    return results
+21
+22
+def main():
+23
+    import sys
+24
+    input = sys.stdin.read
+25
+    data = input().split()
+26
+    idx = 0
+27
+    T = int(data[idx])
+28
+    idx += 1
+29
+    test_cases = []
+30
+    for _ in range(T):
+31
+        N = int(data[idx])
+32
+        K = int(data[idx+1])
+33
+        idx += 2
+34
+        energy = list(map(int, data[idx:idx+N]))
+35
+        idx += N
+36
+        test_cases.append((N, K, energy))
+37
+    results = equalize_energy(test_cases)
+38
+    for res in results:
+39
+        print(res)
+40
+41
+if __name__ == ""__main__"":
+42
+    main()",82,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387833294

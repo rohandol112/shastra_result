@@ -1,0 +1,683 @@
+submission_id,username,problem_name,language,code,page,url
+1387832796,harishpandey1704,unknown,unknown,"1
+def min_operations_to_equalize_energy(t, test_cases):
+2
+    results = []
+3
+    for n, k, energy in test_cases:
+4
+        total_energy = sum(energy)
+5
+        if total_energy % n != 0:
+6
+            results.append(-1)
+7
+            continue
+8
+        target = total_energy // n
+9
+        operations = 0
+10
+        for i in range(n):
+11
+            diff = energy[i] - target
+12
+            if diff % k != 0:
+13
+                operations = -1
+14
+                break
+15
+            operations += abs(diff) // k
+16
+        results.append(operations // 2 if operations != -1 else -1)
+17
+    return results
+18
+19
+t = int(input())
+20
+test_cases = []
+21
+for _ in range(t):
+22
+    n, k = map(int, input().split())
+23
+    energy = list(map(int, input().split()))
+24
+    test_cases.append((n, k, energy))
+25
+26
+for res in min_operations_to_equalize_energy(t, test_cases):
+27
+    print(res)
+28",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387832796
+1387832800,h1032220167,unknown,unknown,"1
+def product_except_self(values):
+2
+    n = len(values)
+3
+    result = [1] * n
+4
+    5
+    # Calculate the product of all elements to the left of each index
+6
+    left_product = 1
+7
+    for i in range(n):
+8
+        result[i] = left_product
+9
+        left_product *= values[i]
+10
+    11
+    # Calculate the product of all elements to the right of each index and multiply with the left product
+12
+    right_product = 1
+13
+    for i in range(n-1, -1, -1):
+14
+        result[i] *= right_product
+15
+        right_product *= values[i]
+16
+    17
+    return result
+18
+19
+def main():
+20
+    import sys
+21
+    input = sys.stdin.read
+22
+    data = input().split()
+23
+    24
+    idx = 0
+25
+    T = int(data[idx])
+26
+    idx += 1
+27
+    28
+    for _ in range(T):
+29
+        n = int(data[idx])
+30
+        idx += 1
+31
+        values = list(map(int, data[idx:idx+n]))
+32
+        idx += n
+33
+        34
+        result = product_except_self(values)
+35
+        print(' '.join(map(str, result)))
+36
+37
+if __name__ == ""__main__"":
+38
+    main()",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832800
+1387832799,aayushkrishnaut,unknown,unknown,"1
+def solve_product_distribution():
+2
+    # Read number of test cases
+3
+    T = int(input())
+4
+    5
+    for _ in range(T):
+6
+        # Read number of nodes
+7
+        n = int(input())
+8
+        9
+        # Read values array
+10
+        values = list(map(int, input().split()))
+11
+        12
+        # Calculate result array
+13
+        result = []
+14
+        for i in range(n):
+15
+            # Initialize product as 1
+16
+            product = 1
+17
+            18
+            # Multiply all values except the current position
+19
+            for j in range(n):
+20
+                if j != i:
+21
+                    product *= values[j]
+22
+            23
+            result.append(product)
+24
+        25
+        # Print result array for this test case
+26
+        print("" "".join(map(str, result)))
+27
+28
+# Run the solution
+29
+if __name__ == ""__main__"":
+30
+    solve_product_distribution()",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832799
+1387832794,h1032231268,unknown,unknown,"1
+def product_array(arr):
+2
+    n = len(arr)
+3
+    left = [1] * n
+4
+    right = [1] * n
+5
+6
+    # Calculate left product array
+7
+    for i in range(1, n):
+8
+        left[i] = left[i-1] * arr[i-1]
+9
+10
+    # Calculate right product array
+11
+    for i in range(n-2, -1, -1):
+12
+        right[i] = right[i+1] * arr[i+1]
+13
+14
+    # Calculate result array
+15
+    result = [left[i] * right[i] for i in range(n)]
+16
+17
+    return result
+18
+19
+# Get number of test cases
+20
+t = int(input())
+21
+22
+for _ in range(t):
+23
+    n = int(input())
+24
+    arr = list(map(int, input().split()))
+25
+    result = product_array(arr)
+26
+    print(*result) 
+27",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832794
+1387832793,sohamkadam0012,unknown,unknown,"1
+#include <stdio.h>
+2
+#include <stdlib.h>
+3
+4
+void calculateProductArray(int *values, int n) {
+5
+    int *prefix = (int *)malloc(n * sizeof(int));
+6
+    int *suffix = (int *)malloc(n * sizeof(int));
+7
+    int *result = (int *)malloc(n * sizeof(int));
+8
+    9
+    // Calculate prefix products
+10
+    prefix[0] = 1; // No element before the first element
+11
+    for (int i = 1; i < n; i++) {
+12
+        prefix[i] = prefix[i - 1] * values[i - 1];
+13
+    }
+14
+    15
+    // Calculate suffix products
+16
+    suffix[n - 1] = 1; // No element after the last element
+17
+    for (int i = n - 2; i >= 0; i--) {
+18
+        suffix[i] = suffix[i + 1] * values[i + 1];
+19
+    }
+20
+    21
+    // Calculate the result array
+22
+    for (int i = 0; i < n; i++) {
+23
+        result[i] = prefix[i] * suffix[i];
+24
+    }
+25
+    26
+    // Print the result array
+27
+    for (int i = 0; i < n; i++) {
+28
+        printf(""%d "", result[i]);
+29
+    }
+30
+    printf(""\n"");
+31
+    32
+    // Free allocated memory
+33
+    free(prefix);
+34
+    free(suffix);
+35
+    free(result);
+36
+}
+37
+38
+int main() {
+39
+    int T;
+40
+    scanf(""%d"", &T);
+41
+    42
+    while (T--) {
+43
+        int n;
+44
+        scanf(""%d"", &n);
+45
+        46
+        int *values = (int *)malloc(n * sizeof(int));
+47
+        for (int i = 0; i < n; i++) {
+48
+            scanf(""%d"", &values[i]);
+49
+        }
+50
+        51
+        calculateProductArray(values, n);
+52
+        free(values);
+53
+    }
+54
+    55
+    return 0;
+56
+}
+57
+58",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832793
+1387832795,krishjain,unknown,unknown,"1
+def solve():
+2
+    # Reading number of test cases
+3
+    T = int(input())
+4
+    5
+    for _ in range(T):
+6
+        # Reading the size of the network
+7
+        n = int(input())
+8
+        # Reading the values of the nodes
+9
+        values = list(map(int, input().split()))
+10
+        11
+        # Initialize result array where we will store the final product values
+12
+        result = [1] * n
+13
+        14
+        # Step 1: Calculate prefix product
+15
+        prefix_product = 1
+16
+        for i in range(n):
+17
+            result[i] = prefix_product
+18
+            prefix_product *= values[i]
+19
+        20
+        # Step 2: Calculate suffix product and multiply with the result array
+21
+        suffix_product = 1
+22
+        for i in range(n - 1, -1, -1):
+23
+            result[i] *= suffix_product
+24
+            suffix_product *= values[i]
+25
+        26
+        # Output the result for the current test case
+27
+        print("" "".join(map(str, result)))
+28
+29
+# Call the solve function
+30
+solve()
+31",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832795
+1387832785,h1032231317,unknown,unknown,"1
+def max_absolute_difference(t, test_cases):
+2
+    results = []
+3
+4
+    for case in test_cases:
+5
+        n, nums = case
+6
+        7
+        prefix_sum = [0] * n
+8
+        prefix_sum[0] = nums[0]
+9
+10
+        for i in range(1, n):
+11
+            prefix_sum[i] = prefix_sum[i - 1] + nums[i]
+12
+13
+        total_sum = prefix_sum[-1]
+14
+        max_diff = 0
+15
+16
+        for i in range(n - 1):
+17
+            left_sum = prefix_sum[i]
+18
+            right_sum = total_sum - left_sum
+19
+            max_diff = max(max_diff, abs(left_sum - right_sum))
+20
+21
+        results.append(max_diff)
+22
+23
+    return results
+24
+25
+def main():
+26
+    t = int(input())
+27
+    test_cases = []
+28
+29
+    for _ in range(t):
+30
+        n = int(input())
+31
+        nums = list(map(int, input().split()))
+32
+        test_cases.append((n, nums))
+33
+34
+    results = max_absolute_difference(t, test_cases)
+35
+36
+    for res in results:
+37
+        print(res)
+38
+39
+if __name__ == ""__main__"":
+40
+    main()",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387832785
+1387832788,hrichamehra11,unknown,unknown,"1
+def product_except_self(test_cases):
+2
+    results = []
+3
+    for case in test_cases:
+4
+        n, values = case
+5
+        # Initialize prefix and suffix product arrays
+6
+        prefix = [1] * n
+7
+        suffix = [1] * n
+8
+        result = [1] * n
+9
+10
+        # Compute prefix products
+11
+        for i in range(1, n):
+12
+            prefix[i] = prefix[i - 1] * values[i - 1]
+13
+14
+        # Compute suffix products
+15
+        for i in range(n - 2, -1, -1):
+16
+            suffix[i] = suffix[i + 1] * values[i + 1]
+17
+18
+        # Compute result as prefix[i] * suffix[i]
+19
+        for i in range(n):
+20
+            result[i] = prefix[i] * suffix[i]
+21
+22
+        results.append(result)
+23
+    24
+    return results
+25
+26
+27
+# Input Handling
+28
+T = int(input())
+29
+test_cases = []
+30
+for _ in range(T):
+31
+    n = int(input())
+32
+    values = list(map(int, input().split()))
+33
+    test_cases.append((n, values))
+34
+35
+# Processing
+36
+output = product_except_self(test_cases)
+37
+38
+# Output Results
+39
+for res in output:
+40
+    print("" "".join(map(str, res)))
+41",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832788
+1387832791,pranalipahurkar,unknown,unknown,"1
+def product_except_self(values):
+2
+    n = len(values)
+3
+    result = [1] * n
+4
+5
+    # Prefix product
+6
+    prefix = 1
+7
+    for i in range(n):
+8
+        result[i] = prefix
+9
+        prefix *= values[i]
+10
+11
+    # Suffix product
+12
+    suffix = 1
+13
+    for i in range(n - 1, -1, -1):
+14
+        result[i] *= suffix
+15
+        suffix *= values[i]
+16
+17
+    return result
+18
+19
+# Input handling
+20
+T = int(input())
+21
+for _ in range(T):
+22
+    n = int(input())
+23
+    values = list(map(int, input().split()))
+24
+    result = product_except_self(values)
+25
+    print(*result)
+26",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832791
+1387832784,singhark94,unknown,unknown,"1
+#include <iostream>
+2
+#include <vector>
+3
+using namespace std;
+4
+5
+vector<vector<long long>> computeProducts(int T, vector<pair<int, vector<int>>>& testCases) {
+6
+    vector<vector<long long>> results;
+7
+8
+    for (int t = 0; t < T; ++t) {
+9
+        int n = testCases[t].first;
+10
+        vector<int>& values = testCases[t].second;
+11
+        12
+        // Result vector
+13
+        vector<long long> result(n, 1);
+14
+15
+        // Compute prefix products
+16
+        long long prefix = 1;
+17
+        for (int i = 0; i < n; ++i) {
+18
+            result[i] = prefix;
+19
+            prefix *= values[i];
+20
+        }
+21
+22
+        // Compute suffix products and multiply with prefix
+23
+        long long suffix = 1;
+24
+        for (int i = n - 1; i >= 0; --i) {
+25
+            result[i] *= suffix;
+26
+            suffix *= values[i];
+27
+        }
+28
+29
+        results.push_back(result);
+30
+    }
+31
+32
+    return results;
+33
+}
+34
+35
+int main() {
+36
+    int T;
+37
+    cin >> T;  // Number of test cases
+38
+    vector<pair<int, vector<int>>> testCases;
+39
+40
+    for (int t = 0; t < T; ++t) {
+41
+        int n;
+42
+        cin >> n;  // Number of nodes
+43
+        vector<int> values(n);
+44
+        for (int i = 0; i < n; ++i) {
+45
+            cin >> values[i];
+46
+        }
+47
+        testCases.emplace_back(n, values);
+48
+    }
+49
+50
+    // Compute results
+51
+    vector<vector<long long>> results = computeProducts(T, testCases);
+52
+53
+    // Output results
+54
+    for (const auto& result : results) {
+55
+        for (size_t i = 0; i < result.size(); ++i) {
+56
+            if (i > 0) cout << "" "";
+57
+            cout << result[i];
+58
+        }
+59
+        cout << endl;
+60
+    }
+61
+62
+    return 0;
+63
+}
+64
+65",112,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387832784

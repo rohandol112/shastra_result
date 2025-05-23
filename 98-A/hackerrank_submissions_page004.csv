@@ -1,0 +1,640 @@
+submission_id,username,problem_name,language,code,page,url
+1387835216,uditbhagat3001,unknown,unknown,"1
+def minimum_operations_to_equalize(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        N, K, energy = t
+6
+        total_energy = sum(energy)
+7
+        8
+        # Check if equalization is possible
+9
+        if total_energy % N != 0:
+10
+            results.append(-1)
+11
+            continue
+12
+        13
+        target = total_energy // N
+14
+        diffs = [energy[i] - target for i in range(N)]
+15
+        16
+        # Check if all differences are divisible by K
+17
+        if any(diff % K != 0 for diff in diffs):
+18
+            results.append(-1)
+19
+            continue
+20
+        21
+        # Calculate minimum operations
+22
+        operations = 0
+23
+        imbalance = 0
+24
+        25
+        for diff in diffs:
+26
+            imbalance += diff // K
+27
+            operations += abs(imbalance)
+28
+        29
+        results.append(operations)
+30
+    31
+    return results
+32
+33
+34
+# Input handling
+35
+T = int(input())
+36
+test_cases = []
+37
+38
+for _ in range(T):
+39
+    N, K = map(int, input().split())
+40
+    energy = list(map(int, input().split()))
+41
+    test_cases.append((N, K, energy))
+42
+43
+# Compute results
+44
+results = minimum_operations_to_equalize(test_cases)
+45
+46
+# Output results
+47
+for res in results:
+48
+    print(res)
+49",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387835216
+1387835218,mehtrevallabh24,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+    public static void main(String[] args) {
+6
+        Scanner sc = new Scanner(System.in);
+7
+        8
+        int T = sc.nextInt();  // Read number of test cases
+9
+        10
+        for (int t = 0; t < T; t++) {
+11
+            int N = sc.nextInt();  // Read number of stations
+12
+            int K = sc.nextInt();  // Read energy units per operation
+13
+            14
+            int[] energy = new int[N];
+15
+            long totalEnergy = 0;
+16
+            17
+            // Read energy values and calculate total energy
+18
+            for (int i = 0; i < N; i++) {
+19
+                energy[i] = sc.nextInt();
+20
+                totalEnergy += energy[i];
+21
+            }
+22
+            23
+            // Check if total energy is divisible by N
+24
+            if (totalEnergy % N != 0) {
+25
+                System.out.println(-1);  // Impossible to equalize
+26
+                continue;
+27
+            }
+28
+            29
+            // Target energy for each station
+30
+            long targetEnergy = totalEnergy / N;
+31
+            32
+            // Calculate the number of operations required
+33
+            long operations = 0;
+34
+            long balance = 0;
+35
+            36
+            for (int i = 0; i < N; i++) {
+37
+                // Calculate the difference from the target energy
+38
+                balance += energy[i] - targetEnergy;
+39
+                40
+                // If the balance is not a multiple of K, it's impossible
+41
+                if (balance % K != 0) {
+42
+                    operations = -1;
+43
+                    break;
+44
+                }
+45
+                46
+                // Accumulate operations based on the absolute balance
+47
+                operations += Math.abs(balance / K);
+48
+            }
+49
+            50
+            // Output the result for the current test case
+51
+            System.out.println(operations);
+52
+        }
+53
+        54
+        sc.close();
+55
+    }
+56
+}
+57",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387835218
+1387835220,anishakarkera737,unknown,unknown,"1
+def solve():
+2
+    import sys
+3
+    data = sys.stdin.read().strip().split()
+4
+    t = int(data[0])
+5
+    idx = 1
+6
+7
+    for _ in range(t):
+8
+        n = int(data[idx]); idx += 1
+9
+        nums = list(map(int, data[idx:idx+n]))
+10
+        idx += n
+11
+        12
+        total_sum = sum(nums)
+13
+        14
+        prefix_sum = 0
+15
+        max_diff = 0
+16
+17
+        for i in range(n - 1):
+18
+            prefix_sum += nums[i]
+19
+            diff = abs(2 * prefix_sum - total_sum)
+20
+            if diff > max_diff:
+21
+                max_diff = diff
+22
+        23
+        print(max_diff)
+24
+25
+solve()",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835220
+1387835194,siddhibsawant221,unknown,unknown,"1
+import java.io.*;
+2
+import java.util.*;
+3
+4
+public class Solution {
+5
+6
+    public static void main(String[] args) {
+7
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+8
+     Scanner scanner = new Scanner(System.in);
+9
+10
+        int T = scanner.nextInt();  // Read number of test cases
+11
+        while (T-- > 0) {
+12
+            int n = scanner.nextInt();  // Read number of nodes
+13
+            int[] values = new int[n];
+14
+            for (int i = 0; i < n; i++) {
+15
+                values[i] = scanner.nextInt();  // Read values of nodes
+16
+            }
+17
+18
+            // Result array to store the product of all elements except the current one
+19
+            int[] result = new int[n];
+20
+21
+            // Create two auxiliary arrays to store the product of elements from left and right
+22
+            int[] leftProduct = new int[n];
+23
+            int[] rightProduct = new int[n];
+24
+25
+            // Initialize the first element of leftProduct
+26
+            leftProduct[0] = 1;
+27
+            for (int i = 1; i < n; i++) {
+28
+                leftProduct[i] = leftProduct[i - 1] * values[i - 1];
+29
+            }
+30
+31
+            // Initialize the last element of rightProduct
+32
+            rightProduct[n - 1] = 1;
+33
+            for (int i = n - 2; i >= 0; i--) {
+34
+                rightProduct[i] = rightProduct[i + 1] * values[i + 1];
+35
+            }
+36
+37
+            // Calculate the result by multiplying corresponding elements of leftProduct and rightProduct
+38
+            for (int i = 0; i < n; i++) {
+39
+                result[i] = leftProduct[i] * rightProduct[i];
+40
+            }
+41
+42
+            // Print the result array
+43
+            for (int i = 0; i < n; i++) {
+44
+                System.out.print(result[i] + "" "");
+45
+            }
+46
+            System.out.println();
+47
+        }
+48
+49
+        scanner.close();
+50
+    }
+51
+}",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387835194
+1387835214,adityagupta2791,unknown,unknown,"1
+def min_operations_to_equalize(N, K, energy):
+2
+    total_energy = sum(energy)
+3
+    4
+   5
+    if total_energy % N != 0:
+6
+        return -1
+7
+8
+    target = total_energy // N  
+9
+    operations = 0
+10
+    balance = 0
+11
+12
+    for i in range(N):
+13
+        diff = energy[i] - target 
+14
+        balance += diff 
+15
+        16
+       17
+        if balance % K != 0:
+18
+            return -1
+19
+20
+        operations += abs(balance) // K  
+21
+    22
+    return operations
+23
+24
+25
+T = int(input())  
+26
+for _ in range(T):
+27
+    N, K = map(int, input().split())  
+28
+    energy = list(map(int, input().split())) 
+29
+    30
+   31
+    print(min_operations_to_equalize(N, K, energy))",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387835214
+1387835215,mayureshbhandar1,unknown,unknown,"1
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+2
+def max_absolute_difference(nums):
+3
+    total_sum = sum(nums)
+4
+    prefix_sum = 0
+5
+    max_diff = 0
+6
+    for i in range(len(nums) - 1):
+7
+        prefix_sum += nums[i]
+8
+        right_sum = total_sum - prefix_sum
+9
+        max_diff = max(max_diff, abs(prefix_sum - right_sum))
+10
+    return max_diff
+11
+12
+def solve():
+13
+    t = int(raw_input())
+14
+    for _ in range(t):
+15
+        n = int(raw_input())
+16
+        nums = map(int, raw_input().split())
+17
+        print max_absolute_difference(nums)
+18
+19
+if __name__ == ""__main__"":
+20
+    solve()
+21",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835215
+1387835184,uditbhagat3001,unknown,unknown,"1
+def max_absolute_difference(test_cases):
+2
+    results = []
+3
+    4
+    for t in test_cases:
+5
+        n, nums = t
+6
+        total_sum = sum(nums)
+7
+        prefix_sum = 0
+8
+        max_diff = 0
+9
+        10
+        # Iterate through possible partitions
+11
+        for i in range(n - 1):  # Last partition is invalid (requires two non-empty subarrays)
+12
+            prefix_sum += nums[i]
+13
+            suffix_sum = total_sum - prefix_sum
+14
+            max_diff = max(max_diff, abs(prefix_sum - suffix_sum))
+15
+        16
+        results.append(max_diff)
+17
+    18
+    return results
+19
+20
+21
+# Input handling
+22
+t = int(input())
+23
+test_cases = []
+24
+25
+for _ in range(t):
+26
+    n = int(input())
+27
+    nums = list(map(int, input().split()))
+28
+    test_cases.append((n, nums))
+29
+30
+# Compute results
+31
+results = max_absolute_difference(test_cases)
+32
+33
+# Output results
+34
+for res in results:
+35
+    print(res)
+36",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835184
+1387835185,baripushpak,unknown,unknown,"1
+def calculate_result(values):
+2
+    n = len(values)
+3
+    result = [1] * n
+4
+5
+    # Compute the prefix product
+6
+    prefix = 1
+7
+    for i in range(n):
+8
+        result[i] = prefix
+9
+        prefix *= values[i]
+10
+11
+    # Compute the suffix product and combine with prefix
+12
+    suffix = 1
+13
+    for i in range(n - 1, -1, -1):
+14
+        result[i] *= suffix
+15
+        suffix *= values[i]
+16
+17
+    return result
+18
+19
+# Input handling for multiple test cases
+20
+T = int(input())  # Number of test cases
+21
+for _ in range(T):
+22
+    n = int(input())  # Number of nodes
+23
+    values = list(map(int, input().split()))  # Node values
+24
+    result = calculate_result(values)
+25
+    print("" "".join(map(str, result)))",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/product-distribution-3/submissions/code/1387835185
+1387835191,yrawal2004,unknown,unknown,"1
+def max_absolute_difference(n, arr):
+2
+    prefix_sum = [0] * n
+3
+    prefix_sum[0] = arr[0]
+4
+5
+    # Compute prefix sum
+6
+    for i in range(1, n):
+7
+        prefix_sum[i] = prefix_sum[i - 1] + arr[i]
+8
+9
+    total_sum = prefix_sum[-1]  # Sum of entire array
+10
+    max_diff = 0
+11
+12
+    # Iterate over all valid partition points
+13
+    for i in range(n - 1):
+14
+        left_sum = prefix_sum[i]
+15
+        right_sum = total_sum - left_sum
+16
+        max_diff = max(max_diff, abs(left_sum - right_sum))
+17
+18
+    return max_diff
+19
+20
+# Read number of test cases
+21
+t = int(input().strip())
+22
+23
+for _ in range(t):
+24
+    n = int(input().strip())  # Read array size
+25
+    arr = list(map(int, input().strip().split()))  # Read array elements
+26
+    print(max_absolute_difference(n, arr))  # Compute and print result
+27",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/optimizing-the-difference-of-subarray-sums/submissions/code/1387835191
+1387835179,1_ashwarya,unknown,unknown,"1
+def min_operations(T, test_cases):
+2
+    results = []
+3
+    4
+    for case in test_cases:
+5
+        N, K = case[0]
+6
+        energy = case[1]
+7
+        8
+        total_energy = sum(energy)
+9
+        10
+        11
+        if total_energy % N != 0:
+12
+            results.append(-1)
+13
+            continue
+14
+        15
+        target = total_energy // N
+16
+        surplus = 0 
+17
+        deficit = 0 
+18
+        19
+        for e in energy:
+20
+            if e > target:
+21
+                surplus += (e - target)  
+22
+            elif e < target:
+23
+                deficit += (target - e)  
+24
+        25
+        if surplus % K != 0 or deficit % K != 0:
+26
+            results.append(-1)
+27
+        else:
+28
+            29
+            results.append(surplus // K)  
+30
+    31
+    return results
+32
+33
+T = int(input())  
+34
+test_cases = []
+35
+36
+for _ in range(T):
+37
+    N, K = map(int, input().split()) 
+38
+    energy = list(map(int, input().split()))
+39
+    test_cases.append(((N, K), energy))  
+40
+41
+results = min_operations(T, test_cases)
+42
+43
+for result in results:
+44
+    print(result)",4,https://www.hackerrank.com/contests/tcet-shastra-coding-contest-8-a/challenges/minimum-operations-to-equalize-energy/submissions/code/1387835179

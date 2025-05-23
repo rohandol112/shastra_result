@@ -1,2 +1,0 @@
-last_page_processed: 1
-total_submissions_scraped: 0
