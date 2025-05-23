@@ -12,15 +12,21 @@ import logging
 from collections import OrderedDict
 from io import StringIO, BytesIO
 
-# Selenium imports
+# Selenium imports with multiple browser support
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -28,8 +34,8 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="HackerRank Leaderboard Scraper API",
-    description="Fast and scalable API for scraping HackerRank leaderboards and merging with student data",
-    version="2.0.0"
+    description="Fast and scalable API for scraping HackerRank leaderboards with multiple browser support",
+    version="3.0.0"
 )
 
 # CORS middleware
@@ -52,9 +58,24 @@ class DataProcessingError(Exception):
     pass
 
 
-def get_chrome_options() -> Options:
+def get_firefox_options() -> FirefoxOptions:
+    """Get optimized Firefox options for scraping"""
+    options = FirefoxOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.set_preference("general.useragent.override",
+                           "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0")
+    options.set_preference("dom.webdriver.enabled", False)
+    options.set_preference("useAutomationExtension", False)
+    return options
+
+
+def get_chrome_options() -> ChromeOptions:
     """Get optimized Chrome options for scraping"""
-    options = Options()
+    options = ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
@@ -69,29 +90,82 @@ def get_chrome_options() -> Options:
     return options
 
 
-def create_driver():
-    """Create a new WebDriver instance"""
-    try:
-        options = get_chrome_options()
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        return driver
-    except Exception as e:
-        logger.error(f"Failed to create driver: {e}")
-        raise ScrapingError(f"Failed to initialize browser: {e}")
+def get_edge_options() -> EdgeOptions:
+    """Get optimized Edge options for scraping"""
+    options = EdgeOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+    return options
+
+
+def create_driver(browser_preference=None):
+    """Create a WebDriver instance with fallback options"""
+    browsers_to_try = []
+
+    # Set browser preference order
+    if browser_preference:
+        browsers_to_try.append(browser_preference.lower())
+
+    # Default fallback order: Firefox -> Chrome -> Edge
+    default_order = ['firefox', 'chrome', 'edge']
+    for browser in default_order:
+        if browser not in browsers_to_try:
+            browsers_to_try.append(browser)
+
+    last_error = None
+
+    for browser in browsers_to_try:
+        try:
+            logger.info(f"Attempting to create {browser} driver...")
+
+            if browser == 'firefox':
+                options = get_firefox_options()
+                service = FirefoxService(GeckoDriverManager().install())
+                driver = webdriver.Firefox(service=service, options=options)
+                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                logger.info("Firefox driver created successfully")
+                return driver
+
+            elif browser == 'chrome':
+                options = get_chrome_options()
+                service = ChromeService(ChromeDriverManager().install())
+                driver = webdriver.Chrome(service=service, options=options)
+                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                logger.info("Chrome driver created successfully")
+                return driver
+
+            elif browser == 'edge':
+                options = get_edge_options()
+                service = EdgeService(EdgeChromiumDriverManager().install())
+                driver = webdriver.Edge(service=service, options=options)
+                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+                logger.info("Edge driver created successfully")
+                return driver
+
+        except Exception as e:
+            logger.warning(f"Failed to create {browser} driver: {e}")
+            last_error = e
+            continue
+
+    # If all browsers failed, raise the last error
+    raise ScrapingError(f"Failed to initialize any browser. Last error: {last_error}")
 
 
 class HackerRankScraper:
-    def __init__(self):
+    def __init__(self, browser_preference=None):
         self.driver = None
         self.wait = None
         self.leaderboard_data = []
+        self.browser_preference = browser_preference
 
     def initialize(self):
         """Initialize the scraper"""
         try:
-            self.driver = create_driver()
+            self.driver = create_driver(self.browser_preference)
             self.wait = WebDriverWait(self.driver, 15)
             logger.info("Scraper initialized successfully")
         except Exception as e:
@@ -272,9 +346,10 @@ async def health_check():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "message": "FastAPI HackerRank Scraper is running",
+        "message": "FastAPI HackerRank Scraper is running (Multi-browser support)",
         "timestamp": datetime.now().isoformat(),
-        "version": "2.0.0"
+        "version": "3.0.0",
+        "supported_browsers": ["firefox", "chrome", "edge"]
     }
 
 
@@ -288,6 +363,7 @@ async def detailed_status():
             "data_processor": "available",
             "file_handler": "available"
         },
+        "supported_browsers": ["firefox", "chrome", "edge"],
         "timestamp": datetime.now().isoformat()
     }
 
@@ -295,7 +371,8 @@ async def detailed_status():
 @app.post("/upload", tags=["Main Operations"])
 def process_leaderboard(
         hackerRankUrl: str = Form(...),
-        file: UploadFile = File(...)
+        file: UploadFile = File(...),
+        browser: str = Form(default="firefox")  # New parameter for browser choice
 ):
     """
     Main endpoint to process student file and merge with HackerRank leaderboard data
@@ -315,7 +392,13 @@ def process_leaderboard(
         if not file.filename.endswith(('.csv', '.xlsx')):
             raise HTTPException(status_code=400, detail="Only CSV and XLSX files are supported")
 
-        logger.info(f"Processing request for URL: {hackerRankUrl}")
+        # Validate browser choice
+        supported_browsers = ["firefox", "chrome", "edge"]
+        if browser.lower() not in supported_browsers:
+            logger.warning(f"Unsupported browser '{browser}', defaulting to firefox")
+            browser = "firefox"
+
+        logger.info(f"Processing request for URL: {hackerRankUrl} using {browser}")
 
         # Read uploaded file
         file_content = file.file.read()
@@ -331,8 +414,8 @@ def process_leaderboard(
         data_processor = DataProcessor()
         cleaned_df = data_processor.clean_dataframe(student_df)
 
-        # Scrape leaderboard data
-        scraper = HackerRankScraper()
+        # Scrape leaderboard data with specified browser
+        scraper = HackerRankScraper(browser_preference=browser)
         leaderboard_data = scraper.scrape_leaderboard(hackerRankUrl)
 
         if not leaderboard_data:
@@ -349,7 +432,7 @@ def process_leaderboard(
 
         processing_time = time.time() - start_time
 
-        logger.info(f"Request processed successfully in {processing_time:.2f} seconds")
+        logger.info(f"Request processed successfully in {processing_time:.2f} seconds using {browser}")
 
         # Return the data directly as array (compatible with frontend)
         return result_json
@@ -370,7 +453,8 @@ def process_leaderboard(
 @app.post("/process-leaderboard", tags=["New API"])
 def process_leaderboard_v2(
         hackerRankUrl: str = Form(...),
-        file: UploadFile = File(...)
+        file: UploadFile = File(...),
+        browser: str = Form(default="firefox")
 ):
     """
     Enhanced endpoint with detailed response format
@@ -389,7 +473,13 @@ def process_leaderboard_v2(
         if not file.filename.endswith(('.csv', '.xlsx')):
             raise HTTPException(status_code=400, detail="Only CSV and XLSX files are supported")
 
-        logger.info(f"Processing request for URL: {hackerRankUrl}")
+        # Validate browser choice
+        supported_browsers = ["firefox", "chrome", "edge"]
+        if browser.lower() not in supported_browsers:
+            logger.warning(f"Unsupported browser '{browser}', defaulting to firefox")
+            browser = "firefox"
+
+        logger.info(f"Processing request for URL: {hackerRankUrl} using {browser}")
 
         # Read uploaded file
         file_content = file.file.read()
@@ -405,8 +495,8 @@ def process_leaderboard_v2(
         data_processor = DataProcessor()
         cleaned_df = data_processor.clean_dataframe(student_df)
 
-        # Scrape leaderboard data
-        scraper = HackerRankScraper()
+        # Scrape leaderboard data with specified browser
+        scraper = HackerRankScraper(browser_preference=browser)
         leaderboard_data = scraper.scrape_leaderboard(hackerRankUrl)
 
         if not leaderboard_data:
@@ -423,7 +513,7 @@ def process_leaderboard_v2(
 
         processing_time = time.time() - start_time
 
-        logger.info(f"Request processed successfully in {processing_time:.2f} seconds")
+        logger.info(f"Request processed successfully in {processing_time:.2f} seconds using {browser}")
 
         return JSONResponse(
             content={
@@ -433,6 +523,7 @@ def process_leaderboard_v2(
                     "total_records": len(result_json),
                     "processing_time_seconds": round(processing_time, 2),
                     "scraped_entries": len(leaderboard_data),
+                    "browser_used": browser,
                     "timestamp": datetime.now().isoformat()
                 }
             }
@@ -452,7 +543,10 @@ def process_leaderboard_v2(
 
 
 @app.post("/scrape-only", tags=["Utilities"])
-def scrape_leaderboard_only(hackerRankUrl: str = Form(...)):
+def scrape_leaderboard_only(
+        hackerRankUrl: str = Form(...),
+        browser: str = Form(default="firefox")
+):
     """
     Utility endpoint to only scrape leaderboard data without merging
     """
@@ -460,7 +554,13 @@ def scrape_leaderboard_only(hackerRankUrl: str = Form(...)):
         if not hackerRankUrl:
             raise HTTPException(status_code=400, detail="HackerRank URL is required")
 
-        scraper = HackerRankScraper()
+        # Validate browser choice
+        supported_browsers = ["firefox", "chrome", "edge"]
+        if browser.lower() not in supported_browsers:
+            logger.warning(f"Unsupported browser '{browser}', defaulting to firefox")
+            browser = "firefox"
+
+        scraper = HackerRankScraper(browser_preference=browser)
         leaderboard_data = scraper.scrape_leaderboard(hackerRankUrl)
 
         if not leaderboard_data:
@@ -475,6 +575,7 @@ def scrape_leaderboard_only(hackerRankUrl: str = Form(...)):
             "data": result_json,
             "metadata": {
                 "total_records": len(result_json),
+                "browser_used": browser,
                 "timestamp": datetime.now().isoformat()
             }
         })
